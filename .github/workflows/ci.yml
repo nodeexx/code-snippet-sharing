@@ -1,0 +1,214 @@
+name: ci
+
+on:
+    pull_request:
+        branches:
+            - main
+            - stage
+            - prod
+
+jobs:
+    ci:
+        if: always()
+        needs:
+            [
+                app-code-linting,
+                app-tests-unit-node,
+                app-tests-unit-dom,
+                app-tests-playwright-e2e,
+                app-tests-playwright-api,
+                commits-linting,
+                forbidden-comments-linting,
+            ]
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Check jobs status
+              run: if ${{ contains(needs.*.result, 'failure') }}; then exit 1; fi
+            - name: Dependencies completed
+              run: echo 'All dependencies completed'
+
+    app-code-linting:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  # Make sure the actual branch is checked out when running on pull requests
+                  ref: ${{ github.head_ref }}
+            - name: Reveal secret .env files
+              uses: entrostat/git-secret-action@v4
+              with:
+                  gpg-private-key: ${{ secrets.GIT_SECRET_PRIVATE_KEY }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.9.0'
+                  cache: 'npm'
+                  cache-dependency-path: package-lock.json
+            - name: Install NPM dependencies
+              run: npm ci
+            - name: Build and lint
+              run: npm run build && npm run lint
+
+    app-tests-unit-node:
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                index: ['1']
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  # Make sure the actual branch is checked out when running on pull requests
+                  ref: ${{ github.head_ref }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.9.0'
+                  cache: 'npm'
+                  cache-dependency-path: package-lock.json
+            - name: Install NPM dependencies
+              run: npm ci
+            - name: Run node unit tests
+              run: |
+                  npm run test:unit:node -- --shard=${{matrix.index}}/1
+
+    app-tests-unit-dom:
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                index: ['1']
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  # Make sure the actual branch is checked out when running on pull requests
+                  ref: ${{ github.head_ref }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.9.0'
+                  cache: 'npm'
+                  cache-dependency-path: package-lock.json
+            - name: Install NPM dependencies
+              run: npm ci
+            - name: Run dom unit tests
+              run: |
+                  npm run test:unit:dom -- --shard=${{matrix.index}}/1
+
+    app-tests-playwright-e2e:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.head_ref }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.9.0'
+                  cache: 'npm'
+                  cache-dependency-path: package-lock.json
+            - name: Install NPM dependencies
+              run: npm ci
+            - name: Reveal secret .env files
+              uses: entrostat/git-secret-action@v4
+              with:
+                  gpg-private-key: ${{ secrets.GIT_SECRET_PRIVATE_KEY }}
+            - name: Prepare folders for failed test data
+              run: mkdir --parents "${PWD}/reports/playwright/e2e/playwright-report" "${PWD}/reports/playwright/e2e/test-results"
+            - name: Run E2E tests
+              id: run-e2e-tests
+              run: ./scripts/stack/local/all/e2e/headless.js
+            - name: Upload data for failed tests
+              if: failure() && steps.run-e2e-tests.outcome == 'failure'
+              uses: actions/upload-artifact@v3
+              with:
+                  name: e2e-failed-tests-data
+                  path: |
+                      ${{ github.workspace }}/reports/playwright/e2e/playwright-report
+                      ${{ github.workspace }}/reports/playwright/e2e/test-results
+                  retention-days: 3
+
+    app-tests-playwright-api:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.head_ref }}
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20.9.0'
+                  cache: 'npm'
+                  cache-dependency-path: package-lock.json
+            - name: Install NPM dependencies
+              run: npm ci
+            - name: Reveal secret .env files
+              uses: entrostat/git-secret-action@v4
+              with:
+                  gpg-private-key: ${{ secrets.GIT_SECRET_PRIVATE_KEY }}
+            - name: Prepare folders for failed test data
+              run: mkdir --parents "${PWD}/reports/playwright/api/playwright-report" "${PWD}/reports/playwright/api/test-results"
+            - name: Run API tests
+              id: run-api-tests
+              run: ./scripts/stack/local/all/api/headless.js
+            - name: Upload data for failed tests
+              if: failure() && steps.run-api-tests.outcome == 'failure'
+              uses: actions/upload-artifact@v3
+              with:
+                  name: api-failed-tests-data
+                  path: |
+                      ${{ github.workspace }}/reports/playwright/api/playwright-report
+                      ${{ github.workspace }}/reports/playwright/api/test-results
+                  retention-days: 3
+
+    commits-linting:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.head_ref }}
+            - name: 'Validate PR commits messages'
+              run: |
+                  PATTERN="(^wip|^fixup)"
+                  MESSAGES=$(git log -n ${{ github.event.pull_request.commits }} --pretty="%s")
+                  if echo "$MESSAGES" | grep -Eqi "$PATTERN"; then
+                    echo "Commits messages are not valid"
+                    exit 1
+                  fi
+                  echo "Commits messages are valid"
+
+    forbidden-comments-linting:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  ref: ${{ github.head_ref }}
+            - name: Setup todos CLI command
+              run: |
+                  curl -sSLo slsa-verifier https://github.com/slsa-framework/slsa-verifier/releases/download/v2.3.0/slsa-verifier-linux-amd64 \
+                  && echo "ea687149d658efecda64d69da999efb84bb695a3212f29548d4897994027172d  slsa-verifier" | sha256sum -c - \
+                  && chmod +x slsa-verifier
+
+                  curl -sSLo todos https://github.com/ianlewis/todos/releases/download/v0.5.0/todos-linux-amd64 \
+                  && curl -sSLo todos.intoto.jsonl https://github.com/ianlewis/todos/releases/download/v0.5.0/todos-linux-amd64.intoto.jsonl \
+                  && ./slsa-verifier verify-artifact todos --provenance-path todos.intoto.jsonl --source-uri github.com/ianlewis/todos --source-tag v0.5.0 \
+                  && chmod +x todos \
+                  && sudo cp todos /usr/local/bin
+            - name: Run todos CLI command
+              run: |
+                  output=$(./todos --output github --todo-types PTODO .)
+
+                  echo "$output"
+
+                  if [[ -z $(echo "$output" | grep -v '^[[:space:]]*$') ]]; then
+                      # No non-empty lines found
+                      exit 0
+                  else
+                      # Non-empty lines found
+                      exit 1
+                  fi

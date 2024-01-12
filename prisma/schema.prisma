@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// # Lucia auth
+
+model User {
+  id             String   @id @unique
+  email          String   @unique
+  email_verified Boolean  @default(false)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  sessions      Session[]
+  keys          Key[]
+  code_snippets CodeSnippet[]
+
+  @@map("users")
+}
+
+model Session {
+  id             String   @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  user User @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("sessions")
+}
+
+model Key {
+  id              String   @id @unique
+  hashed_password String?
+  user_id         String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  user User @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("keys")
+}
+
+// # App
+
+model CodeSnippet {
+  id         Int       @id @default(autoincrement())
+  user_id    String
+  name       String
+  code       String
+  is_deleted Boolean   @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+  user User @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("code_snippets")
+}

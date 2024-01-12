@@ -1,0 +1,24 @@
+services:
+    db-migration:
+        env_file: .env.playwright
+
+    app:
+        env_file: .env.playwright
+
+    api:
+        container_name: ${PROJECT_NAME:?err}--api
+        image: ${PROJECT_NAME:?err}--api:latest
+        build:
+            dockerfile: ./docker/playwright/Dockerfile
+            target: api
+        privileged: true
+        pid: host
+        network_mode: host
+        volumes:
+            - type: bind
+              source: './reports/playwright/api'
+              target: /playwright/reports/playwright/api
+        env_file: .env.playwright
+        depends_on:
+            app:
+                condition: service_healthy
