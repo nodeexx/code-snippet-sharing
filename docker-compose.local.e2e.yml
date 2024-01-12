@@ -1,0 +1,24 @@
+services:
+    db-migration:
+        env_file: .env.playwright
+
+    app:
+        env_file: .env.playwright
+
+    e2e:
+        container_name: ${PROJECT_NAME:?err}--e2e
+        image: ${PROJECT_NAME:?err}--e2e:latest
+        build:
+            dockerfile: ./docker/playwright/Dockerfile
+            target: e2e
+        privileged: true
+        pid: host
+        network_mode: host
+        volumes:
+            - type: bind
+              source: './reports/playwright/e2e'
+              target: /playwright/reports/playwright/e2e
+        env_file: .env.playwright
+        depends_on:
+            app:
+                condition: service_healthy

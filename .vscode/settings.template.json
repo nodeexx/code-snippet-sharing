@@ -1,0 +1,88 @@
+{
+  "editor.formatOnSave": true,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.svelte-kit/**": true
+  },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "postcss.validate": false,
+  "css.customData": ["./.vscode/css-custom-data-tailwind.json"],
+  "files.associations": {
+    ".env": "dotenv",
+    ".env.*": "dotenv"
+  },
+  "debug.javascript.terminalOptions": {
+    "skipFiles": ["<node_internals>/**"]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[postcss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+    // Identation settings -> .editorconfig
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+    // Identation settings -> .editorconfig
+  },
+  /* TypeScript */
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  /* GitHub Copilot */
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false
+  },
+  "github.copilot.advanced": {
+    "slashCommands": {
+      "createWorkspace": true,
+      "createNotebook": true,
+      "search": true
+    }
+  },
+  /* GitHub Pull Requests and Issues */
+  "githubPullRequests.ignoredPullRequestBranches": ["main"],
+  /* Vitest */
+  "vitest.commandLine": "npm run test:unit:watch --",
+  "vitest.include": ["**/src/**/*.test.{js,ts}"],
+  /* Wallaby.js */
+  "wallaby.startAutomatically": false,
+  /* ESLint */
+  // "eslint.enable": true,
+  // "eslint.format.enable": true,
+  "eslint.validate": ["javascript", "typescript", "svelte"],
+  /* Prettier */
+  // "prettier.enable": true,
+  /* Stylelint */
+  "stylelint.validate": ["postcss", "svelte"],
+  /* cSpell */
+  "cSpell.language": "en,en-US",
+  "cSpell.words": []
+}

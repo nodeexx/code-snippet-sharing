@@ -1,0 +1,39 @@
+services:
+    db-migration:
+        container_name: ${PROJECT_NAME:?err}--db-migration
+        image: ${PROJECT_NAME:?err}--app:latest-migrate
+        build:
+            dockerfile: ./docker/app/Dockerfile
+            target: migrate
+        privileged: true
+        pid: host
+        network_mode: host
+        env_file: .env.local
+        environment:
+            - DATABASE_URL=${DATABASE_URL:?err}
+        depends_on:
+            postgres:
+                condition: service_healthy
+
+    app:
+        container_name: ${PROJECT_NAME:?err}--app
+        image: ${PROJECT_NAME:?err}--app:latest
+        build:
+            dockerfile: ./docker/app/Dockerfile
+        privileged: true
+        pid: host
+        network_mode: host
+        # ports:
+        #     - host_ip: 0.0.0.0
+        #       published: 3000 # host
+        #       target: 3000 # container
+        #       protocol: tcp
+        #       mode: host
+        env_file: .env.local
+        environment:
+            - PORT=3000
+        healthcheck:
+            interval: 10s
+        depends_on:
+            db-migration:
+                condition: service_completed_successfully

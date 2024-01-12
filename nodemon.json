@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+  "ignore": [
+    "node_modules",
+    "dist",
+    "build",
+    ".stryker-tmp",
+    ".nyc_output",
+    "coverage",
+    "target",
+    "reports",
+    ".svelte-kit"
+  ],
+  "ext": "json,js,cjs,mjs,ts,svelte"
+}

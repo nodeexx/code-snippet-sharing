@@ -1,0 +1,30 @@
+{
+  "recommendations": [
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "moalamri.inline-fold",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "GitHub.vscode-pull-request-github",
+    "wallabyjs.console-ninja",
+    "wallabyjs.quokka-vscode",
+    "wallabyjs.wallaby-vscode",
+    "ZixuanChen.vitest-explorer",
+    "ms-playwright.playwright",
+    "editorconfig.editorconfig",
+    "mikestead.dotenv",
+    "redhat.vscode-yaml",
+    "ms-azuretools.vscode-docker",
+    "github.vscode-github-actions",
+    "bradlc.vscode-tailwindcss",
+    "Prisma.prisma",
+    "svelte.svelte-vscode",
+    "stordahl.sveltekit-snippets",
+    "proverbialninja.svelte-extractor",
+    "vunguyentuan.vscode-postcss",
+    "wix.vscode-import-cost"
+  ]
+}

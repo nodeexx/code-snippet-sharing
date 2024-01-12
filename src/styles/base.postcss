@@ -1,0 +1,65 @@
+@layer base {
+  /* :root {
+    --color-primary: #ff0000;
+  } */
+
+  /* Open Sans */
+  @font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/Open_Sans/static/OpenSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/Open_Sans/static/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Inter */
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter/static/Inter-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter/static/Inter-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Source Code Pro */
+  @font-face {
+    font-family: 'Source Code Pro';
+    src: url('/fonts/Source_Code_Pro/static/SourceCodePro-Bold.ttf')
+      format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Source Code Pro';
+    src: url('/fonts/Source_Code_Pro/static/SourceCodePro-Regular.ttf')
+      format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Override Skeleton CSS variables for Wintry theme */
+  :root [data-theme='wintry'] {
+    --theme-font-family-heading: Inter, system-ui, sans-serif;
+    --theme-font-family-base: 'Open Sans', system-ui;
+  }
+
+  html,
+  body {
+    @apply m-0
+    block
+    h-full
+    w-full
+    overflow-hidden
+    p-0;
+  }
+}

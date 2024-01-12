@@ -1,0 +1,46 @@
+services:
+    postgres:
+        container_name: ${PROJECT_NAME:?err}--postgres
+        hostname: ${PROJECT_NAME:?err}--postgres
+        image: postgres:15.3-alpine3.18
+        # NOTE: To avoid the error "FATAL: role "root" does not exist docker postgres"
+        user: postgres
+        ports:
+            - host_ip: 0.0.0.0
+              published: 5434 # host
+              target: 5434 # container
+              protocol: tcp
+              mode: host
+        volumes:
+            - type: volume
+              source: postgres-data
+              target: /var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+            PGPORT: 5434
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready']
+            interval: 5s
+
+    # DB connection URL:
+    # postgres://postgres:postgres@${PROJECT_NAME}--postgres:5434/postgres
+    # Browser URL:
+    # http://localhost:8080/?pgsql=${PROJECT_NAME}--postgres%3A5434&username=postgres&db=postgres&ns=public&select=keys
+    adminer:
+        container_name: ${PROJECT_NAME:?err}--adminer
+        image: adminer:4.8.1-standalone
+        ports:
+            - host_ip: 0.0.0.0
+              published: 8080 # host
+              target: 8080 # container
+              protocol: tcp
+              mode: host
+        depends_on:
+            postgres:
+                condition: service_healthy
+
+volumes:
+    postgres-data:
+        name: ${PROJECT_NAME:?err}--${POSTGRES_DATA_VOLUME_NAME:?err}

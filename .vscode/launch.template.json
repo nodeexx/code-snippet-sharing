@@ -1,0 +1,35 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+      // https://code.visualstudio.com/docs/nodejs/browser-debugging#_launch-configuration-attributes
+      "name": "Chrome: Launch (user code only)",
+      "type": "chrome",
+      "request": "launch",
+
+      // Universal attributes with non-default values
+      "webRoot": "${workspaceFolder}",
+      "smartStep": true,
+
+      // Launch-specific attributes with non-default values
+      "url": "http://localhost:3000"
+    },
+    {
+      // https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+      // https://code.visualstudio.com/docs/nodejs/browser-debugging#_launch-configuration-attributes
+      "name": "Chrome: Launch (with node_modules)",
+      "type": "chrome",
+      "request": "launch",
+
+      // Universal attributes with non-default values
+      "webRoot": "${workspaceFolder}",
+
+      // Launch-specific attributes with non-default values
+      "url": "http://localhost:3000"
+    }
+  ]
+}

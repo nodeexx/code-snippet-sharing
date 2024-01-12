@@ -1,0 +1,91 @@
+{
+  "extends": "./.svelte-kit/tsconfig.json",
+  /*
+   * If you want to overwrite includes/excludes, make sure to copy over the
+   * relevant includes/excludes from the referenced
+   * tsconfig.json - TypeScript does not merge them in.
+   */
+  "include": [
+    // Default from `./.svelte-kit/tsconfig.json`
+    ".svelte-kit/ambient.d.ts",
+    ".svelte-kit/types/**/$types.d.ts",
+    "./vite.config.ts",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.svelte",
+    "./tests/**/*.js",
+    "./tests/**/*.ts",
+    "./tests/**/*.svelte",
+    // Custom
+    "./src/**/*.d.ts",
+    "./*.cjs",
+    "./.*.cjs",
+    "./*.js",
+    "./.*.js",
+    "./*.ts",
+    "./.*.ts",
+    "./scripts/app/**/*.js",
+    "./scripts/stack/**/*.js",
+    "./scripts/ci/**/*.js"
+  ],
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "incremental": true,
+    /*
+     * Cannot be disabled because of "composite": true
+     */
+    // "declaration": false,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": false,
+    "skipLibCheck": true, // SvelteKit default: true
+    /**
+     * Typecheck JS in `.svelte` and `.js` files by default.
+     * Disable checkJs if you'd like to use dynamic types in JS.
+     * Note that setting allowJs false does not prevent the use
+     * of JS in `.svelte` files.
+     */
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "./dist",
+    /*
+     * Wrongly set `baseUrl` interferes with SvelteKit path aliases.
+     * E.g. Import from `$lib` works but IDE doesn't recognize it
+     */
+    // "baseUrl": "./",
+    /*
+     * Needed for importing Page Objects in Playwright tests
+     */
+    "allowImportingTsExtensions": true,
+    // "noEmit": true,
+    "emitDeclarationOnly": true,
+    "composite": true,
+    /**
+     * Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
+     */
+    // "paths": {
+    // 	"@": ["./"],
+    // 	"@src/*": ["./src/*"]
+    // },
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    /**
+     * Checked by ESLint
+     */
+    "noUnusedLocals": false
+  }
+}

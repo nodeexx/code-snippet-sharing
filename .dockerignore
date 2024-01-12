@@ -1,0 +1,20 @@
+.git
+.gitignore
+.gitattributes
+.prettierrc
+.eslintrc.cjs
+.graphqlrc
+.editorconfig
+.svelte-kit
+.vscode
+node_modules
+npm-debug
+build
+package
+**/.env
+docker-compose*.yml
+tests/playwright/common/saved-states/*
+
+# For documentation purposes
+!Dockerfile
+!README.md
