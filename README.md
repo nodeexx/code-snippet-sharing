@@ -78,8 +78,11 @@ Backend
 -   Docker
 -   Docker Compose
 
-Setup commands
+Setup
 
+-   Create and fill out values in `.env.local` and `.env.playwright` files
+    -   See Environment variables section and `.env.template` file
+    -   NOTE: `.env.*.secret` files serve repository author's needs only 😉
 -   `npm ci`
 -   `npm run playwright:install:browsers`
 -   `npm run playwright:install:dependencies`
