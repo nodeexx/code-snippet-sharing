@@ -2,12 +2,14 @@
 
 Table of contents
 
-- [Notable features](#notable-features)
-- [The stack](#the-stack)
-- [Environment variables](#environment-variables)
-- [Development](#development)
-  - [Requirements](#requirements)
-  - [Useful command summary](#useful-command-summary)
+-   [Notable features](#notable-features)
+-   [The stack](#the-stack)
+-   [Environment variables](#environment-variables)
+-   [Development](#development)
+    -   [Requirements](#requirements)
+    -   [Setup and processes](#setup-and-processes)
+    -   [Useful command summary](#useful-command-summary)
+-   [Deployment](#deployment)
 
 # Notable features
 
@@ -82,6 +84,10 @@ Setup commands
 -   `npm run playwright:install:browsers`
 -   `npm run playwright:install:dependencies`
 
+## Setup and processes
+
+See [Development ‐ Setup and processes](https://github.com/nodeexx/code-snippet-sharing/wiki/Development-%E2%80%90-Setup-and-processes) Wiki page for more details.
+
 ## Useful command summary
 
 **General development commands**
@@ -108,3 +114,7 @@ Setup commands
 **Linting**
 
 -   `npm run lint:fix` for running all linters and fixing auto-fixable linting errors
+
+# Deployment
+
+See [Deployment ‐ Setup and processes](https://github.com/nodeexx/code-snippet-sharing/wiki/Deployment-%E2%80%90-Setup-and-processes) Wiki page for more details.
