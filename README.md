@@ -81,7 +81,7 @@ Backend
 
 **Software**
 
--   Node.js (see `package.json` for minimum recommended version)
+-   Node.js (see `package.json` for the minimum recommended version)
 -   Docker
 -   Docker Compose
 
@@ -89,7 +89,7 @@ Setup
 
 -   Create and fill out values in `.env.local` and `.env.playwright` files
     -   See Environment variables section and `.env.template` file
-    -   NOTE: `.env.*.secret` files serve repository author's needs only 😉
+    -   NOTE: `.env.*.secret` files serve the repository author's needs only 😉
 -   `npm ci`
 -   `npm run playwright:install:browsers`
 -   `npm run playwright:install:dependencies`
