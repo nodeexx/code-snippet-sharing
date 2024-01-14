@@ -4,6 +4,7 @@ Table of contents
 
 -   [Notable features](#notable-features)
 -   [The stack](#the-stack)
+-   [Environment variables](#environment-variables)
 
 # Notable features
 
@@ -31,3 +32,33 @@ See [Notable features](https://github.com/nodeexx/code-snippet-sharing/wiki/Nota
 # The stack
 
 See [The stack](https://github.com/nodeexx/code-snippet-sharing/wiki/The-stack) Wiki page for more details.
+
+# Environment variables
+
+See `.env.template`.
+
+**Development-only**
+
+Used by Vite and Docker Compose.
+
+**Production**
+
+Backend
+
+-   `DATABASE_URL`
+    -   Database connection string used by Prisma
+    -   Values: Must be defined
+-   `GOOGLE_OAUTH_APP_CLIENT_ID`
+    -   Used for authentication with Google OAuth 2
+    -   Values: Must be defined
+-   `GOOGLE_OAUTH_APP_CLIENT_SECRET`
+    -   Used for authentication with Google OAuth 2
+    -   Values: Must be defined
+-   `GOOGLE_OAUTH_APP_REDIRECT_URI`
+    -   Used for authentication with Google OAuth 2
+    -   Values: Must be defined
+-   `MAINTENANCE_MODE`
+    -   Enables maintenance mode (redirects all routes to `/maintenance`)
+    -   Values: `true` to enable, anything else to disable
+-   `ORIGIN`
+    -   [Node servers • Docs • SvelteKit](https://kit.svelte.dev/docs/adapter-node#environment-variables)
