@@ -2,9 +2,12 @@
 
 Table of contents
 
--   [Notable features](#notable-features)
--   [The stack](#the-stack)
--   [Environment variables](#environment-variables)
+- [Notable features](#notable-features)
+- [The stack](#the-stack)
+- [Environment variables](#environment-variables)
+- [Development](#development)
+  - [Requirements](#requirements)
+  - [Useful command summary](#useful-command-summary)
 
 # Notable features
 
@@ -62,3 +65,46 @@ Backend
     -   Values: `true` to enable, anything else to disable
 -   `ORIGIN`
     -   [Node servers • Docs • SvelteKit](https://kit.svelte.dev/docs/adapter-node#environment-variables)
+
+# Development
+
+## Requirements
+
+**Software**
+
+-   Node.js (see `package.json` for minimum recommended version)
+-   Docker
+-   Docker Compose
+
+Setup commands
+
+-   `npm ci`
+-   `npm run playwright:install:browsers`
+-   `npm run playwright:install:dependencies`
+
+## Useful command summary
+
+**General development commands**
+
+-   `npm run dev`
+    -   Runs PostgreSQL via Docker Compose and app outside of it via `vite dev`
+    -   Database is automatically migrated
+    -   Seeds are not applied
+-   `scripts/stack/local/infra/stack-only/migrate.js` for migrating already running PostgreSQL container
+-   `./scripts/stack/local/infra/stack-only/seed.js` for applying seeds
+    -   Apply seeds
+
+**Run unit tests**
+
+-   `npm run test:unit:node` for server tests
+-   `npm run test:unit:dom` for client tests
+-   Add `:coverage` suffix for generating coverage report
+
+**Run API/E2E tests**
+
+-   `./scripts/stack/local/infra-app/playwright/api/ui.js` for running API tests in UI mode
+-   `./scripts/stack/local/infra-app/playwright/e2e/ui.js` for running E2E tests in UI mode
+
+**Linting**
+
+-   `npm run lint:fix` for running all linters and fixing auto-fixable linting errors
