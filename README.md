@@ -17,7 +17,9 @@ Table of contents
 
 Hey there, welcome to the `code-snippet-sharing` project! It started as an attempt to create a full-stack setup based on the SvelteKit framework by creating a simple CRUD app. But I've enjoyed working with this stack so much, that the project quickly transformed into a kitchen sink regarding to the usage of supporting libraries and services. I still actively use it to experiment with SvelteKit and learn/test new tools (e.g. analytics, crashalytics, logging, monitoring).
 
-It's a total overkill as an example of a simple CRUD app... But I thought its individual parts/features may prove useful for others (e.g. how to unit test SvelteKit app, how to create a Playwright E2E setup), so I've decided to publish it and document some stuff regarding it on a Wiki. Dig in and explore the codebase or Wiki at your pleasure (and risk)!
+When I was a less experienced dev, I always yearned for encountering a real-world example of a full-stack app with a complete support tooling setups (e.g. for unit tests, E2E tests, linting, CI/CD). [CodebaseShow – RealWorld Example Apps](https://codebase.show/projects/realworld) initiative is very useful for taking inspiration regarding meeting common functional requirements, but it does not meet my requirements regarding the support tooling. I guess, in the end, I've created what I wanted myself :)
+
+This project is a total overkill as an example of a simple CRUD app... But I think its individual parts/features or how they come together may prove useful to others (e.g. how to unit test SvelteKit app, how to create a Playwright E2E setup), so I've decided to publish it and document some stuff regarding it on a Wiki. Dig in and explore the codebase or Wiki at your pleasure (and risk)!
 
 # App feature outline
 
