@@ -70,6 +70,7 @@ This project is a total overkill as an example of a simple CRUD app... But I thi
 🚫 Comprehensive global error handling  
 🛑 Configured graceful server shutdown  
 🩺 Includes `healthcheck` API endpoint  
+📐 Responsive app UI  
 👨‍💻 Useful VSCode settings and extensions  
 💬 A lot of helpful comments in the codebase
 
