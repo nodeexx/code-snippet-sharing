@@ -3,7 +3,8 @@
 Table of contents
 
 -   [Origin story](#origin-story)
--   [Notable features](#notable-features)
+-   [App feature outline](#app-feature-outline)
+-   [Notable project features](#notable-project-features)
 -   [The stack](#the-stack)
 -   [Environment variables](#environment-variables)
 -   [Development](#development)
@@ -18,7 +19,38 @@ Hey there, welcome to the `code-snippet-sharing` project! It started as an attem
 
 It's a total overkill as an example of a simple CRUD app... But I thought its individual parts/features may prove useful for others (e.g. how to unit test SvelteKit app, how to create a Playwright E2E setup), so I've decided to publish it and document some stuff regarding it on a Wiki. Dig in and explore the codebase or Wiki at your pleasure (and risk)!
 
-# Notable features
+# App feature outline
+
+**Authentication**
+
+-   Sign in / Sign up via Google Sign in (anyone can create an account)
+-   Sign out
+
+**View all existing code snippets**
+
+-   Available to all users (signed-in or signed-out)
+-   Filtering (current user)
+-   Sorting (creation date)
+-   Pagination
+
+**View code snippet's details**
+
+-   Available to all users (signed-in or signed-out)
+
+**Create code snippet**
+
+-   Available only to signed-in users
+
+**Edit code snippet**
+
+-   Available only to code snippet's author
+
+**Delete code snippet**
+
+-   Available only to code snippet's author
+-   Soft delete
+
+# Notable project features
 
 🎭 E2E testing via Playwright for main happy paths  
 🌐 API testing via Playwright API testing for main happy paths  
