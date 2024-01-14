@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "./scripts/stack/local/infra/stack-only/infra-app.js",
     "dev:only": "vite dev",
