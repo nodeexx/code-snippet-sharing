@@ -2,6 +2,7 @@
 
 Table of contents
 
+-   [Origin story](#origin-story)
 -   [Notable features](#notable-features)
 -   [The stack](#the-stack)
 -   [Environment variables](#environment-variables)
@@ -10,6 +11,12 @@ Table of contents
     -   [Setup and processes](#setup-and-processes)
     -   [Useful command summary](#useful-command-summary)
 -   [Deployment](#deployment)
+
+# Origin story
+
+Hey there, welcome to the `code-snippet-sharing` project! It started as an attempt to create a full-stack setup based on the SvelteKit framework by creating a simple CRUD app. But I've enjoyed working with this stack so much, that the project quickly transformed into a kitchen sink regarding to the usage of supporting libraries and services. I still actively use it to experiment with SvelteKit and learn/test new tools (e.g. analytics, crashalytics, logging, monitoring).
+
+It's a total overkill as an example of a simple CRUD app... But I thought its individual parts/features may prove useful for others (e.g. how to unit test SvelteKit app, how to create a Playwright E2E setup), so I've decided to publish it and document some stuff regarding it on a Wiki. Dig in and explore the codebase or Wiki at your pleasure (and risk)!
 
 # Notable features
 
