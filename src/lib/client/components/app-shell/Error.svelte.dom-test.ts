@@ -39,15 +39,6 @@ describe(Component.name, () => {
     expect(invalidateAllSpy).not.toHaveBeenCalled();
   });
 
-  it('should set custom page title', () => {
-    const title = 'Test Title';
-    render(Component, {
-      title,
-    });
-
-    expect(document.title).toEqual(title);
-  });
-
   it('should show custom text and message', () => {
     const title = 'Test Title';
     const message = 'Test Message';

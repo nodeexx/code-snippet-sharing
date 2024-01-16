@@ -9,6 +9,7 @@ import {
   showToastOnInternetDisconnect,
 } from '$lib/client/global-messages/utils';
 import { formatUtcDateTime } from '$lib/shared/core/utils';
+import { config } from '$lib/client/core/config';
 
 export let data;
 
@@ -27,6 +28,10 @@ const {
 const creationDate = formatUtcDateTime(created_at);
 const lastModificationDate = formatUtcDateTime(updated_at);
 </script>
+
+<svelte:head>
+  <title>{data.codeSnippet.name}{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <Card
   class="flex h-full flex-col"

@@ -2,9 +2,14 @@
 import { Card } from '$lib/client/components/common';
 import { CodeSnippetCreateEditForm } from '$lib/client/components/code-snippets';
 import { goBack } from '$lib/client/core/utils';
+import { config } from '$lib/client/core/config';
 
 export let data;
 </script>
+
+<svelte:head>
+  <title>Edit - {data.form.data.name}{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <Card
   class="flex h-full flex-col"
