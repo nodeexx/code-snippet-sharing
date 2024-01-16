@@ -31,6 +31,10 @@ const lastModificationDate = formatUtcDateTime(updated_at);
 
 <svelte:head>
   <title>{data.codeSnippet.name}{config.pageTitleSuffix}</title>
+  <meta
+    name="description"
+    content="Code snippet - {data.codeSnippet.name} | {data.codeSnippet.code}"
+  />
 </svelte:head>
 
 <Card

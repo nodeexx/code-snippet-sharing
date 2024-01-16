@@ -23,6 +23,7 @@ if ($page.status === 503) {
 
 <svelte:head>
   <title>{title}{config.pageTitleSuffix}</title>
+  <meta name="description" content="{title} - {message}" />
 </svelte:head>
 
 <Error {title} {message} {showAppBar} />

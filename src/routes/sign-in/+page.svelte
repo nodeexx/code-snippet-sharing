@@ -30,6 +30,7 @@ const { message, enhance } = superForm(data.form, {
 
 <svelte:head>
   <title>Sign in{config.pageTitleSuffix}</title>
+  <meta name="description" content="Sign in page" />
 </svelte:head>
 
 <AppShell appBar="{false}">

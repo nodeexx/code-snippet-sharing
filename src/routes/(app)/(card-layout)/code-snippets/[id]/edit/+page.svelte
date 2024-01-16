@@ -9,6 +9,10 @@ export let data;
 
 <svelte:head>
   <title>Edit - {data.form.data.name}{config.pageTitleSuffix}</title>
+  <meta
+    name="description"
+    content="Edit code snippet page - {data.form.data.name}"
+  />
 </svelte:head>
 
 <Card

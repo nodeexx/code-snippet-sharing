@@ -24,6 +24,7 @@ const { message, enhance } = superForm(data.form, {
 
 <svelte:head>
   <title>Profile{config.pageTitleSuffix}</title>
+  <meta name="description" content="Profile page" />
 </svelte:head>
 
 <Card>
