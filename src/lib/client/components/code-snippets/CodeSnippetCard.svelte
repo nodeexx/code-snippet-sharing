@@ -34,7 +34,10 @@ const { enhance } = codeSnippetDeletionSuperForm;
 
   {#if authUser?.userId === codeSnippet.user_id}
     <div class="flex h-full flex-row items-center justify-center gap-2">
-      <a href="/code-snippets/{codeSnippet.id}/edit">
+      <a
+        href="/code-snippets/{codeSnippet.id}/edit"
+        aria-label="Edit code snippet"
+      >
         <button
           type="button"
           class="variant-filled btn-icon"

@@ -9,7 +9,7 @@ export let nextPageUrlPath: string | undefined = undefined;
 {#if previousPageUrlPath || nextPageUrlPath}
   <div class="flex gap-4" data-testid="simple-paginator">
     {#if previousPageUrlPath}
-      <a href="{previousPageUrlPath}">
+      <a href="{previousPageUrlPath}" aria-label="Previous page">
         <button
           type="button"
           class="variant-filled btn-icon"
@@ -21,7 +21,7 @@ export let nextPageUrlPath: string | undefined = undefined;
       </a>
     {/if}
     {#if nextPageUrlPath}
-      <a href="{nextPageUrlPath}">
+      <a href="{nextPageUrlPath}" aria-label="Next page">
         <button
           type="button"
           class="variant-filled btn-icon"
