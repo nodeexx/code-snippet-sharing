@@ -59,6 +59,10 @@ async function reloadData() {
 
 <svelte:head>
   <title>Home{config.pageTitleSuffix}</title>
+  <meta
+    name="description"
+    content="Simple Pastebin-like CRUD app that, open-source example of a full-stack SvelteKit app"
+  />
 </svelte:head>
 
 <div class="flex h-full flex-col items-center justify-center gap-5">

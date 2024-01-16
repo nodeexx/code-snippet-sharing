@@ -8,6 +8,7 @@ export let data;
 
 <svelte:head>
   <title>Create code snippet{config.pageTitleSuffix}</title>
+  <meta name="description" content="Create code snippet page" />
 </svelte:head>
 
 <Card
