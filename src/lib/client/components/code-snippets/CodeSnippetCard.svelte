@@ -39,6 +39,7 @@ const { enhance } = codeSnippetDeletionSuperForm;
           type="button"
           class="variant-filled btn-icon"
           data-testid="edit-button-{codeSnippet.id}"
+          aria-label="Edit code snippet"
         >
           <IconPenToSquare />
         </button>
@@ -48,6 +49,7 @@ const { enhance } = codeSnippetDeletionSuperForm;
         <button
           class="variant-filled btn-icon"
           data-testid="delete-button-{codeSnippet.id}"
+          aria-label="Delete code snippet"
           on:click|stopPropagation
         >
           <IconTrash />

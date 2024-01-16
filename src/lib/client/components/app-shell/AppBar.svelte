@@ -7,7 +7,11 @@ import { AppMenuButton } from '$lib/client/components/app-shell';
 <AppBar>
   <svelte:fragment slot="lead">
     <a href="/">
-      <button type="button" class="variant-filled-surface btn-icon">
+      <button
+        type="button"
+        class="variant-filled-surface btn-icon"
+        aria-label="Go to home page"
+      >
         <IconHouse />
       </button>
     </a>
