@@ -13,6 +13,7 @@ export let nextPageUrlPath: string | undefined = undefined;
         <button
           type="button"
           class="variant-filled btn-icon"
+          aria-label="Go to the previous page"
           data-testid="previous-button"
         >
           <IconArrowLeft />
@@ -24,6 +25,7 @@ export let nextPageUrlPath: string | undefined = undefined;
         <button
           type="button"
           class="variant-filled btn-icon"
+          aria-label="Go to the next page"
           data-testid="next-button"
         >
           <IconArrowRight />

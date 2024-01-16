@@ -94,6 +94,7 @@ onMount(() => {
     class="variant-filled-surface btn-icon"
     class:hidden="{!wasCsrPerformed}"
     data-testid="reload-data-button"
+    aria-label="Reload data"
     on:click="{reloadData}"
   >
     <IconRotateRight />
