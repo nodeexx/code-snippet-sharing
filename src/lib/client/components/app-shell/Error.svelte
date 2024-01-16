@@ -16,10 +16,6 @@ onMount(async () => {
 });
 </script>
 
-<svelte:head>
-  <title>{title}</title>
-</svelte:head>
-
 <AppShell appBar="{showAppBar}">
   <div class="flex h-full flex-col items-center justify-center gap-8">
     <h1 class="h1">{title}</h1>

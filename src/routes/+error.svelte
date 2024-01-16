@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from '$app/stores';
 import { Error } from '$lib/client/components/app-shell';
+import { config } from '$lib/client/core/config';
 
 let title = `Error ${$page.status}`;
 let message = $page.error?.message || 'Unknown error';
@@ -19,5 +20,9 @@ if ($page.status === 503) {
     "Hey there! We're just sprucing up our site a bit. Please check back soon - it won't take long!";
 }
 </script>
+
+<svelte:head>
+  <title>{title}{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <Error {title} {message} {showAppBar} />

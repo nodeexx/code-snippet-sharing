@@ -4,6 +4,7 @@ import { CodeSnippetCard } from '$lib/client/components/code-snippets';
 import CodeSnippetFindForm from '$lib/client/components/code-snippets/CodeSnippetFindForm.svelte';
 import { Alert, Card } from '$lib/client/components/common';
 import SimplePaginator from '$lib/client/components/common/SimplePaginator.svelte';
+import { config } from '$lib/client/core/config';
 import {
   showToastIfFormMessagePresent,
   showToastOnInternetDisconnect,
@@ -55,6 +56,10 @@ async function reloadData() {
   await invalidateAll();
 }
 </script>
+
+<svelte:head>
+  <title>Home{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <div class="flex h-full flex-col items-center justify-center gap-5">
   <a href="/code-snippets/create">

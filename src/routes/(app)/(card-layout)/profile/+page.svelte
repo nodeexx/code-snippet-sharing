@@ -6,6 +6,7 @@ import {
   showToastIfFormMessagePresent,
   showToastOnInternetDisconnect,
 } from '$lib/client/global-messages/utils';
+import { config } from '$lib/client/core/config';
 
 export let data;
 
@@ -20,6 +21,10 @@ const { message, enhance } = superForm(data.form, {
   },
 });
 </script>
+
+<svelte:head>
+  <title>Profile{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <Card>
   <svelte:fragment slot="header">

@@ -1,9 +1,14 @@
 <script lang="ts">
 import { Card } from '$lib/client/components/common';
 import { CodeSnippetCreateEditForm } from '$lib/client/components/code-snippets';
+import { config } from '$lib/client/core/config';
 
 export let data;
 </script>
+
+<svelte:head>
+  <title>Create code snippet{config.pageTitleSuffix}</title>
+</svelte:head>
 
 <Card
   class="flex h-full flex-col"
