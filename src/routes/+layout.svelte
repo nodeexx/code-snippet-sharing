@@ -10,6 +10,12 @@ import { page } from '$app/stores';
 import { getToastStore } from '@skeletonlabs/skeleton';
 import { PageMessage } from '$lib/client/components/app-shell';
 import { createFlashToastSubscriber } from '$lib/client/global-messages/utils';
+import { onDestroy, onMount } from 'svelte';
+import {
+  PosthogConfigurator,
+  PosthogDefaultPageEventsCaptureConfigurator,
+} from '$lib/client/posthog';
+import { PosthogUserIdentityConfigurator } from '$lib/client/posthog/posthog-user-identity.configurator';
 
 setupSkeletonPopup();
 setupSkeletonModalToastDrawer();
@@ -19,6 +25,23 @@ const toastStore = getToastStore();
 const flash = getFlash(page);
 
 flash.subscribe(createFlashToastSubscriber(toastStore));
+
+onMount(() => {
+  if (PosthogConfigurator.isConfigured) {
+    PosthogUserIdentityConfigurator.configure();
+    PosthogDefaultPageEventsCaptureConfigurator.configure();
+  }
+});
+
+onDestroy(() => {
+  if (PosthogDefaultPageEventsCaptureConfigurator.isConfigured) {
+    PosthogDefaultPageEventsCaptureConfigurator.cleanup();
+  }
+
+  if (PosthogUserIdentityConfigurator.isConfigured) {
+    PosthogUserIdentityConfigurator.cleanup();
+  }
+});
 </script>
 
 <Toast position="br" />
