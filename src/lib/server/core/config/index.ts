@@ -5,21 +5,29 @@ export const config = {
     return privateEnv.MAINTENANCE_MODE === 'true';
   },
   db: {
-    get url() {
+    get url(): string {
       return privateEnv.DATABASE_URL;
     },
   },
   auth: {
     google: {
-      get clientId() {
+      get clientId(): string {
         return privateEnv.GOOGLE_OAUTH_APP_CLIENT_ID;
       },
-      get clientSecret() {
+      get clientSecret(): string {
         return privateEnv.GOOGLE_OAUTH_APP_CLIENT_SECRET;
       },
-      get redirectUri() {
+      get redirectUri(): string {
         return privateEnv.GOOGLE_OAUTH_APP_REDIRECT_URI;
       },
+    },
+  },
+  posthog: {
+    get projectApiKey(): string | undefined {
+      return privateEnv.POSTHOG_PROJECT_API_KEY;
+    },
+    get apiHost(): string | undefined {
+      return privateEnv.POSTHOG_API_HOST;
     },
   },
 };
