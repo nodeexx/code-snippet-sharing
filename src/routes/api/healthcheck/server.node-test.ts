@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { GET } from './+server';
-import * as libServerConfigModule from '$lib/server/core/config';
+import * as libServerCoreConfigModule from '$lib/server/core/config';
 
 describe(GET.name, () => {
   afterEach(async () => {
@@ -8,11 +8,11 @@ describe(GET.name, () => {
   });
 
   it('should return OK status', async () => {
-    vi.spyOn(libServerConfigModule, 'config', 'get').mockReturnValue({
+    vi.spyOn(libServerCoreConfigModule, 'config', 'get').mockReturnValue({
       isMaintenanceMode: false,
     } as Partial<
-      typeof libServerConfigModule.config
-    > as typeof libServerConfigModule.config);
+      typeof libServerCoreConfigModule.config
+    > as typeof libServerCoreConfigModule.config);
 
     const response = await GET();
 
@@ -22,11 +22,11 @@ describe(GET.name, () => {
   });
 
   it('should return maintenance status', async () => {
-    vi.spyOn(libServerConfigModule, 'config', 'get').mockReturnValue({
+    vi.spyOn(libServerCoreConfigModule, 'config', 'get').mockReturnValue({
       isMaintenanceMode: true,
     } as Partial<
-      typeof libServerConfigModule.config
-    > as typeof libServerConfigModule.config);
+      typeof libServerCoreConfigModule.config
+    > as typeof libServerCoreConfigModule.config);
 
     const response = await GET();
 

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { load } from './+page.server';
 import type { PageServerLoadEvent } from './$types';
-import * as libServerConfigModule from '$lib/server/core/config';
+import * as libServerCoreConfigModule from '$lib/server/core/config';
 import * as sveltejsKitModule from '@sveltejs/kit';
 import { ORIGINAL_PATH_URL_QUERY_PARAM_NAME } from '$lib/shared/core/utils';
 
@@ -11,7 +11,7 @@ describe(load.name, () => {
   });
 
   it('should throw 503 error if maintenance mode is enabled', async () => {
-    vi.spyOn(libServerConfigModule, 'config', 'get').mockReturnValueOnce({
+    vi.spyOn(libServerCoreConfigModule, 'config', 'get').mockReturnValueOnce({
       isMaintenanceMode: true,
     } as any);
     const errorSpy = vi.spyOn(sveltejsKitModule, 'error');
@@ -32,7 +32,7 @@ describe(load.name, () => {
   });
 
   it('should redirect to original path if query param is present', async () => {
-    vi.spyOn(libServerConfigModule, 'config', 'get').mockReturnValueOnce({
+    vi.spyOn(libServerCoreConfigModule, 'config', 'get').mockReturnValueOnce({
       isMaintenanceMode: false,
     } as any);
     const redirectSpy = vi.spyOn(sveltejsKitModule, 'redirect');
@@ -51,7 +51,7 @@ describe(load.name, () => {
   });
 
   it('should redirect to root route', async () => {
-    vi.spyOn(libServerConfigModule, 'config', 'get').mockReturnValueOnce({
+    vi.spyOn(libServerCoreConfigModule, 'config', 'get').mockReturnValueOnce({
       isMaintenanceMode: false,
     } as any);
     const redirectSpy = vi.spyOn(sveltejsKitModule, 'redirect');
