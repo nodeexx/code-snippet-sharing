@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
-import * as libServerConfigModule from '$lib/server/core/config';
+import * as libServerCoreConfigModule from '$lib/server/core/config';
 import { maintenanceModeHandle } from './maintenance-mode.handle';
 import * as sveltejsKitModule from '@sveltejs/kit';
 
@@ -10,7 +10,7 @@ describe(maintenanceModeHandle.name, () => {
 
   it('should resolve if not in maintenance mode', async () => {
     const spy = vi
-      .spyOn(libServerConfigModule, 'config', 'get')
+      .spyOn(libServerCoreConfigModule, 'config', 'get')
       .mockReturnValueOnce({
         isMaintenanceMode: false,
       } as any);
@@ -30,7 +30,7 @@ describe(maintenanceModeHandle.name, () => {
 
   it('should resolve if requesting maintenance route', async () => {
     const spy = vi
-      .spyOn(libServerConfigModule, 'config', 'get')
+      .spyOn(libServerCoreConfigModule, 'config', 'get')
       .mockReturnValueOnce({
         isMaintenanceMode: true,
       } as any);
@@ -50,7 +50,7 @@ describe(maintenanceModeHandle.name, () => {
 
   it('should throw redirect', async () => {
     const configSpy = vi
-      .spyOn(libServerConfigModule, 'config', 'get')
+      .spyOn(libServerCoreConfigModule, 'config', 'get')
       .mockReturnValueOnce({
         isMaintenanceMode: true,
       } as any);
