@@ -19,6 +19,8 @@ if ($page.status === 503) {
   message =
     "Hey there! We're just sprucing up our site a bit. Please check back soon - it won't take long!";
 }
+
+// TODO: Add crashalytics inside `onMount`?
 </script>
 
 <svelte:head>
