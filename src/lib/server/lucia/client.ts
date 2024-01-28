@@ -15,10 +15,12 @@ export const auth = lucia({
     session: 'session',
     key: 'key',
   }),
+  // Properties of the database user included in the auth user as is
   getUserAttributes: (authUserSchema) => {
     return {
       email: authUserSchema.email,
       email_verified: authUserSchema.email_verified,
+      created_at: authUserSchema.created_at!,
     };
   },
   // csrfProtection: false,

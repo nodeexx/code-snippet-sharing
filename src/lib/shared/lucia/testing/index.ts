@@ -26,10 +26,7 @@ export function getMockAuthSession(
     fresh: false,
     ...overrides,
     user: {
-      email: 'mock-email',
-      email_verified: true,
-      userId: 'mock-user-id',
-      ...overrides?.user,
+      ...getMockAuthUser(overrides?.user),
     },
   };
 }
@@ -41,6 +38,7 @@ export function getMockAuthUser(
     email: 'mock-email',
     email_verified: true,
     userId: 'mock-user-id',
+    created_at: new Date(),
     ...overrides,
   };
 }
