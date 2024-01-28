@@ -78,6 +78,7 @@ describe(load.name, () => {
         email: 'mock-email',
         email_verified: true,
         userId: 'mock-user-id',
+        created_at: expect.any(Date),
       },
       codeSnippet: {
         id: 1,
@@ -106,6 +107,7 @@ describe(load.name, () => {
         email: 'mock-email',
         email_verified: true,
         userId: 'mock-user-id',
+        created_at: expect.any(Date),
       },
       codeSnippet: {
         id: 1,
