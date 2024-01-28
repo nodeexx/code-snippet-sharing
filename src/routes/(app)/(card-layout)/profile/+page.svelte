@@ -20,6 +20,14 @@ const { message, enhance } = superForm(data.form, {
     showToastOnInternetDisconnect(toastStore, result);
   },
 });
+
+function signOut() {
+  const form = document.getElementById('sign-out-form') as HTMLFormElement;
+  const button = document.getElementById(
+    'sign-out-button',
+  ) as HTMLButtonElement;
+  form.requestSubmit(button);
+}
 </script>
 
 <svelte:head>
@@ -34,8 +42,12 @@ const { message, enhance } = superForm(data.form, {
 
   <div class="flex flex-col items-center gap-4">
     <p>{data.authUser?.email}</p>
-    <form method="post" action="?/sign-out" use:enhance>
-      <button class="variant-filled-primary btn">
+    <form id="sign-out-form" method="post" action="?/sign-out" use:enhance>
+      <button
+        id="sign-out-button"
+        class="variant-filled-primary btn"
+        on:click|preventDefault="{signOut}"
+      >
         <span>Sign out</span>
       </button>
     </form>
