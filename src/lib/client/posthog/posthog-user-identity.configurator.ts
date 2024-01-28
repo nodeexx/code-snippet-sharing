@@ -46,6 +46,7 @@ export class PosthogUserIdentityConfigurator {
         }
 
         posthog.identify(newAuthUserData.userId, {
+          id: newAuthUserData.userId,
           email: newAuthUserData.email,
           email_verified: newAuthUserData.email_verified,
           created_at: newAuthUserData.created_at.toISOString(),
