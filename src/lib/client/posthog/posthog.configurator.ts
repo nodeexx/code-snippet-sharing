@@ -6,15 +6,24 @@ import posthog from 'posthog-js';
 export class PosthogConfigurator {
   private static _isConfigured = false;
   private static _isConfigurationStarted = false;
+  private static _isConfigurationFailed = false;
 
   public static get isConfigured(): boolean {
     return this._isConfigured;
+  }
+
+  public static get isConfigurationFailed(): boolean {
+    return this._isConfigurationFailed;
   }
 
   public static checkIfConfigured(): void {
     if (!this.isConfigured) {
       throw new Error(`${this.name} is not configured`);
     }
+  }
+
+  public static failConfiguration(): void {
+    this._isConfigurationFailed = true;
   }
 
   public static configure(
