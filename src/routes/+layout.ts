@@ -17,13 +17,17 @@ function setupClientPosthog(
   projectApiKey: string | undefined,
   apiHost: string | undefined,
 ): void {
-  if (PosthogConfigurator.isConfigured) {
+  if (
+    PosthogConfigurator.isConfigured ||
+    PosthogConfigurator.isConfigurationFailed
+  ) {
     return;
   }
 
   if (arePosthogClientConfigurationInputsValid(projectApiKey, apiHost)) {
     PosthogConfigurator.configure(projectApiKey, apiHost);
   } else {
+    PosthogConfigurator.failConfiguration();
     displayPosthogConfigurationWarning();
   }
 }
