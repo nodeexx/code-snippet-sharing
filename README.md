@@ -92,23 +92,32 @@ Used by Vite and Docker Compose.
 
 Backend
 
--   `DATABASE_URL`
-    -   Database connection string used by Prisma
-    -   Values: Must be defined
--   `GOOGLE_OAUTH_APP_CLIENT_ID`
-    -   Used for authentication with Google OAuth 2
-    -   Values: Must be defined
--   `GOOGLE_OAUTH_APP_CLIENT_SECRET`
-    -   Used for authentication with Google OAuth 2
-    -   Values: Must be defined
--   `GOOGLE_OAUTH_APP_REDIRECT_URI`
-    -   Used for authentication with Google OAuth 2
-    -   Values: Must be defined
--   `MAINTENANCE_MODE`
-    -   Enables maintenance mode (redirects all routes to `/maintenance`)
-    -   Values: `true` to enable, anything else to disable
 -   `ORIGIN`
     -   [Node servers • Docs • SvelteKit](https://kit.svelte.dev/docs/adapter-node#environment-variables)
+    -   Must be defined
+-   `MAINTENANCE_MODE`
+    -   Enables maintenance mode (redirects all routes to `/maintenance`)
+    -   `true` to enable, anything else to disable
+-   `DATABASE_URL`
+    -   Database connection string used by Prisma
+    -   Must be defined
+-   `GOOGLE_OAUTH_APP_CLIENT_ID`
+    -   Used for authentication with Google OAuth 2
+    -   Must be defined
+-   `GOOGLE_OAUTH_APP_CLIENT_SECRET`
+    -   Used for authentication with Google OAuth 2
+    -   Must be defined
+-   `GOOGLE_OAUTH_APP_REDIRECT_URI`
+    -   Used for authentication with Google OAuth 2
+    -   Must be defined
+-   `POSTHOG_PROJECT_API_KEY`
+    -   Used for the Posthog integration
+    -   Optional
+    -   Find value in the related Posthog project
+-   `POSTHOG_API_HOST`
+    -   Used for the Posthog integration
+    -   Optional
+    -   E.g. `https://eu.posthog.com` for EU region
 
 # Development
 
