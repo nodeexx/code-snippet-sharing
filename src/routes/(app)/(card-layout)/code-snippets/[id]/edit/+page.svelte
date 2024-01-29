@@ -3,8 +3,19 @@ import { Card } from '$lib/client/components/common';
 import { CodeSnippetCreateEditForm } from '$lib/client/components/code-snippets';
 import { goBack } from '$lib/client/core/utils';
 import { config } from '$lib/client/core/config';
+import { onMount } from 'svelte';
+import { previousAppPage } from '$lib/client/core/stores';
 
 export let data;
+
+onMount(() => {
+  // Navigation to page happens after its `onMount`
+  const unsubscribePreviousAppPage = previousAppPage.subscribe(() => {});
+
+  return () => {
+    unsubscribePreviousAppPage();
+  };
+});
 </script>
 
 <svelte:head>
