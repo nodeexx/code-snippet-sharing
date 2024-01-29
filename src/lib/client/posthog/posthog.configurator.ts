@@ -1,3 +1,4 @@
+import { arePosthogClientConfigurationInputsValid } from '$lib/shared/posthog/utils';
 import posthog from 'posthog-js';
 
 // NOTE: There is no way to check if the Posthog package has been initialized,
@@ -41,18 +42,11 @@ export class PosthogConfigurator {
     this._isConfigurationStarted = false;
   }
 
-  public static areConfigurationInputsValid(
-    projectApiKey: string | undefined,
-    apiHost: string | undefined,
-  ): boolean {
-    return !!projectApiKey && !!apiHost;
-  }
-
   private static checkConfigurationInputs(
     projectApiKey: string | undefined,
     apiHost: string | undefined,
   ): void {
-    if (!this.areConfigurationInputsValid(projectApiKey, apiHost)) {
+    if (!arePosthogClientConfigurationInputsValid(projectApiKey, apiHost)) {
       throw new Error(
         `${this.name} configuration inputs are invalid - projectApiKey: ${projectApiKey}, apiHost: ${apiHost}`,
       );

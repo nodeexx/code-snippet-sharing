@@ -1,6 +1,7 @@
 import { browser, dev } from '$app/environment';
 import type { LayoutLoad } from './$types';
 import { PosthogConfigurator } from '$lib/client/posthog/posthog.configurator';
+import { arePosthogClientConfigurationInputsValid } from '$lib/shared/posthog/utils';
 
 export const load: LayoutLoad = async ({ data }) => {
   if (browser) {
@@ -20,7 +21,7 @@ function setupClientPosthog(
     return;
   }
 
-  if (PosthogConfigurator.areConfigurationInputsValid(projectApiKey, apiHost)) {
+  if (arePosthogClientConfigurationInputsValid(projectApiKey, apiHost)) {
     PosthogConfigurator.configure(projectApiKey, apiHost);
   } else {
     displayPosthogConfigurationWarning();
