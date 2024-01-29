@@ -26,7 +26,25 @@ export const defaultMockAppNavigation: typeof appNavigationModule = {
   preloadCode: () => Promise.resolve(),
 };
 
-export const defaultMockAppStoresNavigationValue: Navigation | null = null;
+export const mockAppStoresNavigatingValue: Navigation = {
+  from: {
+    params: {},
+    route: {
+      id: '/',
+    },
+    url: new URL('http://localhost'),
+  },
+  to: {
+    params: {},
+    route: {
+      id: '/some/path',
+    },
+    url: new URL('http://localhost/some/path'),
+  },
+  type: 'link',
+  willUnload: false,
+  complete: Promise.resolve(),
+};
 export const defaultMockAppStoresPageValue: Page = {
   url: new URL('http://localhost'),
   params: {},
@@ -76,9 +94,7 @@ export class SveltekitDefaultMocks {
   static mockAppStores(): void {
     vi.doMock('$app/stores', (): typeof appStoresModule => {
       const getStores: typeof appStoresModule.getStores = () => {
-        const navigating = readable<Navigation | null>(
-          defaultMockAppStoresNavigationValue,
-        );
+        const navigating = readable<Navigation | null>(null);
 
         const page = readable<Page>(defaultMockAppStoresPageValue);
 
