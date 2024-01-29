@@ -12,6 +12,12 @@ import { prisma } from '$lib/server/prisma';
 import type { User as PrismaUser } from '@prisma/client';
 import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 import { error, redirect, type HttpError, type Cookies } from '@sveltejs/kit';
+import { posthog } from '$lib/server/posthog';
+import {
+  POSTHOG_USER_SIGN_IN_EVENT_NAME,
+  POSTHOG_USER_SIGN_UP_EVENT_NAME,
+} from '$lib/shared/posthog/constants';
+import { getCurrentAuthUserFromSession } from '$lib/server/lucia/utils';
 
 export async function signInWithGoogle(
   url: URL,
@@ -29,6 +35,15 @@ export async function signInWithGoogle(
   const authSession = await createAuthSessionViaGoogleOauthCode(code);
   // Set session cookie
   locals.authRequest.setSession(authSession);
+
+  const authUser = getCurrentAuthUserFromSession(authSession)!;
+  posthog?.capture({
+    distinctId: authUser.userId,
+    event: POSTHOG_USER_SIGN_IN_EVENT_NAME,
+    properties: {
+      authProvider: 'google',
+    },
+  });
 
   const path = getRedirectPathAfterSignIn(url);
   throw redirect(307, path);
@@ -123,6 +138,29 @@ async function getUser(
     attributes: {
       email: newUserEmail,
       email_verified: true,
+    },
+  });
+
+  // NOTE: Auth user returned by `createUser` has `create_at` with
+  // an `undefined` value. Hence the need to fetch a database user.
+  const newDatabaseUser = (await prisma.user.findUnique({
+    where: {
+      id: newUser.userId,
+    },
+  }))!;
+  posthog?.capture({
+    distinctId: newDatabaseUser.id,
+    event: POSTHOG_USER_SIGN_UP_EVENT_NAME,
+    properties: {
+      authProvider: 'google',
+      $set_once: {
+        id: newDatabaseUser.id,
+        created_at: newDatabaseUser.created_at.toISOString(),
+      },
+      $set: {
+        email: newDatabaseUser.email,
+        email_verified: newDatabaseUser.email_verified,
+      },
     },
   });
 

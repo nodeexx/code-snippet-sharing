@@ -5,6 +5,9 @@ import type { Actions, PageServerLoad } from './$types';
 import { codeSnippetsService } from '$lib/server/code-snippets';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
+import { posthog } from '$lib/server/posthog';
+import { POSTHOG_CODE_SNIPPET_CREATED_EVENT_NAME } from '$lib/shared/posthog/constants';
+import type { CodeSnippet } from '@prisma/client';
 
 export const load = (async ({ locals, url }) => {
   const authPageData = guardAuthUser(locals, url);
@@ -43,8 +46,9 @@ export const actions = {
       return fail(400, { form });
     }
 
+    let newCodeSnippet: CodeSnippet | undefined;
     try {
-      await codeSnippetsService.create({
+      newCodeSnippet = await codeSnippetsService.create({
         name: form.data.name,
         code: form.data.code,
         user_id: authUser.userId,
@@ -62,6 +66,14 @@ export const actions = {
         },
       );
     }
+
+    posthog?.capture({
+      distinctId: authUser.userId,
+      event: POSTHOG_CODE_SNIPPET_CREATED_EVENT_NAME,
+      properties: {
+        id: newCodeSnippet.id,
+      },
+    });
 
     throw redirectWithFlash(
       307,

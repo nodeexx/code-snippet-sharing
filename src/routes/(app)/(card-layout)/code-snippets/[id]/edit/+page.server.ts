@@ -7,6 +7,8 @@ import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos'
 import type { CodeSnippet } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { throwCodeSnippetNotFoundError } from '$lib/server/code-snippets/utils';
+import { posthog } from '$lib/server/posthog';
+import { POSTHOG_CODE_SNIPPET_UPDATED_EVENT_NAME } from '$lib/shared/posthog/constants';
 
 export const load = (async ({ locals, url, params }) => {
   const authPageData = guardAuthUser(locals, url);
@@ -104,6 +106,14 @@ export const actions = {
         },
       );
     }
+
+    posthog?.capture({
+      distinctId: authUser.userId,
+      event: POSTHOG_CODE_SNIPPET_UPDATED_EVENT_NAME,
+      properties: {
+        id: codeSnippetId,
+      },
+    });
 
     return message(form, {
       type: 'success',

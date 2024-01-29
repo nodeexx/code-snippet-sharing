@@ -1,12 +1,18 @@
 import { auth } from '$lib/server/lucia';
 import { guardAuthUser } from '$lib/server/lucia/guards';
-import { getCurrentAuthSession } from '$lib/server/lucia/utils';
+import {
+  getCurrentAuthSession,
+  getCurrentAuthUserFromSession,
+} from '$lib/server/lucia/utils';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { AuthSession } from '$lib/shared/lucia/types';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
+import { POSTHOG_USER_SIGN_OUT_EVENT_NAME } from '$lib/shared/posthog/constants';
+import type { AuthRequest } from 'lucia';
+import { posthog } from '$lib/server/posthog';
 
 const formSchema = z.object({}).strict();
 export type FormSchema = typeof formSchema;
@@ -27,6 +33,7 @@ export const actions = {
     const form = await superValidate(formData, formSchema);
 
     const authSession = await getCurrentAuthSession(locals.authRequest);
+    const authUserBeforeSignOut = getCurrentAuthUserFromSession(authSession);
     if (!authSession) {
       return message(
         form,
@@ -41,7 +48,7 @@ export const actions = {
     }
 
     try {
-      await signOut(locals, authSession);
+      await signOut(locals.authRequest, authSession);
     } catch (e) {
       // TODO: Add crashalytics
       const errorMessage = 'Failed to sign out';
@@ -56,6 +63,11 @@ export const actions = {
       );
     }
 
+    posthog?.capture({
+      distinctId: authUserBeforeSignOut!.userId,
+      event: POSTHOG_USER_SIGN_OUT_EVENT_NAME,
+    });
+
     // NOTE: No need to manually update the `locals.auth*` properties. Up to
     // this points there are only errors/redirects and after is a redirect.
     // If `return` was used at any point, it would have been necessary to
@@ -67,11 +79,11 @@ export const actions = {
 } satisfies Actions;
 
 async function signOut(
-  locals: App.Locals,
+  authRequest: AuthRequest,
   authSession: AuthSession,
 ): Promise<void> {
   // Delete session from database
   await auth.invalidateSession(authSession.sessionId);
   // Remove session cookie
-  locals.authRequest.setSession(null);
+  authRequest.setSession(null);
 }
