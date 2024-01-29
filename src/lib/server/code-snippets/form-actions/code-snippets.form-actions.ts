@@ -10,6 +10,8 @@ import {
 } from '../utils/errors';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import type { HttpError } from '@sveltejs/kit';
+import { posthog } from '$lib/server/posthog';
+import { POSTHOG_CODE_SNIPPET_DELETED_EVENT_NAME } from '$lib/shared/posthog/constants';
 
 export async function deleteCodeSnippetFormAction<
   T extends ZodValidation<AnyZodObject>,
@@ -65,6 +67,14 @@ export async function deleteCodeSnippetFormAction<
       },
     );
   }
+
+  posthog?.capture({
+    distinctId: authUser.userId,
+    event: POSTHOG_CODE_SNIPPET_DELETED_EVENT_NAME,
+    properties: {
+      id: codeSnippetId,
+    },
+  });
 
   return deletedCodeSnippet;
 }
