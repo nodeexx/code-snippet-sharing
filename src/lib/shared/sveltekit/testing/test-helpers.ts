@@ -1,20 +1,20 @@
 import { vi } from 'vitest';
-import type * as appEnvironment from '$app/environment';
-import type * as appNavigation from '$app/navigation';
-import type * as appStores from '$app/stores';
-import type * as envDynamicPrivate from '$env/dynamic/private';
-import type * as envDynamicPublic from '$env/dynamic/public';
+import type * as appEnvironmentModule from '$app/environment';
+import type * as appNavigationModule from '$app/navigation';
+import type * as appStoresModule from '$app/stores';
+import type * as envDynamicPrivateModule from '$env/dynamic/private';
+import type * as envDynamicPublicModule from '$env/dynamic/public';
 import type { Navigation, Page } from '@sveltejs/kit';
 import { readable } from 'svelte/store';
 
-export const defaultMockAppEnvironment: typeof appEnvironment = {
+export const defaultMockAppEnvironment: typeof appEnvironmentModule = {
   browser: false,
   dev: true,
   building: false,
   version: 'any',
 };
 
-export const defaultMockAppNavigation: typeof appNavigation = {
+export const defaultMockAppNavigation: typeof appNavigationModule = {
   onNavigate: () => () => {},
   afterNavigate: () => {},
   beforeNavigate: () => {},
@@ -56,7 +56,7 @@ export class SveltekitDefaultMocks {
   static mockAppEnvironment(): void {
     vi.mock(
       '$app/environment',
-      (): typeof appEnvironment => defaultMockAppEnvironment,
+      (): typeof appEnvironmentModule => defaultMockAppEnvironment,
     );
   }
 
@@ -66,7 +66,7 @@ export class SveltekitDefaultMocks {
   static mockAppNavigation(): void {
     vi.mock(
       '$app/navigation',
-      (): typeof appNavigation => defaultMockAppNavigation,
+      (): typeof appNavigationModule => defaultMockAppNavigation,
     );
   }
 
@@ -74,8 +74,8 @@ export class SveltekitDefaultMocks {
    * Mock SvelteKit runtime module $app/stores
    */
   static mockAppStores(): void {
-    vi.doMock('$app/stores', (): typeof appStores => {
-      const getStores: typeof appStores.getStores = () => {
+    vi.doMock('$app/stores', (): typeof appStoresModule => {
+      const getStores: typeof appStoresModule.getStores = () => {
         const navigating = readable<Navigation | null>(
           defaultMockAppStoresNavigationValue,
         );
@@ -90,19 +90,19 @@ export class SveltekitDefaultMocks {
         return { navigating, page, updated };
       };
 
-      const page: typeof appStores.page = {
+      const page: typeof appStoresModule.page = {
         subscribe(fn) {
           return getStores().page.subscribe(fn);
         },
       };
 
-      const navigating: typeof appStores.navigating = {
+      const navigating: typeof appStoresModule.navigating = {
         subscribe(fn) {
           return getStores().navigating.subscribe(fn);
         },
       };
 
-      const updated: typeof appStores.updated = {
+      const updated: typeof appStoresModule.updated = {
         subscribe(fn) {
           return getStores().updated.subscribe(fn);
         },
@@ -122,7 +122,7 @@ export class SveltekitDefaultMocks {
    * Mock SvelteKit runtime module $env/dynamic/private
    */
   static mockEnvDynamicPrivate(): void {
-    vi.mock('$env/dynamic/private', (): typeof envDynamicPrivate => ({
+    vi.mock('$env/dynamic/private', (): typeof envDynamicPrivateModule => ({
       env: {} as any,
     }));
   }
@@ -131,7 +131,7 @@ export class SveltekitDefaultMocks {
    * Mock SvelteKit runtime module $env/dynamic/public
    */
   static mockEnvDynamicPublic(): void {
-    vi.mock('$env/dynamic/public', (): typeof envDynamicPublic => ({
+    vi.mock('$env/dynamic/public', (): typeof envDynamicPublicModule => ({
       env: {} as any,
     }));
   }
