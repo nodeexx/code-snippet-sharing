@@ -1,6 +1,6 @@
 import { browser, dev } from '$app/environment';
 import type { LayoutLoad } from './$types';
-import { PosthogConfigurator } from '$lib/client/posthog/posthog.configurator';
+import { posthogClientConfigurator } from '$lib/client/posthog';
 import { arePosthogClientConfigurationInputsValid } from '$lib/shared/posthog/utils';
 
 export const load: LayoutLoad = async ({ data }) => {
@@ -18,16 +18,16 @@ function setupClientPosthog(
   apiHost: string | undefined,
 ): void {
   if (
-    PosthogConfigurator.isConfigured ||
-    PosthogConfigurator.isConfigurationFailed
+    posthogClientConfigurator.isConfigured ||
+    posthogClientConfigurator.isConfigurationFailed
   ) {
     return;
   }
 
   if (arePosthogClientConfigurationInputsValid(projectApiKey, apiHost)) {
-    PosthogConfigurator.configure(projectApiKey, apiHost);
+    posthogClientConfigurator.configure(projectApiKey, apiHost);
   } else {
-    PosthogConfigurator.failConfiguration();
+    posthogClientConfigurator.failConfiguration();
     displayPosthogConfigurationWarning();
   }
 }

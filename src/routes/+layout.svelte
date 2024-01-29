@@ -12,10 +12,10 @@ import { PageMessage } from '$lib/client/components/app-shell';
 import { createFlashToastSubscriber } from '$lib/client/global-messages/utils';
 import { onDestroy, onMount } from 'svelte';
 import {
-  PosthogConfigurator,
-  PosthogDefaultPageEventsCaptureConfigurator,
+  posthogClientConfigurator,
+  posthogDefaultPageEventsCaptureConfigurator,
+  posthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
-import { PosthogUserIdentityConfigurator } from '$lib/client/posthog/posthog-user-identity.configurator';
 
 setupSkeletonPopup();
 setupSkeletonModalToastDrawer();
@@ -27,19 +27,19 @@ const flash = getFlash(page);
 flash.subscribe(createFlashToastSubscriber(toastStore));
 
 onMount(() => {
-  if (PosthogConfigurator.isConfigured) {
-    PosthogUserIdentityConfigurator.configure();
-    PosthogDefaultPageEventsCaptureConfigurator.configure();
+  if (posthogClientConfigurator.isConfigured) {
+    posthogUserIdentityConfigurator.configure();
+    posthogDefaultPageEventsCaptureConfigurator.configure();
   }
 });
 
 onDestroy(() => {
-  if (PosthogDefaultPageEventsCaptureConfigurator.isConfigured) {
-    PosthogDefaultPageEventsCaptureConfigurator.cleanup();
+  if (posthogDefaultPageEventsCaptureConfigurator.isConfigured) {
+    posthogDefaultPageEventsCaptureConfigurator.cleanup();
   }
 
-  if (PosthogUserIdentityConfigurator.isConfigured) {
-    PosthogUserIdentityConfigurator.cleanup();
+  if (posthogUserIdentityConfigurator.isConfigured) {
+    posthogUserIdentityConfigurator.cleanup();
   }
 });
 </script>

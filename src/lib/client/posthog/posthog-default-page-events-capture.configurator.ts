@@ -5,9 +5,9 @@ import {
 } from '$lib/shared/posthog/constants';
 import posthog from 'posthog-js';
 import type { Unsubscriber } from 'svelte/store';
-import { PosthogConfigurator } from './posthog.configurator';
+import { posthogClientConfigurator } from './posthog-client.configurator';
 
-enum PageEventTrigger {
+export enum _PageEventTrigger {
   VISIBILITY_VISIBLE = 'visibility-visible',
   VISIBILITY_HIDDEN = 'visibility-hidden',
   // NOTE: Only indirect relationship to the `load` event.
@@ -20,18 +20,18 @@ enum PageEventTrigger {
 // NOTE: It does not make sense to use Svelte custom store, because there is
 // no value to subscribe to. Reactivity is also not needed. Therefor class is
 // better for readability.
-export class PosthogDefaultPageEventsCaptureConfigurator {
-  private static _isConfigured = false;
-  private static _isConfigurationStarted = false;
-  private static isSiteLoaded = false;
-  private static unsubscribeNavigating: Unsubscriber | undefined;
+export class _PosthogDefaultPageEventsCaptureConfigurator {
+  private _isConfigured = false;
+  private _isConfigurationStarted = false;
+  private isSiteLoaded = false;
+  private unsubscribeNavigating: Unsubscriber | undefined;
 
   // NOTE: Arrow functions are used to preserve `this` context.
-  private static handleBeforeUnload = (): void => {
+  private handleBeforeUnload = (): void => {
     this.isSiteLoaded = false;
-    this.capturePageLeaveEvent(PageEventTrigger.BEFORE_UNLOAD);
+    this.capturePageLeaveEvent(_PageEventTrigger.BEFORE_UNLOAD);
   };
-  private static handleVisibilityChange = (): void => {
+  private handleVisibilityChange = (): void => {
     if (document.visibilityState === 'hidden') {
       if (!this.isSiteLoaded) {
         // NOTE: To prevent capturing duplicate page leave event when the
@@ -40,28 +40,28 @@ export class PosthogDefaultPageEventsCaptureConfigurator {
         return;
       }
 
-      this.capturePageLeaveEvent(PageEventTrigger.VISIBILITY_HIDDEN);
+      this.capturePageLeaveEvent(_PageEventTrigger.VISIBILITY_HIDDEN);
       return;
     }
 
-    this.capturePageViewEvent(PageEventTrigger.VISIBILITY_VISIBLE);
+    this.capturePageViewEvent(_PageEventTrigger.VISIBILITY_VISIBLE);
   };
 
-  public static get isConfigured(): boolean {
+  public get isConfigured(): boolean {
     return this._isConfigured;
   }
 
-  public static checkIfConfigured(): void {
+  public checkIfConfigured(): void {
     if (!this.isConfigured) {
-      throw new Error(`${this.name} is not configured`);
+      throw new Error(`${this.constructor.name} is not configured`);
     }
   }
 
-  public static configure(): void {
-    PosthogConfigurator.checkIfConfigured();
+  public configure(): void {
+    posthogClientConfigurator.checkIfConfigured();
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
-        `${this.name} is in the process of or has already been configured`,
+        `${this.constructor.name} is in the process of or has already been configured`,
       );
     }
     this._isConfigurationStarted = true;
@@ -76,24 +76,24 @@ export class PosthogDefaultPageEventsCaptureConfigurator {
     this.unsubscribeNavigating = navigating.subscribe(($navigating) => {
       // NOTE: Does not react to unload events.
       if ($navigating) {
-        this.capturePageLeaveEvent(PageEventTrigger.BEFORE_NAVIGATE);
+        this.capturePageLeaveEvent(_PageEventTrigger.BEFORE_NAVIGATE);
         return;
       }
 
       if (!this.isSiteLoaded) {
-        this.capturePageViewEvent(PageEventTrigger.AFTER_LOAD);
+        this.capturePageViewEvent(_PageEventTrigger.AFTER_LOAD);
         this.isSiteLoaded = true;
         return;
       }
-      this.capturePageViewEvent(PageEventTrigger.AFTER_NAVIGATE);
+      this.capturePageViewEvent(_PageEventTrigger.AFTER_NAVIGATE);
     });
 
     this._isConfigured = true;
     this._isConfigurationStarted = false;
   }
 
-  public static cleanup(): void {
-    PosthogConfigurator.checkIfConfigured();
+  public cleanup(): void {
+    this.checkIfConfigured();
 
     this.unsubscribeNavigating?.();
     window.removeEventListener('beforeunload', this.handleBeforeUnload);
@@ -102,14 +102,17 @@ export class PosthogDefaultPageEventsCaptureConfigurator {
     this._isConfigured = false;
   }
 
-  private static capturePageViewEvent(trigger: PageEventTrigger): void {
+  private capturePageViewEvent(trigger: _PageEventTrigger): void {
     posthog.capture(POSTHOG_PAGE_VIEW_EVENT_NAME, {
       trigger,
     });
   }
-  private static capturePageLeaveEvent(trigger: PageEventTrigger): void {
+  private capturePageLeaveEvent(trigger: _PageEventTrigger): void {
     posthog.capture(POSTHOG_PAGE_LEAVE_EVENT_NAME, {
       trigger,
     });
   }
 }
+
+export const posthogDefaultPageEventsCaptureConfigurator =
+  new _PosthogDefaultPageEventsCaptureConfigurator();
