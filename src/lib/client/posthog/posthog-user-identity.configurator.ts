@@ -1,34 +1,34 @@
 import { page } from '$app/stores';
 import posthog from 'posthog-js';
 import type { Unsubscriber } from 'svelte/store';
-import { PosthogConfigurator } from './posthog.configurator';
+import { posthogClientConfigurator } from './posthog-client.configurator';
 import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
 
 // NOTE: It does not make sense to use Svelte custom store, because there is
 // no value to subscribe to. Reactivity is also not needed. Therefor class is
 // better for readability.
-export class PosthogUserIdentityConfigurator {
-  private static _isConfigured = false;
-  private static _isConfigurationStarted = false;
-  private static unsubscribePage: Unsubscriber | undefined;
-  private static currentAuthUserData: AuthUser | null = null;
+export class _PosthogUserIdentityConfigurator {
+  private _isConfigured = false;
+  private _isConfigurationStarted = false;
+  private unsubscribePage: Unsubscriber | undefined;
+  private currentAuthUserData: AuthUser | null = null;
 
-  public static get isConfigured(): boolean {
+  public get isConfigured(): boolean {
     return this._isConfigured;
   }
 
-  public static checkIfConfigured(): void {
+  public checkIfConfigured(): void {
     if (!this.isConfigured) {
-      throw new Error(`${this.name} is not configured`);
+      throw new Error(`${this.constructor.name} is not configured`);
     }
   }
 
-  public static configure(): void {
-    PosthogConfigurator.checkIfConfigured();
+  public configure(): void {
+    posthogClientConfigurator.checkIfConfigured();
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
-        `${this.name} is in the process of or has already been configured`,
+        `${this.constructor.name} is in the process of or has already been configured`,
       );
     }
     this._isConfigurationStarted = true;
@@ -58,11 +58,14 @@ export class PosthogUserIdentityConfigurator {
     this._isConfigurationStarted = false;
   }
 
-  public static cleanup(): void {
-    PosthogConfigurator.checkIfConfigured();
+  public cleanup(): void {
+    this.checkIfConfigured();
 
     this.unsubscribePage?.();
 
     this._isConfigured = false;
   }
 }
+
+export const posthogUserIdentityConfigurator =
+  new _PosthogUserIdentityConfigurator();

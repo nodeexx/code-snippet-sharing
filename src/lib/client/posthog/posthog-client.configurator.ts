@@ -3,42 +3,45 @@ import posthog from 'posthog-js';
 
 // NOTE: There is no way to check if the Posthog package has been initialized,
 // hence the need for this class.
-export class PosthogConfigurator {
-  private static _isConfigured = false;
-  private static _isConfigurationStarted = false;
-  private static _isConfigurationFailed = false;
+export class _PosthogClientConfigurator {
+  private _isConfigured = false;
+  private _isConfigurationStarted = false;
+  private _isConfigurationFailed = false;
 
-  public static get isConfigured(): boolean {
+  public get isConfigured(): boolean {
     return this._isConfigured;
   }
 
-  public static get isConfigurationFailed(): boolean {
+  public get isConfigurationFailed(): boolean {
     return this._isConfigurationFailed;
   }
 
-  public static checkIfConfigured(): void {
+  public checkIfConfigured(): void {
     if (!this.isConfigured) {
-      throw new Error(`${this.name} is not configured`);
+      throw new Error(`${this.constructor.name} is not configured`);
     }
   }
 
-  public static failConfiguration(): void {
+  public failConfiguration(): void {
     this._isConfigurationFailed = true;
   }
 
-  public static configure(
+  public configure(
     projectApiKey: string | undefined,
     apiHost: string | undefined,
   ): void {
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
-        `${this.name} is in the process of or has already been configured`,
+        `${this.constructor.name} is in the process of or has already been configured`,
       );
     }
     this._isConfigurationStarted = true;
 
     this.checkConfigurationInputs(projectApiKey, apiHost);
 
+    // NOTE: `posthog.init` does not validate project API key and API host
+    // at all, invalid value cause problems later when Posthog client tries
+    // to send events to the API.
     posthog.init(projectApiKey!, {
       api_host: apiHost!,
       persistence: 'memory',
@@ -51,14 +54,17 @@ export class PosthogConfigurator {
     this._isConfigurationStarted = false;
   }
 
-  private static checkConfigurationInputs(
+  private checkConfigurationInputs(
     projectApiKey: string | undefined,
     apiHost: string | undefined,
   ): void {
     if (!arePosthogClientConfigurationInputsValid(projectApiKey, apiHost)) {
       throw new Error(
-        `${this.name} configuration inputs are invalid - projectApiKey: ${projectApiKey}, apiHost: ${apiHost}`,
+        `${this.constructor.name}: One or both configuration inputs are invalid` +
+          ` - projectApiKey: ${projectApiKey}, apiHost: ${apiHost}`,
       );
     }
   }
 }
+
+export const posthogClientConfigurator = new _PosthogClientConfigurator();
