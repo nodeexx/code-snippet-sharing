@@ -9,7 +9,11 @@ import {
 } from 'vitest';
 import { signInWithGoogle } from './sign-in.utils';
 import { redirect, type Cookies, error } from '@sveltejs/kit';
-import { getMockAuthRequest } from '$lib/shared/lucia/testing';
+import {
+  getMockAuthRequest,
+  getMockAuthSession,
+  getMockAuthUser,
+} from '$lib/shared/lucia/testing';
 import * as libServerLuciaModule from '$lib/server/lucia';
 import * as libServerLuciaOauthGoogleModule from '$lib/server/lucia/oauth/google';
 import { OAuthRequestError } from '@lucia-auth/oauth';
@@ -17,6 +21,8 @@ import type { GoogleUser, GoogleUserAuth } from '@lucia-auth/oauth/providers';
 import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 import { prisma } from '$lib/server/prisma';
 import type { DatabaseUser } from '$lib/server/prisma/types';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import type { PostHog } from 'posthog-node';
 
 interface SignInArgumentsObject {
   url: URL;
@@ -55,7 +61,12 @@ describe(signInWithGoogle.name, () => {
 
     vi.spyOn(libServerLuciaModule.auth, 'createSession').mockResolvedValue({
       sessionId: 'mock-session-id',
+      user: getMockAuthUser(),
     } as Partial<AuthSession> as AuthSession);
+
+    vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
+      capture: vi.fn(),
+    } as Partial<PostHog> as PostHog);
   });
 
   afterEach(async () => {
@@ -242,18 +253,23 @@ describe(signInWithGoogle.name, () => {
     mockGetExistingUser.mockResolvedValue(null);
     const prismaUserFindUniqueSpy = vi
       .spyOn(prisma.user, 'findUnique')
-      .mockResolvedValue(null);
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({
+        id: 'mock-user-id',
+        created_at: new Date(),
+      } as DatabaseUser);
     mockCreateUser.mockResolvedValue({
       userId: 'mock-user-id',
     } as Partial<AuthUser>);
 
     await expectSuccess();
 
+    expect(prismaUserFindUniqueSpy).toHaveBeenCalledTimes(2);
+
     /* Account linking not performed */
-    expect(prismaUserFindUniqueSpy).toHaveBeenCalledTimes(1);
-    expect(prismaUserFindUniqueSpy).toHaveBeenCalledWith({
-      where: { email: 'mock-email' },
-    });
+    expect(prismaUserFindUniqueSpy.mock.calls[0]).toEqual([
+      { where: { email: 'mock-email' } },
+    ]);
     expect(mockCreateKey).toHaveBeenCalledTimes(0);
 
     /* New user created */
@@ -264,6 +280,9 @@ describe(signInWithGoogle.name, () => {
         email_verified: true,
       },
     });
+    expect(prismaUserFindUniqueSpy.mock.calls[1]).toEqual([
+      { where: { id: 'mock-user-id' } },
+    ]);
   });
 
   it('should redirect user to original path from the state', async () => {
@@ -300,6 +319,12 @@ describe(signInWithGoogle.name, () => {
       mockSignInArgumentsObject.locals.authRequest.setSession,
     ).toHaveBeenCalledWith({
       sessionId: 'mock-session-id',
+      user: {
+        userId: 'mock-user-id',
+        email: 'mock-email',
+        email_verified: true,
+        created_at: expect.any(Date),
+      },
     } as Partial<AuthSession> as AuthSession);
   }
 });
@@ -322,7 +347,7 @@ function getMockSignInArgumentsObjects(overrides?: {
       `https://mock-url.com/?state=${encodedMockState}&code=${encodedMockCode}`,
     );
 
-  const mockAuthRequest = getMockAuthRequest();
+  const mockAuthRequest = getMockAuthRequest(getMockAuthSession());
   const locals = {
     authRequest: mockAuthRequest,
   } as App.Locals;

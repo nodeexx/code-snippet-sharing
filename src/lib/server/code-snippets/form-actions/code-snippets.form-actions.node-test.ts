@@ -19,6 +19,8 @@ import type { AuthUser } from '$lib/shared/lucia/types';
 import { deleteCodeSnippetFormAction } from './code-snippets.form-actions';
 import { z, type AnyZodObject } from 'zod';
 import type { SuperValidated, ZodValidation } from 'sveltekit-superforms';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import type { PostHog } from 'posthog-node';
 
 describe('actions', () => {
   describe(deleteCodeSnippetFormAction.name, () => {
@@ -52,6 +54,9 @@ describe('actions', () => {
         getOneById: mockGetOneById,
         softDelete: mockSoftDelete,
       } as Partial<CodeSnippetsService> as CodeSnippetsService);
+      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
+        capture: vi.fn(),
+      } as Partial<PostHog> as PostHog);
     });
 
     afterEach(async () => {

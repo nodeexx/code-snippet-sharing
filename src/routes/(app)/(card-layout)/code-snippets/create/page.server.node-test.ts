@@ -8,10 +8,15 @@ import type { CodeSnippetsService } from '$lib/server/code-snippets/services';
 import * as sveltekitFlashMessageServerModule from 'sveltekit-flash-message/server';
 import { getMockFormData } from '$lib/server/superforms/testing';
 import { getMockFormValue } from '$lib/shared/superforms/testing';
-import { getMockCreateCodeSnippetFormConstraints } from '$lib/shared/code-snippets/testing';
+import {
+  getMockCodeSnippet,
+  getMockCreateCodeSnippetFormConstraints,
+} from '$lib/shared/code-snippets/testing';
 import type { CreateEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import * as libServerLuciaGuardsModule from '$lib/server/lucia/guards';
 import * as sveltekitSuperformsServerModule from 'sveltekit-superforms/server';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import type { PostHog } from 'posthog-node';
 
 describe(load.name, () => {
   afterEach(async () => {
@@ -49,7 +54,11 @@ describe('actions', () => {
   const action = actions.create;
 
   describe(actions.create.name, () => {
-    beforeEach(async () => {});
+    beforeEach(async () => {
+      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
+        capture: vi.fn(),
+      } as Partial<PostHog> as PostHog);
+    });
 
     afterEach(async () => {
       vi.restoreAllMocks();
@@ -146,7 +155,7 @@ describe('actions', () => {
         'codeSnippetsService',
         'get',
       ).mockReturnValue({
-        create: vi.fn().mockResolvedValue(undefined),
+        create: vi.fn().mockResolvedValue(getMockCodeSnippet()),
       } as Partial<CodeSnippetsService> as CodeSnippetsService);
       const redirectWithFlashSpy = vi.spyOn(
         sveltekitFlashMessageServerModule,
