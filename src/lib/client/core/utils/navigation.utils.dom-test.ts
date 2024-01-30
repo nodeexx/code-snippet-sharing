@@ -6,27 +6,33 @@ import {
   afterEach,
   vi,
   type MockInstance,
-  type Mock,
 } from 'vitest';
 import * as appNavigationModule from '$app/navigation';
 import { goBack } from './navigation.utils';
+import { writable, type Writable } from 'svelte/store';
+import type { NavigationTarget, Page } from '@sveltejs/kit';
+import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+import * as appStoresModule from '$app/stores';
+import * as previousAppPageStoreModule from '$lib/client/core/stores/previous-app-page.store';
+import { mockPreviousAppPageValue } from '../stores/testing';
 
 describe(goBack.name, () => {
-  let mockHistoryBack: Mock;
+  let previousAppPageStore: Writable<NavigationTarget | undefined>;
+  let pageStore: Writable<Page>;
   let documentReferrerSpy: MockInstance;
   let gotoSpy: MockInstance;
 
   beforeEach(() => {
-    // NOTE: `vi.spyOn(window.location, 'origin', 'get')` doesn't work
-    mockHistoryBack = vi.fn();
-    vi.spyOn(window, 'window', 'get').mockReturnValue({
-      location: {
-        origin: 'http://localhost:3000',
-      } as Partial<Location> as Location,
-      history: {
-        back: mockHistoryBack,
-      } as Partial<History> as History,
-    } as Partial<Window> as any);
+    previousAppPageStore = writable<NavigationTarget | undefined>(
+      mockPreviousAppPageValue,
+    );
+    vi.spyOn(
+      previousAppPageStoreModule,
+      'previousAppPage',
+      'get',
+    ).mockReturnValue(previousAppPageStore);
+    pageStore = writable<Page>(defaultMockAppStoresPageValue);
+    vi.spyOn(appStoresModule, 'page', 'get').mockReturnValue(pageStore);
     documentReferrerSpy = vi
       .spyOn(document, 'referrer', 'get')
       .mockReturnValue('');
@@ -38,18 +44,30 @@ describe(goBack.name, () => {
   });
 
   it('should go to the root page', async () => {
+    previousAppPageStore.set(undefined);
+
     await goBack();
 
-    expect(mockHistoryBack).toBeCalledTimes(0);
     expect(gotoSpy).toBeCalledTimes(1);
+    expect(gotoSpy).toBeCalledWith('/');
   });
 
-  it('should go back to the previous page', async () => {
-    documentReferrerSpy.mockReturnValue('http://localhost:3000/some/path');
+  it('should go back to the previous app page', async () => {
+    await goBack();
+
+    expect(gotoSpy).toBeCalledTimes(1);
+    expect(gotoSpy).toBeCalledWith(new URL('http://localhost/some/path'));
+  });
+
+  it('should go back to the previous app referrer page', async () => {
+    previousAppPageStore.set(undefined);
+    documentReferrerSpy.mockReturnValue(
+      'http://localhost:3000/some/other/path',
+    );
 
     await goBack();
 
-    expect(mockHistoryBack).toBeCalledTimes(1);
-    expect(gotoSpy).toBeCalledTimes(0);
+    expect(gotoSpy).toBeCalledTimes(1);
+    expect(gotoSpy).toBeCalledWith('http://localhost:3000/some/other/path');
   });
 });

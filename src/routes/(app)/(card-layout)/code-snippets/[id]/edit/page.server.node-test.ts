@@ -29,6 +29,8 @@ import {
   getMockRequest,
   getMockPageServerLoadEvent,
 } from '$lib/server/sveltekit/testing';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import type { PostHog } from 'posthog-node';
 
 describe(load.name, () => {
   let mockAuthUser: AuthUser;
@@ -173,6 +175,9 @@ describe('actions', () => {
         getOneById: mockGetOneById,
         update: mockUpdate,
       } as Partial<CodeSnippetsService> as CodeSnippetsService);
+      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
+        capture: vi.fn(),
+      } as Partial<PostHog> as PostHog);
     });
 
     afterEach(async () => {
