@@ -1,10 +1,4 @@
 services:
-    db-migration:
-        env_file: .env.playwright
-
-    app:
-        env_file: .env.playwright
-
     api:
         container_name: ${PROJECT_NAME:?err}--api
         image: ${PROJECT_NAME:?err}--api:latest

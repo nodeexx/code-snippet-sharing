@@ -1,0 +1,6 @@
+services:
+    db-migration:
+        env_file: .env.playwright
+
+    app:
+        env_file: .env.playwright

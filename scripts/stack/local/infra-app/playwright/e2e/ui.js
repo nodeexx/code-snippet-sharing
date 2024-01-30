@@ -7,12 +7,9 @@ import {
   runLocalUiE2E,
   startDockerizedInfraApp,
 } from '../../../../_lib/actions.js';
-import { ENV_FILE } from '../_lib/constants.js';
+import { ENV_FILE, DOCKER_COMPOSE_FILES } from '../_lib/constants.js';
 import { execSync } from 'child_process';
-import {
-  DOCKER_COMPOSE_FILES,
-  MANDATORY_ENV_VARS,
-} from '../../_lib/constants.js';
+import { MANDATORY_ENV_VARS } from '../../_lib/constants.js';
 
 main().catch((e) => {
   console.error(e);
@@ -30,6 +27,8 @@ async function main() {
     scriptName,
     envFileAbsolutePath,
   } = paths;
+
+  console.log(`>>> envFileAbsolutePath: ${envFileAbsolutePath}`);
 
   program
     .name(scriptName)

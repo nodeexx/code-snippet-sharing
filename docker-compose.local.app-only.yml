@@ -1,0 +1,6 @@
+services:
+    db-migration:
+        env_file: .env.local
+
+    app:
+        env_file: .env.local
