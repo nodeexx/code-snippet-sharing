@@ -84,13 +84,13 @@ See [The stack](https://github.com/nodeexx/code-snippet-sharing/wiki/The-stack) 
 
 See `.env.template`.
 
-**Development-only**
+**Development only**
 
 Used by Vite and Docker Compose.
 
-**Production**
+**Development and production**
 
-Backend
+Backend only
 
 -   `ORIGIN`
     -   [Node servers • Docs • SvelteKit](https://kit.svelte.dev/docs/adapter-node#environment-variables)
@@ -108,16 +108,45 @@ Backend
     -   Used for authentication with Google OAuth 2
     -   Must be defined
 -   `GOOGLE_OAUTH_APP_REDIRECT_URI`
-    -   Used for authentication with Google OAuth 2
+    -   Where to redirect user after successful Google OAuth 2 authentication
     -   Must be defined
 -   `POSTHOG_PROJECT_API_KEY`
-    -   Used for the Posthog integration
+    -   Used for authenticating Posthog event requests
     -   Optional
     -   Find value in the related Posthog project
 -   `POSTHOG_API_HOST`
-    -   Used for the Posthog integration
+    -   URL where to send Posthog events
     -   Optional
     -   E.g. `https://eu.posthog.com` for EU region
+
+Backend and Frontend
+
+-   `PUBLIC_SENTRY_ENVIRONMENT`
+    -   Environment associated with sent Sentry requests
+    -   [Environments](https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/environments/)
+    -   Optional
+    -   Possible values
+        -   `localhost` for local development
+        -   `staging` for staging environment
+        -   `production` for production environment
+-   `PUBLIC_SENTRY_DSN`
+    -   URL where to send Sentry requests
+    -   [Basic Options](https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#dsn)
+    -   Optional
+-   `VITE_SENTRY_ORG`
+    -   Sentry org slug
+    -   Can be found in "Organization Settings" in the Sentry app
+    -   Used to upload source maps for both server and client builds to Sentry via Vite plugin
+    -   Optional
+-   `VITE_SENTRY_PROJECT`
+    -   Sentry project slug
+    -   Used to upload source maps for both server and client builds to Sentry via Vite plugin
+    -   Optional
+-   `VITE_SENTRY_AUTH_TOKEN `
+    -   Sentry auth token
+    -   Can be found in "Auth tokens" in the Sentry app
+    -   Used to upload source maps for both server and client builds to Sentry via Vite plugin
+    -   Optional
 
 # Development
 
