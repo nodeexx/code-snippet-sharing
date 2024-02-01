@@ -60,6 +60,7 @@
     "@lucia-auth/adapter-prisma": "3.0.2",
     "@lucia-auth/oauth": "3.4.0",
     "@prisma/client": "5.5.2",
+    "@sentry/sveltekit": "7.99.0",
     "dayjs": "1.11.10",
     "lodash": "4.17.21",
     "lucia": "2.7.3",
