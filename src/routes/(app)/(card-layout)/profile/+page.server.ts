@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { POSTHOG_USER_SIGN_OUT_EVENT_NAME } from '$lib/shared/posthog/constants';
 import type { AuthRequest } from 'lucia';
 import { posthog } from '$lib/server/posthog';
+import * as Sentry from '@sentry/node';
 
 const formSchema = z.object({}).strict();
 export type FormSchema = typeof formSchema;
@@ -50,7 +51,9 @@ export const actions = {
     try {
       await signOut(locals.authRequest, authSession);
     } catch (e) {
-      // TODO: Add crashalytics
+      Sentry.captureException(e);
+
+      // TODO: Setup logging
       const errorMessage = 'Failed to sign out';
       console.error(errorMessage, e);
 

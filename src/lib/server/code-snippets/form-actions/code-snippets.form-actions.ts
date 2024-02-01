@@ -12,6 +12,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import type { HttpError } from '@sveltejs/kit';
 import { posthog } from '$lib/server/posthog';
 import { POSTHOG_CODE_SNIPPET_DELETED_EVENT_NAME } from '$lib/shared/posthog/constants';
+import * as Sentry from '@sentry/sveltekit';
 
 export async function deleteCodeSnippetFormAction<
   T extends ZodValidation<AnyZodObject>,
@@ -47,7 +48,8 @@ export async function deleteCodeSnippetFormAction<
 
     deletedCodeSnippet = await codeSnippetsService.softDelete(codeSnippetId);
   } catch (e) {
-    // TODO: Add crashalytics
+    Sentry.captureException(e);
+
     if (e instanceof PrismaClientKnownRequestError && e.code === 'P2025') {
       throwCodeSnippetNotFoundError(codeSnippetId);
     }
@@ -56,6 +58,7 @@ export async function deleteCodeSnippetFormAction<
       throw e;
     }
 
+    // TODO: Setup logging
     const errorMessage = 'Failed to delete a code snippet';
     console.error(errorMessage, e);
 
