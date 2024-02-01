@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/sveltekit';
 import {
   checkMandatoryPrivateEnvVarsHandle,
   maintenanceModeHandle,
@@ -7,21 +8,34 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { config } from '$lib/server/core/config';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
 import { posthog } from '$lib/server/posthog';
+import { setupSentryClient } from '$lib/shared/sentry/utils';
+import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
+
+setupSentryClient(config.sentry.dsn, config.sentry.environment);
 
 export const handle = (async (input) => {
-  if (config.isMaintenanceMode) {
-    return sequence(maintenanceModeHandle)(input);
-  }
-
-  return sequence(
+  const maintenanceModeHandles: Handle[] = [maintenanceModeHandle];
+  const nonMaintenanceModeHandles: Handle[] = [
     checkMandatoryPrivateEnvVarsHandle,
     addAuthDataToLocalHandle,
-  )(input);
+  ];
+
+  if (Sentry.isInitialized()) {
+    const sentryHandles = [Sentry.sentryHandle()];
+
+    maintenanceModeHandles.unshift(...sentryHandles);
+    nonMaintenanceModeHandles.unshift(...sentryHandles);
+    nonMaintenanceModeHandles.push(setSentryUserIdentity);
+  }
+
+  if (config.isMaintenanceMode) {
+    return sequence(...maintenanceModeHandles)(input);
+  }
+
+  return sequence(...nonMaintenanceModeHandles)(input);
 }) satisfies Handle;
 
-export const handleError = (async ({ error }) => {
-  // TODO: Add crashalytics
-
+export const handleError = Sentry.handleErrorWithSentry((async ({ error }) => {
   const message = 'Internal Server Error';
   console.error(message, error);
 
@@ -29,7 +43,7 @@ export const handleError = (async ({ error }) => {
     message,
     status: 500,
   };
-}) satisfies HandleServerError;
+}) satisfies HandleServerError);
 
 process.on('SIGINT', async () => {
   console.info(
@@ -51,6 +65,10 @@ async function shutdownGracefully() {
 
   if (posthog) {
     await posthog.shutdownAsync();
+  }
+
+  if (Sentry.isInitialized()) {
+    await Sentry.close();
   }
 
   // Does not gracefully stop the wrapping Node server from `index.js`...
