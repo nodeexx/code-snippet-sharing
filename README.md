@@ -15,7 +15,7 @@ Table of contents
 
 # Origin story
 
-Hey there, welcome to the `code-snippet-sharing` project! It started as an attempt to create a full-stack setup based on the SvelteKit framework by creating a simple CRUD app. But I've enjoyed working with this stack so much, that the project quickly transformed into a kitchen sink regarding to the usage of supporting libraries and services. I still actively use it to experiment with SvelteKit and learn/test new tools (e.g. analytics, crashalytics, logging, monitoring).
+Hey there, welcome to the `code-snippet-sharing` project! It started as an attempt to create a full-stack setup based on the SvelteKit framework by creating a simple CRUD app. But I've enjoyed working with this stack so much, that the project quickly transformed into a kitchen sink regarding to the usage of supporting libraries and services. I still actively use it to experiment with SvelteKit and learn/test new tools (e.g. web analytics, error tracking, logging, monitoring, alerting).
 
 When I was a less experienced dev, I always yearned for encountering a real-world example of a full-stack app with a complete support tooling setups (e.g. for unit tests, E2E tests, linting, CI/CD). [CodebaseShow – RealWorld Example Apps](https://codebase.show/projects/realworld) initiative is very useful for taking inspiration regarding meeting common functional requirements, but it does not meet my requirements regarding the support tooling. I guess, in the end, I've created what I wanted myself :)
 
