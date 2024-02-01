@@ -4,6 +4,8 @@ import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 import Icons from 'unplugin-icons/vite';
 import type { PluginOption } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { sentrySvelteKit } from '@sentry/sveltekit';
+import type { SentrySvelteKitPluginOptions } from '@sentry/sveltekit/types/vite/sentryVitePlugins';
 
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
@@ -11,7 +13,19 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
+    build: {
+      minify: 'esbuild',
+    },
+    server: {
+      host: env['VITE_DEV_HOST'] ?? 'localhost',
+      port: parseInt(env['VITE_DEV_PORT'] ?? '') || 5173,
+      strictPort: true,
+    },
+    preview: {
+      port: parseInt(env['VITE_PREVIEW_PORT'] ?? '') || 4173,
+    },
     plugins: [
+      ...getWrappedSentrySvelteKitPlugin(mode, env),
       sveltekit(),
       Icons({
         compiler: 'svelte',
@@ -33,13 +47,57 @@ export default defineConfig(({ mode }) => {
         brotliSize: true,
       }) as PluginOption,
     ],
-    server: {
-      host: env['VITE_DEV_HOST'] ?? 'localhost',
-      port: parseInt(env['VITE_DEV_PORT'] ?? '') || 5173,
-      strictPort: true,
-    },
-    preview: {
-      port: parseInt(env['VITE_PREVIEW_PORT'] ?? '') || 4173,
-    },
   };
 });
+
+function getWrappedSentrySvelteKitPlugin(
+  mode: string,
+  env: Record<string, string>,
+): PluginOption[] {
+  if (mode === 'test') {
+    return [];
+  }
+
+  const plugin = sentrySvelteKit({
+    debug: mode !== 'production',
+    ...setupSentrySourceMapsUpload(
+      env['VITE_SENTRY_ORG'],
+      env['VITE_SENTRY_PROJECT'],
+      env['VITE_SENTRY_AUTH_TOKEN'],
+    ),
+  });
+
+  return [plugin];
+}
+
+function setupSentrySourceMapsUpload(
+  org: string | undefined,
+  project: string | undefined,
+  authToken: string | undefined,
+): SentrySvelteKitPluginOptions {
+  if (!org || !project || !authToken) {
+    console.warn(
+      'Sentry Org, Project, and/or Auth token is invalid or unset. Source maps upload is disabled',
+    );
+    console.warn(
+      `Sentry - Org: ${org}, Project: ${project}, Auth Token: ${authToken}`,
+    );
+
+    return {
+      autoUploadSourceMaps: false,
+      sourceMapsUploadOptions: {
+        telemetry: false,
+      },
+    };
+  }
+
+  return {
+    autoUploadSourceMaps: true,
+    sourceMapsUploadOptions: {
+      telemetry: false,
+      org,
+      project,
+      authToken,
+    },
+  };
+}
