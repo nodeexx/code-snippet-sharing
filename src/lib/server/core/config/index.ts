@@ -1,4 +1,5 @@
 import { env as privateEnv } from '$env/dynamic/private';
+import { env as publicEnv } from '$env/dynamic/public';
 
 export const config = {
   get isMaintenanceMode() {
@@ -28,6 +29,14 @@ export const config = {
     },
     get apiHost(): string | undefined {
       return privateEnv.POSTHOG_API_HOST;
+    },
+  },
+  sentry: {
+    get dsn(): string | undefined {
+      return publicEnv.PUBLIC_SENTRY_DSN;
+    },
+    get environment(): string | undefined {
+      return publicEnv.PUBLIC_SENTRY_ENVIRONMENT;
     },
   },
 };
