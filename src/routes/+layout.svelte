@@ -16,6 +16,8 @@ import {
   posthogDefaultPageEventsCaptureConfigurator,
   posthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
+import { sentryUserIdentityConfigurator } from '$lib/client/sentry';
+import { sentryClientConfigurator } from '$lib/shared/sentry';
 
 setupSkeletonPopup();
 setupSkeletonModalToastDrawer();
@@ -27,6 +29,10 @@ const flash = getFlash(page);
 flash.subscribe(createFlashToastSubscriber(toastStore));
 
 onMount(() => {
+  if (sentryClientConfigurator.isConfigured) {
+    sentryUserIdentityConfigurator.configure();
+  }
+
   if (posthogClientConfigurator.isConfigured) {
     posthogUserIdentityConfigurator.configure();
     posthogDefaultPageEventsCaptureConfigurator.configure();
@@ -40,6 +46,10 @@ onDestroy(() => {
 
   if (posthogUserIdentityConfigurator.isConfigured) {
     posthogUserIdentityConfigurator.cleanup();
+  }
+
+  if (sentryUserIdentityConfigurator.isConfigured) {
+    sentryUserIdentityConfigurator.cleanup();
   }
 });
 </script>
