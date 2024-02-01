@@ -437,3 +437,6 @@ wallaby.cjs
 !.vscode/extensions.template.json
 !.vscode/css-custom-data-tailwind.json
 !*.secret
+
+# Sentry Config File
+.sentryclirc
