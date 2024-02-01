@@ -8,6 +8,7 @@ import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos'
 import { posthog } from '$lib/server/posthog';
 import { POSTHOG_CODE_SNIPPET_CREATED_EVENT_NAME } from '$lib/shared/posthog/constants';
 import type { CodeSnippet } from '@prisma/client';
+import * as Sentry from '@sentry/node';
 
 export const load = (async ({ locals, url }) => {
   const authPageData = guardAuthUser(locals, url);
@@ -54,7 +55,9 @@ export const actions = {
         user_id: authUser.userId,
       });
     } catch (e) {
-      // TODO: Add crashalytics
+      Sentry.captureException(e);
+
+      // TODO: Setup logging
       const errorMessage = 'Failed to create a code snippet';
       console.error(errorMessage, e);
 

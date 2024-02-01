@@ -26,6 +26,7 @@ import { encodeOriginalPath } from '$lib/shared/core/utils';
 import { dev } from '$app/environment';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
+import * as Sentry from '@sentry/node';
 
 const formSchema = z.object({}).strict();
 export type FormSchema = typeof formSchema;
@@ -62,7 +63,9 @@ export const actions = {
       redirectUrl = url;
       setGoogleOAuthStateCookie(cookies, state);
     } catch (e) {
-      // TODO: Add crashalytics
+      Sentry.captureException(e);
+
+      // TODO: Setup logging
       const errorMessage = 'Failed to sign in';
       console.error(errorMessage, e);
 

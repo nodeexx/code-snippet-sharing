@@ -9,6 +9,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { throwCodeSnippetNotFoundError } from '$lib/server/code-snippets/utils';
 import { posthog } from '$lib/server/posthog';
 import { POSTHOG_CODE_SNIPPET_UPDATED_EVENT_NAME } from '$lib/shared/posthog/constants';
+import * as Sentry from '@sentry/node';
 
 export const load = (async ({ locals, url, params }) => {
   const authPageData = guardAuthUser(locals, url);
@@ -86,7 +87,8 @@ export const actions = {
         user_id: authUser.userId,
       });
     } catch (e) {
-      // TODO: Add crashalytics
+      Sentry.captureException(e);
+
       if (e instanceof PrismaClientKnownRequestError && e.code === 'P2025') {
         throwCodeSnippetNotFoundError(codeSnippetId);
       }
@@ -95,6 +97,7 @@ export const actions = {
         throw e;
       }
 
+      // TODO: Setup logging
       const errorMessage = 'Failed to edit a code snippet';
       console.error(errorMessage, e);
 
