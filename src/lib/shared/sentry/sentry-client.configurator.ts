@@ -54,7 +54,7 @@ export class _SentryClientConfigurator {
     if (!areSentryClientConfigurationInputsValid(dsn, environment)) {
       throw new Error(
         `${this.constructor.name}: One or both configuration inputs are invalid` +
-          ` - dsn: ${dsn}, apiHost: ${environment}`,
+          ` - dsn: ${dsn}, environment: ${environment}`,
       );
     }
   }

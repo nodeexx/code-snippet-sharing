@@ -18,6 +18,8 @@ import * as sveltekitSuperformsServerModule from 'sveltekit-superforms/server';
 import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
 
+vi.mock('@sentry/sveltekit');
+
 describe(load.name, () => {
   afterEach(async () => {
     vi.restoreAllMocks();

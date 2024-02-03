@@ -1,7 +1,7 @@
 import { page } from '$app/stores';
 import * as Sentry from '@sentry/sveltekit';
 import type { Unsubscriber } from 'svelte/store';
-import { sentryClientConfigurator } from '../../shared/sentry/sentry-client.configurator';
+import { sentryClientConfigurator } from '$lib/shared/sentry';
 import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
 
