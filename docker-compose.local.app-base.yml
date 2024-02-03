@@ -19,6 +19,12 @@ services:
         image: ${PROJECT_NAME:?err}--app:latest
         build:
             dockerfile: ./docker/app/Dockerfile
+            args:
+                - PUBLIC_SENTRY_ENVIRONMENT=${PUBLIC_SENTRY_ENVIRONMENT}
+                - PUBLIC_SENTRY_DSN=${PUBLIC_SENTRY_DSN}
+                - VITE_SENTRY_ORG=${VITE_SENTRY_ORG}
+                - VITE_SENTRY_PROJECT=${VITE_SENTRY_PROJECT}
+                - VITE_SENTRY_AUTH_TOKEN=${VITE_SENTRY_AUTH_TOKEN}
         privileged: true
         pid: host
         network_mode: host
