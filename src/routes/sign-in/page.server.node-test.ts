@@ -20,6 +20,8 @@ import type { Cookies } from '@sveltejs/kit';
 import { getMockFormData } from '$lib/server/superforms/testing';
 import { getMockFormValue } from '$lib/shared/superforms/testing';
 
+vi.mock('@sentry/sveltekit');
+
 describe(load.name, () => {
   afterEach(async () => {
     vi.restoreAllMocks();

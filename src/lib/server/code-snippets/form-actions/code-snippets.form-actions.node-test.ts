@@ -22,6 +22,8 @@ import type { SuperValidated, ZodValidation } from 'sveltekit-superforms';
 import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
 
+vi.mock('@sentry/sveltekit');
+
 describe('actions', () => {
   describe(deleteCodeSnippetFormAction.name, () => {
     const formSchema = z.object({}).strict();
