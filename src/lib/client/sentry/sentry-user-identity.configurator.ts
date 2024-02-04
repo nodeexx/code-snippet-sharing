@@ -1,7 +1,6 @@
 import { page } from '$app/stores';
-import * as Sentry from '@sentry/sveltekit';
 import type { Unsubscriber } from 'svelte/store';
-import { sentryClientConfigurator } from '$lib/shared/sentry';
+import { sentry, checkIfSentryClientConfigured } from '$lib/shared/sentry';
 import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
 
@@ -25,7 +24,7 @@ export class _SentryUserIdentityConfigurator {
   }
 
   public configure(): void {
-    sentryClientConfigurator.checkIfConfigured();
+    checkIfSentryClientConfigured();
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
         `${this.constructor.name} is in the process of or has already been configured`,
@@ -41,11 +40,11 @@ export class _SentryUserIdentityConfigurator {
         this.currentAuthUserData = newAuthUserData;
 
         if (!newAuthUserData) {
-          Sentry.setUser(null);
+          sentry!.setUser(null);
           return;
         }
 
-        Sentry.setUser({
+        sentry!.setUser({
           id: newAuthUserData.userId,
           email: newAuthUserData.email,
         });

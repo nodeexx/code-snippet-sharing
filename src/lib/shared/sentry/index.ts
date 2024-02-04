@@ -1,1 +1,1 @@
-export * from './sentry-client.configurator';
+export * from './client';

@@ -5,28 +5,39 @@ import {
   beforeEach,
   afterEach,
   vi,
-  type MockInstance,
   type Mock,
 } from 'vitest';
 import { setSentryUserIdentity } from './set-sentry-user-identity.handle';
-import * as sentrySveltekitModule from '@sentry/sveltekit';
+import * as libSharedSentryModule from '$lib/shared/sentry';
 import { getMockAuthUser } from '$lib/shared/lucia/testing';
 import type { RequestEvent } from '@sveltejs/kit';
 import { getMockWithType } from '$lib/shared/core/testing';
 
-vi.mock('@sentry/sveltekit');
-
 describe(setSentryUserIdentity.name, () => {
-  let setUserSpy: MockInstance<any[], void>;
+  let mockSetUser: Mock<any[], void>;
   let mockHandleResolve: Mock<any[], any>;
 
   beforeEach(() => {
+    mockSetUser = vi.fn();
     mockHandleResolve = vi.fn();
-    setUserSpy = vi.spyOn(sentrySveltekitModule, 'setUser').mockReturnValue();
+    vi.spyOn(libSharedSentryModule, 'sentry', 'get').mockReturnValue(
+      getMockWithType<typeof libSharedSentryModule.sentry>({
+        setUser: mockSetUser,
+      }),
+    );
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  it('should not set user identity if Sentry client is not configured', async () => {
+    vi.spyOn(libSharedSentryModule, 'sentry', 'get').mockReturnValue(undefined);
+    const event = getTypedEvent({});
+
+    await setSentryUserIdentity({ event, resolve: mockHandleResolve });
+
+    expect(mockSetUser).not.toBeCalled();
   });
 
   it('should set user identity when user is authenticated', async () => {
@@ -38,8 +49,8 @@ describe(setSentryUserIdentity.name, () => {
 
     await setSentryUserIdentity({ event, resolve: mockHandleResolve });
 
-    expect(setUserSpy).toBeCalledTimes(1);
-    expect(setUserSpy).toHaveBeenCalledWith({
+    expect(mockSetUser).toBeCalledTimes(1);
+    expect(mockSetUser).toHaveBeenCalledWith({
       id: 'mock-user-id',
       email: 'mock-email',
     });
@@ -55,8 +66,8 @@ describe(setSentryUserIdentity.name, () => {
 
     await setSentryUserIdentity({ event, resolve: mockHandleResolve });
 
-    expect(setUserSpy).toBeCalledTimes(1);
-    expect(setUserSpy).toHaveBeenCalledWith(null);
+    expect(mockSetUser).toBeCalledTimes(1);
+    expect(mockSetUser).toHaveBeenCalledWith(null);
     expect(mockHandleResolve).toHaveBeenCalledWith(event);
   });
 });

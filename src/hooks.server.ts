@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/sveltekit';
 import {
   checkMandatoryPrivateEnvVarsHandle,
   maintenanceModeHandle,
@@ -7,7 +6,11 @@ import { addAuthDataToLocalHandle } from '$lib/server/lucia/hooks';
 import { sequence } from '@sveltejs/kit/hooks';
 import { config } from '$lib/server/core/config';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
-import { setupSentryClient } from '$lib/shared/sentry/utils';
+import {
+  handleErrorWithSentry,
+  sentry,
+  setupSentryClient,
+} from '$lib/shared/sentry';
 import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 
@@ -21,8 +24,8 @@ export const handle = (async (input) => {
     addAuthDataToLocalHandle,
   ];
 
-  if (Sentry.isInitialized()) {
-    const sentryHandles = [Sentry.sentryHandle()];
+  if (sentry) {
+    const sentryHandles = [sentry.sentryHandle()];
 
     maintenanceModeHandles.unshift(...sentryHandles);
     nonMaintenanceModeHandles.unshift(...sentryHandles);
@@ -36,7 +39,7 @@ export const handle = (async (input) => {
   return sequence(...nonMaintenanceModeHandles)(input);
 }) satisfies Handle;
 
-export const handleError = Sentry.handleErrorWithSentry((async ({ error }) => {
+export const handleError = handleErrorWithSentry((async ({ error }) => {
   const message = 'Internal Server Error';
   console.error(message, error);
 
@@ -68,8 +71,8 @@ async function shutdownGracefully() {
     await posthog.shutdownAsync();
   }
 
-  if (Sentry.isInitialized()) {
-    await Sentry.close();
+  if (sentry) {
+    await sentry.close();
   }
 
   // Does not gracefully stop the wrapping Node server from `index.js`...

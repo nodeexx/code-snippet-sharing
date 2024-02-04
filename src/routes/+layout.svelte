@@ -17,7 +17,7 @@ import {
   posthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
 import { sentryUserIdentityConfigurator } from '$lib/client/sentry';
-import { sentryClientConfigurator } from '$lib/shared/sentry';
+import { sentry } from '$lib/shared/sentry';
 
 setupSkeletonPopup();
 setupSkeletonModalToastDrawer();
@@ -29,7 +29,7 @@ const flash = getFlash(page);
 flash.subscribe(createFlashToastSubscriber(toastStore));
 
 onMount(() => {
-  if (sentryClientConfigurator.isConfigured) {
+  if (sentry) {
     sentryUserIdentityConfigurator.configure();
   }
 

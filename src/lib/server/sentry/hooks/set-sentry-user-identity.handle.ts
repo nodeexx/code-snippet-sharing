@@ -1,13 +1,17 @@
+import { sentry } from '$lib/shared/sentry';
 import type { Handle } from '@sveltejs/kit';
-import * as Sentry from '@sentry/sveltekit';
 
 export const setSentryUserIdentity = (async ({ event, resolve }) => {
+  if (!sentry) {
+    return resolve(event);
+  }
+
   const authUser = event.locals.authUser;
 
   if (!authUser) {
-    Sentry.setUser(null);
+    sentry.setUser(null);
   } else {
-    Sentry.setUser({
+    sentry.setUser({
       id: authUser.userId,
       email: authUser.email,
     });

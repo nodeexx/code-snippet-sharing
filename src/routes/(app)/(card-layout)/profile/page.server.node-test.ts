@@ -17,8 +17,6 @@ import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
 import { getMockWithType } from '$lib/shared/core/testing';
 
-vi.mock('@sentry/sveltekit');
-
 describe(load.name, () => {
   afterEach(async () => {
     vi.restoreAllMocks();
