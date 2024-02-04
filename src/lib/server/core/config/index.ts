@@ -25,10 +25,10 @@ export const config = {
   },
   posthog: {
     get projectApiKey(): string | undefined {
-      return privateEnv.POSTHOG_PROJECT_API_KEY;
+      return publicEnv.PUBLIC_POSTHOG_PROJECT_API_KEY;
     },
     get apiHost(): string | undefined {
-      return privateEnv.POSTHOG_API_HOST;
+      return publicEnv.PUBLIC_POSTHOG_API_HOST;
     },
   },
   sentry: {
