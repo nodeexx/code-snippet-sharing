@@ -31,6 +31,7 @@ import {
 } from '$lib/server/sveltekit/testing';
 import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
+import { getMockWithType } from '$lib/shared/core/testing';
 
 vi.mock('@sentry/sveltekit');
 
@@ -177,9 +178,11 @@ describe('actions', () => {
         getOneById: mockGetOneById,
         update: mockUpdate,
       } as Partial<CodeSnippetsService> as CodeSnippetsService);
-      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
-        capture: vi.fn(),
-      } as Partial<PostHog> as PostHog);
+      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue(
+        getMockWithType<PostHog>({
+          capture: vi.fn(),
+        }),
+      );
     });
 
     afterEach(async () => {

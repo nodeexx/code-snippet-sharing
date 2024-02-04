@@ -15,16 +15,16 @@ import * as libClientPosthogModule from '$lib/client/posthog';
 import * as libClientSentryModule from '$lib/client/sentry';
 import * as libSharedSentryModule from '$lib/shared/sentry';
 import type {
-  _PosthogClientConfigurator,
   _PosthogDefaultPageEventsCaptureConfigurator,
   _PosthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
 import type { _SentryUserIdentityConfigurator } from '$lib/client/sentry';
 import type { _SentryClientConfigurator } from '$lib/shared/sentry';
+import type { PostHog } from 'posthog-js';
 
 describe(Component.name, () => {
   beforeEach(() => {
-    setupPosthogClientConfiguratorSpy();
+    setupPosthogClientSpy();
     setupPosthogDefaultPageEventsCaptureConfiguratorSpy();
     setupPosthogUserIdentityConfiguratorSpy();
     setupSentryClientConfiguratorSpy();
@@ -76,7 +76,7 @@ describe(Component.name, () => {
   });
 
   it('should not configure Posthog user identity if Posthog client is not configured', () => {
-    setupPosthogClientConfiguratorSpy({ isConfigured: false });
+    setupPosthogClientSpy(null);
 
     render(Component);
 
@@ -95,7 +95,7 @@ describe(Component.name, () => {
   });
 
   it('should not configure Posthog default page events capture if Posthog client is not configured', () => {
-    setupPosthogClientConfiguratorSpy({ isConfigured: false });
+    setupPosthogClientSpy(null);
 
     render(Component);
 
@@ -183,17 +183,12 @@ describe(Component.name, () => {
   });
 });
 
-function setupPosthogClientConfiguratorSpy(
-  overrides: Partial<_PosthogClientConfigurator> = {},
-): MockInstance<any[], _PosthogClientConfigurator> {
+function setupPosthogClientSpy(
+  value: Partial<PostHog> | null = {},
+): MockInstance<any[], PostHog | undefined> {
   return vi
-    .spyOn(libClientPosthogModule, 'posthogClientConfigurator', 'get')
-    .mockReturnValue(
-      getMockWithType<_PosthogClientConfigurator>({
-        isConfigured: true,
-        ...overrides,
-      }),
-    );
+    .spyOn(libClientPosthogModule, 'posthog', 'get')
+    .mockReturnValue(getMockWithType<PostHog | undefined>(value ?? undefined));
 }
 
 function setupPosthogDefaultPageEventsCaptureConfiguratorSpy(

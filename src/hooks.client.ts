@@ -3,7 +3,9 @@ import { dev } from '$app/environment';
 import type { HandleClientError } from '@sveltejs/kit';
 import { config } from '$lib/client/core/config';
 import { setupSentryClient } from '$lib/shared/sentry/utils';
+import { setupBrowserPosthogClient } from '$lib/client/posthog';
 
+setupBrowserPosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient(config.sentry.dsn, config.sentry.environment);
 
 export const handleError = Sentry.handleErrorWithSentry((async ({ error }) => {

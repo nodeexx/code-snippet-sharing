@@ -3,9 +3,9 @@ import {
   POSTHOG_PAGE_LEAVE_EVENT_NAME,
   POSTHOG_PAGE_VIEW_EVENT_NAME,
 } from '$lib/shared/posthog/constants';
-import posthog from 'posthog-js';
 import type { Unsubscriber } from 'svelte/store';
-import { posthogClientConfigurator } from './posthog-client.configurator';
+import { posthog } from './client';
+import { checkIfPosthogClientConfigured } from '$lib/shared/posthog/utils';
 
 export enum _PageEventTrigger {
   VISIBILITY_VISIBLE = 'visibility-visible',
@@ -58,7 +58,7 @@ export class _PosthogDefaultPageEventsCaptureConfigurator {
   }
 
   public configure(): void {
-    posthogClientConfigurator.checkIfConfigured();
+    checkIfPosthogClientConfigured(posthog);
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
         `${this.constructor.name} is in the process of or has already been configured`,
@@ -103,12 +103,12 @@ export class _PosthogDefaultPageEventsCaptureConfigurator {
   }
 
   private capturePageViewEvent(trigger: _PageEventTrigger): void {
-    posthog.capture(POSTHOG_PAGE_VIEW_EVENT_NAME, {
+    posthog!.capture(POSTHOG_PAGE_VIEW_EVENT_NAME, {
       trigger,
     });
   }
   private capturePageLeaveEvent(trigger: _PageEventTrigger): void {
-    posthog.capture(POSTHOG_PAGE_LEAVE_EVENT_NAME, {
+    posthog!.capture(POSTHOG_PAGE_LEAVE_EVENT_NAME, {
       trigger,
     });
   }

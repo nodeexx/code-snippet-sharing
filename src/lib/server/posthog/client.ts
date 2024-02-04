@@ -1,18 +1,24 @@
 import { PostHog } from 'posthog-node';
-import { config } from '$lib/server/core/config';
-import { arePosthogClientConfigurationInputsValid } from '$lib/shared/posthog/utils';
+import { _setupPosthogClientBase } from '$lib/shared/posthog/utils';
 
-let posthog: PostHog | undefined;
+export let posthog: PostHog | undefined;
 
-if (
-  arePosthogClientConfigurationInputsValid(
-    config.posthog.projectApiKey,
-    config.posthog.apiHost,
-  )
-) {
-  posthog = new PostHog(config.posthog.projectApiKey!, {
-    host: config.posthog.apiHost!,
-  });
+export function setupNodePosthogClient(
+  projectApiKey: string | undefined,
+  apiHost: string | undefined,
+): PostHog | undefined {
+  posthog = _setupPosthogClientBase(
+    projectApiKey,
+    apiHost,
+    posthog,
+    getNodePosthogClient,
+  );
+
+  return posthog;
 }
 
-export { posthog };
+function getNodePosthogClient(projectApiKey: string, apiHost: string): PostHog {
+  return new PostHog(projectApiKey!, {
+    host: apiHost!,
+  });
+}

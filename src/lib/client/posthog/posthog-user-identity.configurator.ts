@@ -1,7 +1,7 @@
 import { page } from '$app/stores';
-import posthog from 'posthog-js';
 import type { Unsubscriber } from 'svelte/store';
-import { posthogClientConfigurator } from './posthog-client.configurator';
+import { posthog } from './client';
+import { checkIfPosthogClientConfigured } from '$lib/shared/posthog/utils';
 import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
 
@@ -25,7 +25,7 @@ export class _PosthogUserIdentityConfigurator {
   }
 
   public configure(): void {
-    posthogClientConfigurator.checkIfConfigured();
+    checkIfPosthogClientConfigured(posthog);
     if (this.isConfigured || this._isConfigurationStarted) {
       throw new Error(
         `${this.constructor.name} is in the process of or has already been configured`,
@@ -41,11 +41,11 @@ export class _PosthogUserIdentityConfigurator {
         this.currentAuthUserData = newAuthUserData;
 
         if (!newAuthUserData) {
-          posthog.reset();
+          posthog!.reset();
           return;
         }
 
-        posthog.identify(newAuthUserData.userId, {
+        posthog!.identify(newAuthUserData.userId, {
           id: newAuthUserData.userId,
           email: newAuthUserData.email,
           email_verified: newAuthUserData.email_verified,
