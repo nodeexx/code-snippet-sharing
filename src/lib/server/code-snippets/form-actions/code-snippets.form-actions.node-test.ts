@@ -23,8 +23,6 @@ import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
 import { getMockWithType } from '$lib/shared/core/testing';
 
-vi.mock('@sentry/sveltekit');
-
 describe('actions', () => {
   describe(deleteCodeSnippetFormAction.name, () => {
     const formSchema = z.object({}).strict();

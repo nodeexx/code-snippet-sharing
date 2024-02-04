@@ -19,7 +19,6 @@ import type {
   _PosthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
 import type { _SentryUserIdentityConfigurator } from '$lib/client/sentry';
-import type { _SentryClientConfigurator } from '$lib/shared/sentry';
 import type { PostHog } from 'posthog-js';
 
 describe(Component.name, () => {
@@ -27,7 +26,7 @@ describe(Component.name, () => {
     setupPosthogClientSpy();
     setupPosthogDefaultPageEventsCaptureConfiguratorSpy();
     setupPosthogUserIdentityConfiguratorSpy();
-    setupSentryClientConfiguratorSpy();
+    setupSentryClientSpy();
     setupSentryUserIdentityConfiguratorSpy();
   });
 
@@ -58,7 +57,7 @@ describe(Component.name, () => {
   });
 
   it('should not configure Sentry user identity if Sentry client is not configured', () => {
-    setupSentryClientConfiguratorSpy({ isConfigured: false });
+    setupSentryClientSpy(null);
 
     render(Component);
 
@@ -225,16 +224,15 @@ function setupPosthogUserIdentityConfiguratorSpy(
     );
 }
 
-function setupSentryClientConfiguratorSpy(
-  overrides: Partial<libSharedSentryModule._SentryClientConfigurator> = {},
-): MockInstance<any[], _SentryClientConfigurator> {
+function setupSentryClientSpy(
+  value: Partial<typeof libSharedSentryModule.sentry> | null = {},
+): MockInstance<any[], typeof libSharedSentryModule.sentry | undefined> {
   return vi
-    .spyOn(libSharedSentryModule, 'sentryClientConfigurator', 'get')
+    .spyOn(libSharedSentryModule, 'sentry', 'get')
     .mockReturnValue(
-      getMockWithType<_SentryClientConfigurator>({
-        isConfigured: true,
-        ...overrides,
-      }),
+      getMockWithType<typeof libSharedSentryModule.sentry | undefined>(
+        value ?? undefined,
+      ),
     );
 }
 

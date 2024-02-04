@@ -19,8 +19,8 @@ import { actions } from './+page.server';
 import type { Cookies } from '@sveltejs/kit';
 import { getMockFormData } from '$lib/server/superforms/testing';
 import { getMockFormValue } from '$lib/shared/superforms/testing';
-
-vi.mock('@sentry/sveltekit');
+import * as libSharedSentryModule from '$lib/shared/sentry';
+import { getMockWithType } from '$lib/shared/core/testing';
 
 describe(load.name, () => {
   afterEach(async () => {
@@ -221,6 +221,14 @@ describe(load.name, () => {
 
 describe('actions', () => {
   describe(actions['google-auth'].name, () => {
+    beforeEach(async () => {
+      vi.spyOn(libSharedSentryModule, 'sentry', 'get').mockReturnValue(
+        getMockWithType<typeof libSharedSentryModule.sentry>({
+          captureException: vi.fn(),
+        }),
+      );
+    });
+
     afterEach(async () => {
       vi.restoreAllMocks();
     });

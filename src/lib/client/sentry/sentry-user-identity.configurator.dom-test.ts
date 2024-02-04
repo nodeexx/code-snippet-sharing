@@ -5,35 +5,33 @@ import {
   beforeEach,
   afterEach,
   vi,
-  type MockInstance,
+  type Mock,
 } from 'vitest';
 import { _SentryUserIdentityConfigurator } from './sentry-user-identity.configurator';
 import * as libSharedSentryModule from '$lib/shared/sentry';
-import type { _SentryClientConfigurator } from '$lib/shared/sentry';
 import { writable, type Writable } from 'svelte/store';
 import * as appStoresModule from '$app/stores';
 import type { Page } from '@sveltejs/kit';
 import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
 import { getMockAuthUser } from '$lib/shared/lucia/testing';
-import * as sentrySveltekitModule from '@sentry/sveltekit';
-
-vi.mock('@sentry/sveltekit');
+import { getMockWithType } from '$lib/shared/core/testing';
 
 describe(_SentryUserIdentityConfigurator.name, () => {
   let configurator: _SentryUserIdentityConfigurator;
-  let setUserSpy: MockInstance<any[], void>;
+  let mockSetUser: Mock<any[], void>;
   let mockAppStoresPageStore: Writable<Page>;
 
   beforeEach(() => {
-    setUserSpy = vi.spyOn(sentrySveltekitModule, 'setUser').mockReturnValue();
+    mockSetUser = vi.fn();
+    vi.spyOn(libSharedSentryModule, 'sentry', 'get').mockReturnValue(
+      getMockWithType<typeof libSharedSentryModule.sentry>({
+        setUser: mockSetUser,
+      }),
+    );
     vi.spyOn(
       libSharedSentryModule,
-      'sentryClientConfigurator',
-      'get',
-    ).mockReturnValue({
-      isConfigured: true,
-      checkIfConfigured: () => {},
-    } as Partial<_SentryClientConfigurator> as _SentryClientConfigurator);
+      'checkIfSentryClientConfigured',
+    ).mockReturnValue();
     mockAppStoresPageStore = writable<Page>(defaultMockAppStoresPageValue);
     vi.spyOn(appStoresModule, 'page', 'get').mockReturnValue(
       mockAppStoresPageStore,
@@ -65,6 +63,17 @@ describe(_SentryUserIdentityConfigurator.name, () => {
     expect(configurator.isConfigured).toBe(true);
   });
 
+  it('should throw if Sentry client is not configured', () => {
+    vi.spyOn(
+      libSharedSentryModule,
+      'checkIfSentryClientConfigured',
+    ).mockImplementation(() => {
+      throw new Error('mock-error');
+    });
+
+    expect(() => configurator.configure()).toThrowError('mock-error');
+  });
+
   it('should throw an error if already configured', () => {
     configurator.configure();
 
@@ -90,7 +99,7 @@ describe(_SentryUserIdentityConfigurator.name, () => {
   it('should not send events after configuration', () => {
     configurator.configure();
 
-    expect(setUserSpy).not.toBeCalled();
+    expect(mockSetUser).not.toBeCalled();
   });
 
   it('should not send events if new auth user data is same as the current data', () => {
@@ -98,7 +107,7 @@ describe(_SentryUserIdentityConfigurator.name, () => {
 
     mockAppStoresPageStore.set(defaultMockAppStoresPageValue);
 
-    expect(setUserSpy).not.toBeCalled();
+    expect(mockSetUser).not.toBeCalled();
   });
 
   it('should set user identity', () => {
@@ -112,8 +121,8 @@ describe(_SentryUserIdentityConfigurator.name, () => {
       },
     });
 
-    expect(setUserSpy).toBeCalledTimes(1);
-    expect(setUserSpy).toHaveBeenCalledWith({
+    expect(mockSetUser).toBeCalledTimes(1);
+    expect(mockSetUser).toHaveBeenCalledWith({
       id: 'mock-user-id',
       email: 'mock-email',
     });
@@ -139,7 +148,7 @@ describe(_SentryUserIdentityConfigurator.name, () => {
       },
     });
 
-    expect(setUserSpy).toBeCalledTimes(1);
-    expect(setUserSpy).toHaveBeenCalledWith(null);
+    expect(mockSetUser).toBeCalledTimes(1);
+    expect(mockSetUser).toHaveBeenCalledWith(null);
   });
 });
