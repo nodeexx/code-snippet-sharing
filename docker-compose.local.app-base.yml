@@ -20,6 +20,8 @@ services:
         build:
             dockerfile: ./docker/app/Dockerfile
             args:
+                - PUBLIC_POSTHOG_PROJECT_API_KEY=${PUBLIC_POSTHOG_PROJECT_API_KEY}
+                - PUBLIC_POSTHOG_API_HOST=${PUBLIC_POSTHOG_API_HOST}
                 - PUBLIC_SENTRY_ENVIRONMENT=${PUBLIC_SENTRY_ENVIRONMENT}
                 - PUBLIC_SENTRY_DSN=${PUBLIC_SENTRY_DSN}
                 - VITE_SENTRY_ORG=${VITE_SENTRY_ORG}
