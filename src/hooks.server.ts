@@ -7,10 +7,11 @@ import { addAuthDataToLocalHandle } from '$lib/server/lucia/hooks';
 import { sequence } from '@sveltejs/kit/hooks';
 import { config } from '$lib/server/core/config';
 import type { Handle, HandleServerError } from '@sveltejs/kit';
-import { posthog } from '$lib/server/posthog';
 import { setupSentryClient } from '$lib/shared/sentry/utils';
 import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
+import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 
+setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient(config.sentry.dsn, config.sentry.environment);
 
 export const handle = (async (input) => {

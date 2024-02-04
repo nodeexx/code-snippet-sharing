@@ -12,7 +12,7 @@ import { PageMessage } from '$lib/client/components/app-shell';
 import { createFlashToastSubscriber } from '$lib/client/global-messages/utils';
 import { onDestroy, onMount } from 'svelte';
 import {
-  posthogClientConfigurator,
+  posthog,
   posthogDefaultPageEventsCaptureConfigurator,
   posthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
@@ -33,7 +33,7 @@ onMount(() => {
     sentryUserIdentityConfigurator.configure();
   }
 
-  if (posthogClientConfigurator.isConfigured) {
+  if (posthog) {
     posthogUserIdentityConfigurator.configure();
     posthogDefaultPageEventsCaptureConfigurator.configure();
   }

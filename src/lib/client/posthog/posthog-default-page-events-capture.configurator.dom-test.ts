@@ -8,18 +8,18 @@ import {
   type Mock,
   type MockInstance,
 } from 'vitest';
-import * as posthogJsModule from 'posthog-js';
 import type { PostHog } from 'posthog-js';
 import {
   _PageEventTrigger,
   _PosthogDefaultPageEventsCaptureConfigurator,
 } from './posthog-default-page-events-capture.configurator';
-import * as posthogClientConfiguratorModule from './posthog-client.configurator';
-import type { _PosthogClientConfigurator } from './posthog-client.configurator';
+import * as posthogClientModule from './client';
 import { writable, type Writable } from 'svelte/store';
 import type { Navigation } from '@sveltejs/kit';
 import * as appStoresModule from '$app/stores';
 import { mockAppStoresNavigatingValue } from '$lib/shared/sveltekit/testing';
+import { getMockWithType } from '$lib/shared/core/testing';
+import * as libSharedPosthogUtilsModule from '$lib/shared/posthog/utils';
 
 describe(_PosthogDefaultPageEventsCaptureConfigurator.name, () => {
   let configurator: _PosthogDefaultPageEventsCaptureConfigurator;
@@ -30,17 +30,15 @@ describe(_PosthogDefaultPageEventsCaptureConfigurator.name, () => {
 
   beforeEach(() => {
     mockCapture = vi.fn();
-    vi.spyOn(posthogJsModule, 'default', 'get').mockReturnValue({
-      capture: mockCapture,
-    } as Partial<PostHog> as PostHog);
+    vi.spyOn(posthogClientModule, 'posthog', 'get').mockReturnValue(
+      getMockWithType<PostHog>({
+        capture: mockCapture,
+      }),
+    );
     vi.spyOn(
-      posthogClientConfiguratorModule,
-      'posthogClientConfigurator',
-      'get',
-    ).mockReturnValue({
-      isConfigured: true,
-      checkIfConfigured: () => {},
-    } as Partial<_PosthogClientConfigurator> as _PosthogClientConfigurator);
+      libSharedPosthogUtilsModule,
+      'checkIfPosthogClientConfigured',
+    ).mockReturnValue();
     mockWindow = new EventTarget();
     vi.spyOn(window, 'window', 'get').mockReturnValue({
       addEventListener: mockWindow.addEventListener.bind(mockWindow),
@@ -78,6 +76,19 @@ describe(_PosthogDefaultPageEventsCaptureConfigurator.name, () => {
     configurator.configure();
 
     expect(configurator.isConfigured).toBe(true);
+  });
+
+  it('should throw an error if Posthog client is not configured', () => {
+    vi.spyOn(
+      libSharedPosthogUtilsModule,
+      'checkIfPosthogClientConfigured',
+    ).mockImplementation(() => {
+      throw new Error('mock-posthog-client-error');
+    });
+
+    expect(() => configurator.configure()).toThrowError(
+      new Error('mock-posthog-client-error'),
+    );
   });
 
   it('should throw an error if already configured', () => {

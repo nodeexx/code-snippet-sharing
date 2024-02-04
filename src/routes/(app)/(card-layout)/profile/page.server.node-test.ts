@@ -15,6 +15,7 @@ import * as libServerLuciaGuardsModule from '$lib/server/lucia/guards';
 import * as sveltekitSuperformsServerModule from 'sveltekit-superforms/server';
 import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
+import { getMockWithType } from '$lib/shared/core/testing';
 
 vi.mock('@sentry/sveltekit');
 
@@ -54,9 +55,11 @@ describe('actions', () => {
   describe(actions['sign-out'].name, () => {
     beforeEach(async () => {
       vi.spyOn(auth, 'invalidateSession').mockResolvedValue(undefined);
-      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
-        capture: vi.fn(),
-      } as Partial<PostHog> as PostHog);
+      vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue(
+        getMockWithType<PostHog>({
+          capture: vi.fn(),
+        }),
+      );
     });
 
     afterEach(async () => {

@@ -23,6 +23,7 @@ import { prisma } from '$lib/server/prisma';
 import type { DatabaseUser } from '$lib/server/prisma/types';
 import * as libServerPosthogModule from '$lib/server/posthog';
 import type { PostHog } from 'posthog-node';
+import { getMockWithType } from '$lib/shared/core/testing';
 
 interface SignInArgumentsObject {
   url: URL;
@@ -64,9 +65,11 @@ describe(signInWithGoogle.name, () => {
       user: getMockAuthUser(),
     } as Partial<AuthSession> as AuthSession);
 
-    vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue({
-      capture: vi.fn(),
-    } as Partial<PostHog> as PostHog);
+    vi.spyOn(libServerPosthogModule, 'posthog', 'get').mockReturnValue(
+      getMockWithType<PostHog>({
+        capture: vi.fn(),
+      }),
+    );
   });
 
   afterEach(async () => {

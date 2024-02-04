@@ -31,10 +31,6 @@ describe(load.name, () => {
 
     expect(result).toEqual({
       authUser: mockAuthSession.user,
-      posthog: {
-        apiHost: undefined,
-        projectApiKey: undefined,
-      },
     });
     expect(mockCookies.get).toHaveBeenCalledTimes(1);
     expect(mockCookies.get).toHaveBeenCalledWith('flash');
@@ -56,10 +52,6 @@ describe(load.name, () => {
 
     expect(result).toEqual({
       authUser: null,
-      posthog: {
-        apiHost: undefined,
-        projectApiKey: undefined,
-      },
     });
     expect(mockCookies.get).toHaveBeenCalledTimes(1);
     expect(mockCookies.get).toHaveBeenCalledWith('flash');
