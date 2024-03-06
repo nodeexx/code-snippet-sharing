@@ -15,7 +15,7 @@ import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
-setupSentryClient(config.sentry.dsn, config.sentry.environment);
+setupSentryClient(config.sentry.dsn, config.sentry.environment, config.origin);
 
 export const handle = (async (input) => {
   const maintenanceModeHandles: Handle[] = [maintenanceModeHandle];
