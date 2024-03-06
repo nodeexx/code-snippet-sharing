@@ -46,4 +46,4 @@ $(sed 's/#.*$//g' $ENV_PATH | sed '/^$/d' | sed 's/^/export /g')
 sudo -E "$(which npx)" northflank forward \
     addon \
     --projectId code-snippet-sharing \
-    --addonId postgres-staging
+    --addonId postgres-production
