@@ -2,7 +2,10 @@ import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 
 export const config = {
-  get isMaintenanceMode() {
+  get origin(): string {
+    return privateEnv.ORIGIN;
+  },
+  get isMaintenanceMode(): boolean {
     return privateEnv.MAINTENANCE_MODE === 'true';
   },
   db: {

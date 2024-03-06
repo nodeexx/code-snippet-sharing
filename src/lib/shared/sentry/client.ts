@@ -10,9 +10,10 @@ export let sentry: SentryClient | undefined;
 export function setupSentryClient(
   dsn: string | undefined,
   environment: string | undefined,
+  origin: string | undefined,
 ): SentryClient | undefined {
   if (!sentry) {
-    if (!_areSentryClientConfigurationInputsValid(dsn, environment)) {
+    if (!_areSentryClientConfigurationInputsValid(dsn, environment, origin)) {
       displaySentrySetupWarning();
 
       return undefined;
@@ -22,6 +23,7 @@ export function setupSentryClient(
       dsn: dsn!,
       environment: environment!,
       tracesSampleRate: 1,
+      tracePropagationTargets: ['localhost', /^\//, RegExp('^' + origin!)],
     });
 
     sentry = Sentry;
@@ -43,19 +45,21 @@ export function _resetSentryClient(): void {
 export function _areSentryClientConfigurationInputsValid(
   dsn: string | undefined,
   environment: string | undefined,
+  origin: string | undefined,
 ): boolean {
   const dsnIsValid = !!dsn;
   const environmentIsValid =
     !!environment &&
     ['localhost', 'staging', 'production'].includes(environment);
+  const originIsValid = !!origin && origin.startsWith('http');
 
-  return dsnIsValid && environmentIsValid;
+  return dsnIsValid && environmentIsValid && originIsValid;
 }
 
 function displaySentrySetupWarning(): void {
   if (dev) {
     console.warn(
-      'Sentry DSN and/or environment are invalid or not set. Sentry will not be configured.',
+      'Sentry DSN, environment, and/or origin are invalid or not set. Sentry will not be configured.',
     );
     return;
   }
