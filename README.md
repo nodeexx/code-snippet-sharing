@@ -150,6 +150,12 @@ Backend and Frontend
     -   URL where to send Sentry requests
     -   [Basic Options](https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#dsn)
     -   Optional
+-   `PUBLIC_SENTRY_ORGANIZATION`
+    -   Sentry organization slug (not name)
+    -   Optional
+-   `PUBLIC_SENTRY_PROJECT_ID`
+    -   Sentry project ID (number, not name)
+    -   Optional
 
 # Development
 
