@@ -75,6 +75,9 @@ export class _PosthogDefaultPageEventsCaptureConfigurator {
 
     this.unsubscribeNavigating = navigating.subscribe(($navigating) => {
       // NOTE: Does not react to unload events.
+      // WARN: Navigation after `popstate` event happens before this runs, so
+      // page leave event is captured for the destination page, not the source
+      // one. No solution for now (`beforeNavigate` also did not help).
       if ($navigating) {
         this.capturePageLeaveEvent(_PageEventTrigger.BEFORE_NAVIGATE);
         return;
