@@ -13,9 +13,15 @@ import {
 } from '$lib/shared/sentry';
 import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
+import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
-setupSentryClient(config.sentry.dsn, config.sentry.environment, config.origin);
+setupSentryClient({
+  dsn: config.sentry.dsn,
+  environment: config.sentry.environment,
+  origin: config.origin,
+  integrations: [...getServerSentryIntegrations(config.sentry.organization)],
+});
 
 export const handle = (async (input) => {
   const maintenanceModeHandles: Handle[] = [maintenanceModeHandle];

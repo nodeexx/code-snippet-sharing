@@ -3,14 +3,25 @@ import type { HandleClientError } from '@sveltejs/kit';
 import { config } from '$lib/client/core/config';
 import { handleErrorWithSentry, setupSentryClient } from '$lib/shared/sentry';
 import { setupBrowserPosthogClient } from '$lib/client/posthog';
+import {
+  getClientSentryIntegrations,
+  setClientPosthogSessionId,
+} from '$lib/client/sentry/utils';
 
 setupBrowserPosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
-setupSentryClient(
-  config.sentry.dsn,
-  config.sentry.environment,
+setupSentryClient({
+  dsn: config.sentry.dsn,
+  environment: config.sentry.environment,
   // SvelteKit's page store is empty at this point
-  window.location.origin,
-);
+  origin: window.location.origin,
+  integrations: [
+    ...getClientSentryIntegrations(
+      config.sentry.organization,
+      config.sentry.projectId,
+    ),
+  ],
+});
+setClientPosthogSessionId();
 
 export const handleError = handleErrorWithSentry((async ({ error }) => {
   const message = 'Internal Client Error';

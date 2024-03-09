@@ -1,6 +1,8 @@
 import { PostHog } from 'posthog-node';
 import { _setupPosthogClientBase } from '$lib/shared/posthog/utils';
 
+export { PostHogSentryIntegration } from 'posthog-node';
+
 export let posthog: PostHog | undefined;
 
 export function setupNodePosthogClient(

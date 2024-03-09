@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import * as Sentry from '@sentry/sveltekit';
+import type { Integration } from '@sentry/types';
 
 type SentryClient = typeof Sentry;
 
@@ -7,11 +8,17 @@ export const handleErrorWithSentry = Sentry.handleErrorWithSentry;
 
 export let sentry: SentryClient | undefined;
 
-export function setupSentryClient(
-  dsn: string | undefined,
-  environment: string | undefined,
-  origin: string | undefined,
-): SentryClient | undefined {
+export function setupSentryClient({
+  dsn,
+  environment,
+  origin,
+  integrations,
+}: {
+  dsn: string | undefined;
+  environment: string | undefined;
+  origin: string | undefined;
+  integrations?: Integration[];
+}): SentryClient | undefined {
   if (!sentry) {
     if (!_areSentryClientConfigurationInputsValid(dsn, environment, origin)) {
       displaySentrySetupWarning();
@@ -24,6 +31,8 @@ export function setupSentryClient(
       environment: environment!,
       tracesSampleRate: 1,
       tracePropagationTargets: ['localhost', /^\//, RegExp('^' + origin!)],
+      autoSessionTracking: true,
+      integrations: integrations ?? [],
     });
 
     sentry = Sentry;
