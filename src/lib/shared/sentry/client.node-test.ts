@@ -36,28 +36,46 @@ describe(setupSentryClient.name, () => {
   });
 
   it('should configure the client', async () => {
-    setupSentryClient('mock-dsn', 'localhost');
-
-    expect(initSpy).toHaveBeenCalledTimes(1);
-    expect(initSpy).toHaveBeenCalledWith({
+    await setupSentryClient({
       dsn: 'mock-dsn',
       environment: 'localhost',
-      tracesSampleRate: 1,
+      origin: 'http://localhost:3000',
     });
+
+    expect(initSpy).toHaveBeenCalledTimes(1);
+    expect(initSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dsn: 'mock-dsn',
+        environment: 'localhost',
+        tracesSampleRate: 1,
+      }),
+    );
   });
 
   it('should not configure the client if its already configured', async () => {
-    setupSentryClient('mock-dsn', 'localhost');
+    await setupSentryClient({
+      dsn: 'mock-dsn',
+      environment: 'localhost',
+      origin: 'http://localhost:3000',
+    });
     // Reset the spy to check if it's called again
     vi.clearAllMocks();
 
-    setupSentryClient('mock-dsn', 'localhost');
+    await setupSentryClient({
+      dsn: 'mock-dsn',
+      environment: 'localhost',
+      origin: 'http://localhost:3000',
+    });
 
     expect(initSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should fail configuration of the client if configuration inputs are invalid', async () => {
-    setupSentryClient(undefined, undefined);
+    await setupSentryClient({
+      dsn: undefined,
+      environment: undefined,
+      origin: 'http://localhost:3000',
+    });
 
     expect(initSpy).toHaveBeenCalledTimes(0);
   });
@@ -70,8 +88,12 @@ describe(checkIfSentryClientConfigured.name, () => {
     );
   });
 
-  it('should not throw an error if client is configured', () => {
-    setupSentryClient('mock-dsn', 'localhost');
+  it('should not throw an error if client is configured', async () => {
+    await setupSentryClient({
+      dsn: 'mock-dsn',
+      environment: 'localhost',
+      origin: 'http://localhost:3000',
+    });
 
     expect(() => checkIfSentryClientConfigured()).not.toThrow();
   });
@@ -80,37 +102,61 @@ describe(checkIfSentryClientConfigured.name, () => {
 describe(_areSentryClientConfigurationInputsValid.name, () => {
   it('should return true if inputs are valid', () => {
     expect(
-      _areSentryClientConfigurationInputsValid('mock-dsn', 'localhost'),
+      _areSentryClientConfigurationInputsValid(
+        'mock-dsn',
+        'localhost',
+        'http://localhost:3000',
+      ),
     ).toBe(true);
   });
 
   it('should return false if DSN is undefined', () => {
     expect(
-      _areSentryClientConfigurationInputsValid(undefined, 'localhost'),
+      _areSentryClientConfigurationInputsValid(
+        undefined,
+        'localhost',
+        'http://localhost:3000',
+      ),
     ).toBe(false);
   });
 
   it('should return false if DSN is an empty string', () => {
-    expect(_areSentryClientConfigurationInputsValid('', 'localhost')).toBe(
-      false,
-    );
+    expect(
+      _areSentryClientConfigurationInputsValid(
+        '',
+        'localhost',
+        'http://localhost:3000',
+      ),
+    ).toBe(false);
   });
 
   it('should return false if environment is undefined', () => {
     expect(
-      _areSentryClientConfigurationInputsValid('mock-dsn', undefined),
+      _areSentryClientConfigurationInputsValid(
+        'mock-dsn',
+        undefined,
+        'http://localhost:3000',
+      ),
     ).toBe(false);
   });
 
   it('should return false if environment is an empty string', () => {
-    expect(_areSentryClientConfigurationInputsValid('mock-dsn', '')).toBe(
-      false,
-    );
+    expect(
+      _areSentryClientConfigurationInputsValid(
+        'mock-dsn',
+        '',
+        'http://localhost:3000',
+      ),
+    ).toBe(false);
   });
 
   it('should return false if environment is not a valid value', () => {
     expect(
-      _areSentryClientConfigurationInputsValid('mock-dsn', 'invalid'),
+      _areSentryClientConfigurationInputsValid(
+        'mock-dsn',
+        'invalid',
+        'http://localhost:3000',
+      ),
     ).toBe(false);
   });
 });

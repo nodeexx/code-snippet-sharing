@@ -41,5 +41,8 @@ export const config = {
     get environment(): string | undefined {
       return publicEnv.PUBLIC_SENTRY_ENVIRONMENT;
     },
+    get organization(): string | undefined {
+      return publicEnv.PUBLIC_SENTRY_ORGANIZATION;
+    },
   },
 };

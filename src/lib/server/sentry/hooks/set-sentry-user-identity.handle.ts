@@ -1,5 +1,6 @@
 import { sentry } from '$lib/shared/sentry';
 import type { Handle } from '@sveltejs/kit';
+import { posthog, PostHogSentryIntegration } from '$lib/server/posthog';
 
 export const setSentryUserIdentity = (async ({ event, resolve }) => {
   if (!sentry) {
@@ -15,6 +16,10 @@ export const setSentryUserIdentity = (async ({ event, resolve }) => {
       id: authUser.userId,
       email: authUser.email,
     });
+
+    if (posthog) {
+      sentry.setTag(PostHogSentryIntegration.POSTHOG_ID_TAG, authUser.userId);
+    }
   }
 
   return resolve(event);
