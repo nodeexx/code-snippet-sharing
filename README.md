@@ -127,6 +127,22 @@ Backend only
 -   `GOOGLE_OAUTH_APP_REDIRECT_URI`
     -   Where to redirect user after successful Google OAuth 2 authentication
     -   Must be defined
+-   `ROARR_LOG`
+    -   Whether to show Roarr logs
+    -   [roarr/README.md at main · gajus/roarr](https://github.com/gajus/roarr/blob/main/README.md)
+    -   Optional
+    -   Values: `true` to enable, anything else to disable
+    -   Default: empty
+-   `ROARR_MIN_LOG_LEVEL`
+    -   Minimal log level to display
+    -   Optional
+    -   Values: `trace`, `debug`, `info`, `warn`, `error`, `fatal`
+    -   Default: `info`
+-   `ROARR_SHOW_DEBUG_CONTEXT`
+    -   Whether to show debug context information in logs
+    -   Optional
+    -   Values: `true` to enable, anything else to disable
+    -   Default: empty
 
 Backend and Frontend
 
