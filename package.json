@@ -68,6 +68,7 @@
     "posthog-js": "1.102.0",
     "posthog-node": "3.6.1",
     "roarr": "7.21.0",
+    "serialize-error": "11.0.3",
     "sveltekit-flash-message": "2.3.0",
     "sveltekit-superforms": "1.12.0",
     "zod": "3.22.4"
