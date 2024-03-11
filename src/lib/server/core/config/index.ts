@@ -1,5 +1,7 @@
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
+import path from 'path';
+import url from 'url';
 
 export const config = {
   get origin(): string {
@@ -7,6 +9,14 @@ export const config = {
   },
   get isMaintenanceMode(): boolean {
     return privateEnv.MAINTENANCE_MODE === 'true';
+  },
+  folders: {
+    get root(): string {
+      return path.resolve(
+        path.dirname(url.fileURLToPath(import.meta.url)),
+        '../../../../../',
+      );
+    },
   },
   db: {
     get url(): string {
@@ -43,6 +53,17 @@ export const config = {
     },
     get organization(): string | undefined {
       return publicEnv.PUBLIC_SENTRY_ORGANIZATION;
+    },
+  },
+  roarr: {
+    get isEnabled(): boolean {
+      return privateEnv.ROARR_LOG === 'true';
+    },
+    get minLogLevel(): string {
+      return privateEnv.ROARR_MIN_LOG_LEVEL || 'info';
+    },
+    get isDebugContextShown(): boolean {
+      return privateEnv.ROARR_SHOW_DEBUG_CONTEXT === 'true';
     },
   },
 };
