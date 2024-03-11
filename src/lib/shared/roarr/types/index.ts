@@ -24,10 +24,12 @@ export type JsonValue =
 
 export interface LoggerContext extends JsonObject {
   error?: JsonValue;
+  sentryTraceId?: string;
 }
 
 export interface LoggerContextWithError {
   error?: Error | JsonValue;
+  sentryTraceId?: string;
   // WARN: Other properties should not have an `Error` type, but I don't know
   // how to enforce it in combination with the type of `error` property.
   [k: string]: Error | JsonValue;
