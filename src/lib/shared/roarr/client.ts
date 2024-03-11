@@ -7,6 +7,8 @@ import type {
   LoggerLoggingMethodName,
 } from './types';
 import { serializeError } from 'serialize-error';
+import { sentry } from '../sentry';
+import { getTraceId } from '../sentry/utils';
 
 export const roarr = (function () {
   const createLogger = (methodName: LoggerLoggingMethodName) => {
@@ -15,11 +17,8 @@ export const roarr = (function () {
         return;
       }
 
-      const contextClone = { ...context } as LoggerContext;
-      const errorContext = contextClone.error;
-      if (errorContext && errorContext instanceof Error) {
-        contextClone.error = serializeError(errorContext);
-      }
+      let contextClone = serializeErrorInContext(context);
+      contextClone = enrichContextWithSentryTraceId(contextClone);
 
       Roarr[methodName](
         config.roarr.isDebugContextShown
@@ -62,13 +61,43 @@ function shouldBeLogged(methodName: LoggerLoggingMethodName): boolean {
   return requestedLogLevel >= minLogLevel;
 }
 
+function serializeErrorInContext(
+  context: LoggerContextWithError,
+): LoggerContext {
+  const errorContext = context.error;
+  if (!errorContext || !(errorContext instanceof Error)) {
+    return { ...context } as LoggerContext;
+  }
+
+  return {
+    ...context,
+    error: serializeError(errorContext),
+  };
+}
+
+function enrichContextWithSentryTraceId(context: LoggerContext): LoggerContext {
+  if (!sentry) {
+    return { ...context };
+  }
+
+  const traceId = getTraceId();
+  if (!traceId) {
+    return { ...context };
+  }
+
+  return {
+    ...context,
+    sentryTraceId: traceId,
+  };
+}
+
 function enrichContextWithDebugInfo(
-  override: LoggerContext = {},
+  context: LoggerContext = {},
 ): LoggerContext {
   return {
+    ...context,
     callName: getCallName(),
     fileName: getFileName(),
-    ...override,
   };
 }
 
