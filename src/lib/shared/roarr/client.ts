@@ -1,19 +1,30 @@
 import { Roarr, logLevels, type LogLevelName } from 'roarr';
 import callsites from 'callsites';
 import { config } from '$lib/server/core/config';
-import type { JsonObject, LoggerLoggingMethodName } from './types';
+import type {
+  LoggerContext,
+  LoggerContextWithError,
+  LoggerLoggingMethodName,
+} from './types';
+import { serializeError } from 'serialize-error';
 
 export const roarr = (function () {
   const createLogger = (methodName: LoggerLoggingMethodName) => {
-    return (message: string, context: JsonObject = {}) => {
+    return (message: string, context: LoggerContextWithError = {}) => {
       if (!shouldBeLogged(methodName)) {
         return;
       }
 
+      const contextClone = { ...context } as LoggerContext;
+      const errorContext = contextClone.error;
+      if (errorContext && errorContext instanceof Error) {
+        contextClone.error = serializeError(errorContext);
+      }
+
       Roarr[methodName](
         config.roarr.isDebugContextShown
-          ? enrichContextWithDebugInfo(context)
-          : context,
+          ? enrichContextWithDebugInfo(contextClone)
+          : contextClone,
         message,
       );
     };
@@ -36,7 +47,7 @@ export const roarr = (function () {
     },
     {} as Record<
       LoggerLoggingMethodName,
-      (message: string, context?: JsonObject) => void
+      (message: string, context?: LoggerContextWithError) => void
     >,
   );
 
@@ -51,7 +62,9 @@ function shouldBeLogged(methodName: LoggerLoggingMethodName): boolean {
   return requestedLogLevel >= minLogLevel;
 }
 
-function enrichContextWithDebugInfo(override: JsonObject = {}): JsonObject {
+function enrichContextWithDebugInfo(
+  override: LoggerContext = {},
+): LoggerContext {
   return {
     callName: getCallName(),
     fileName: getFileName(),
