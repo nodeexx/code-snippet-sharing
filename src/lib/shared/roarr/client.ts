@@ -9,6 +9,7 @@ import type {
 import { serializeError } from 'serialize-error';
 import { sentry } from '../sentry';
 import { getTraceId } from '../sentry/utils';
+import type { SeverityLevel } from '../sentry/types';
 
 export const roarr = (function () {
   const createLogger = (methodName: LoggerLoggingMethodName) => {
@@ -26,6 +27,13 @@ export const roarr = (function () {
           : contextClone,
         message,
       );
+
+      sentry?.addBreadcrumb({
+        type: 'default',
+        category: 'console',
+        message: JSON.stringify({ message, context: contextClone }),
+        level: convertLogLevelNameRoarrToSentry(methodName),
+      });
     };
   };
 
@@ -118,4 +126,19 @@ function getFileName(): string {
     callsites()[3]?.getFileName() ?? callsites()[3]?.getEvalOrigin() ?? '';
 
   return fileName.replace(config.folders.root, '');
+}
+
+function convertLogLevelNameRoarrToSentry(
+  methodName: LoggerLoggingMethodName,
+): SeverityLevel {
+  const methodNameWithoutOnce = methodName.replace('Once', '');
+
+  switch (methodNameWithoutOnce) {
+    case 'trace':
+      return 'debug';
+    case 'warn':
+      return 'warning';
+    default:
+      return methodName as SeverityLevel;
+  }
 }
