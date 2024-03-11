@@ -13,7 +13,11 @@ import type { SeverityLevel } from '../sentry/types';
 
 export const roarr = (function () {
   const createLogger = (methodName: LoggerLoggingMethodName) => {
-    return (message: string, context: LoggerContextWithError = {}) => {
+    return (
+      message: string,
+      context: LoggerContextWithError = {},
+      stackLevel: number = 3,
+    ) => {
       if (!shouldBeLogged(methodName)) {
         return;
       }
@@ -23,7 +27,7 @@ export const roarr = (function () {
 
       Roarr[methodName](
         config.roarr.isDebugContextShown
-          ? enrichContextWithDebugInfo(contextClone)
+          ? enrichContextWithDebugInfo(contextClone, stackLevel)
           : contextClone,
         message,
       );
@@ -54,7 +58,11 @@ export const roarr = (function () {
     },
     {} as Record<
       LoggerLoggingMethodName,
-      (message: string, context?: LoggerContextWithError) => void
+      (
+        message: string,
+        context?: LoggerContextWithError,
+        stackLevel?: number,
+      ) => void
     >,
   );
 
@@ -101,18 +109,21 @@ function enrichContextWithSentryTraceId(context: LoggerContext): LoggerContext {
 
 function enrichContextWithDebugInfo(
   context: LoggerContext = {},
+  stackLevel: number = 3,
 ): LoggerContext {
   return {
     ...context,
-    callName: getCallName(),
-    fileName: getFileName(),
+    callName: getCallName(stackLevel),
+    fileName: getFileName(stackLevel),
   };
 }
 
-function getCallName(): string {
-  const typeName = callsites()[3]?.getTypeName() ?? '';
+function getCallName(stackLevel: number = 3): string {
+  const typeName = callsites()[stackLevel]?.getTypeName() ?? '';
   const functionName =
-    callsites()[3]?.getFunctionName() ?? callsites()[3]?.getMethodName() ?? '';
+    callsites()[3]?.getFunctionName() ??
+    callsites()[stackLevel]?.getMethodName() ??
+    '';
 
   if (typeName) {
     return `${typeName}.${functionName}`;
@@ -121,9 +132,11 @@ function getCallName(): string {
   return functionName;
 }
 
-function getFileName(): string {
+function getFileName(stackLevel: number = 3): string {
   const fileName =
-    callsites()[3]?.getFileName() ?? callsites()[3]?.getEvalOrigin() ?? '';
+    callsites()[stackLevel]?.getFileName() ??
+    callsites()[stackLevel]?.getEvalOrigin() ??
+    '';
 
   return fileName.replace(config.folders.root, '');
 }
