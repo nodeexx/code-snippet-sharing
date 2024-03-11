@@ -14,6 +14,7 @@ import {
 import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
+import { roarr } from '$lib/shared/roarr';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({
@@ -22,6 +23,8 @@ setupSentryClient({
   origin: config.origin,
   integrations: [...getServerSentryIntegrations(config.sentry.organization)],
 });
+
+roarr.info('Starting the app server...');
 
 export const handle = (async (input) => {
   const maintenanceModeHandles: Handle[] = [maintenanceModeHandle];

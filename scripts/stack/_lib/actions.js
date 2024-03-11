@@ -152,10 +152,14 @@ export function runLocalApp() {
   console.log('app (local): running');
 
   try {
-    execSync('npx vite dev', {
-      stdio: 'inherit',
-      env: process.env,
-    });
+    execSync(
+      'npx vite dev | npx roarr --include-date true --output-format pretty', // pretty | json
+      {
+        stdio: 'inherit',
+        shell: '/bin/bash',
+        env: process.env,
+      },
+    );
   } catch (e) {
     console.log('app (local): exited');
   }
