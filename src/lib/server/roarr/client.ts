@@ -23,6 +23,7 @@ export const roarr = (function () {
       }
 
       let contextClone = serializeErrorInContext(context);
+      contextClone = enrichContextWithLogType(contextClone);
       contextClone = enrichContextWithSentryTraceId(contextClone);
 
       Roarr[methodName](
@@ -115,6 +116,13 @@ function enrichContextWithDebugInfo(
     ...context,
     callName: getCallName(stackLevel),
     fileName: getFileName(stackLevel),
+  };
+}
+
+function enrichContextWithLogType(context: LoggerContext): LoggerContext {
+  return {
+    logType: 'app',
+    ...context,
   };
 }
 

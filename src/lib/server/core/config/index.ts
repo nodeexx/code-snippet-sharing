@@ -65,5 +65,8 @@ export const config = {
     get isDebugContextShown(): boolean {
       return privateEnv.ROARR_SHOW_DEBUG_CONTEXT === 'true';
     },
+    get isAccessLoggingEnabled(): boolean {
+      return privateEnv.ROARR_ACCESS_LOG === 'true';
+    },
   },
 };
