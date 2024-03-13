@@ -29,6 +29,10 @@ services:
                 - VITE_SENTRY_ORG=${VITE_SENTRY_ORG}
                 - VITE_SENTRY_PROJECT=${VITE_SENTRY_PROJECT}
                 - VITE_SENTRY_AUTH_TOKEN=${VITE_SENTRY_AUTH_TOKEN}
+                - ROARR_LOG=${ROARR_LOG}
+                - ROARR_MIN_LOG_LEVEL=${ROARR_MIN_LOG_LEVEL}
+                - ROARR_SHOW_DEBUG_CONTEXT=${ROARR_SHOW_DEBUG_CONTEXT}
+                - ROARR_ACCESS_LOG=${ROARR_ACCESS_LOG}
         privileged: true
         pid: host
         network_mode: host

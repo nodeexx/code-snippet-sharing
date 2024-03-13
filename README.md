@@ -143,6 +143,11 @@ Backend only
     -   Optional
     -   Values: `true` to enable, anything else to disable
     -   Default: empty
+-   `ROARR_ACCESS_LOG`
+    -   Whether to output HTTP access logs
+    -   Optional
+    -   Values: `true` to enable, anything else to disable
+    -   Default: empty
 
 Backend and Frontend
 
