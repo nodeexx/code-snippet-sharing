@@ -1,5 +1,6 @@
 import {
   checkMandatoryPrivateEnvVarsHandle,
+  httpLogHandle,
   maintenanceModeHandle,
 } from '$lib/server/core/hooks';
 import { addAuthDataToLocalHandle } from '$lib/server/lucia/hooks';
@@ -27,10 +28,14 @@ setupSentryClient({
 roarr.info('Starting the app server...');
 
 export const handle = (async (input) => {
-  const maintenanceModeHandles: Handle[] = [maintenanceModeHandle];
+  const maintenanceModeHandles: Handle[] = [
+    httpLogHandle,
+    maintenanceModeHandle,
+  ];
   const nonMaintenanceModeHandles: Handle[] = [
     checkMandatoryPrivateEnvVarsHandle,
     addAuthDataToLocalHandle,
+    httpLogHandle,
   ];
 
   if (sentry) {
