@@ -7,9 +7,9 @@ import type {
   LoggerLoggingMethodName,
 } from './types';
 import { serializeError } from 'serialize-error';
-import { sentry } from '../sentry';
-import { getTraceId } from '../sentry/utils';
-import type { SeverityLevel } from '../sentry/types';
+import { sentry } from '$lib/shared/sentry';
+import { getTraceId } from '$lib/shared/sentry/utils';
+import type { SeverityLevel } from '$lib/shared/sentry/types';
 
 export const roarr = (function () {
   const createLogger = (methodName: LoggerLoggingMethodName) => {

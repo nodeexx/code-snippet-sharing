@@ -14,7 +14,7 @@ import {
 import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
-import { roarr } from '$lib/shared/roarr';
+import { roarr } from '$lib/server/roarr';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({
