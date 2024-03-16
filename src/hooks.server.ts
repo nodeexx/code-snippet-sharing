@@ -1,6 +1,5 @@
 import {
   checkMandatoryPrivateEnvVarsHandle,
-  httpLogHandle,
   maintenanceModeHandle,
 } from '$lib/server/core/hooks';
 import { addAuthDataToLocalHandle } from '$lib/server/lucia/hooks';
@@ -16,6 +15,7 @@ import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
 import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
 import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
 import { roarr } from '$lib/server/roarr';
+import { httpLogHandle } from '$lib/server/roarr/hooks';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({
