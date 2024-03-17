@@ -22,6 +22,16 @@ export const config = {
     organization: PUBLIC_SENTRY_ORGANIZATION,
     projectId: getSentryProjectId(),
   },
+  logger: {
+    get minLogLevel(): string {
+      return globalThis.localStorage.getItem('LOGGER_MIN_LOG_LEVEL') ?? 'info';
+    },
+    get isDebugContextShown(): boolean {
+      return (
+        globalThis.localStorage.getItem('LOGGER_SHOW_DEBUG_CONTEXT') === 'true'
+      );
+    },
+  },
 };
 
 function getSentryProjectId(): number | undefined {

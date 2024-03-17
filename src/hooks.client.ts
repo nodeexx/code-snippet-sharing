@@ -7,6 +7,7 @@ import {
   getClientSentryIntegrations,
   setClientPosthogSessionId,
 } from '$lib/client/sentry/utils';
+import { logger } from '$lib/client/logging';
 
 setupBrowserPosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({
@@ -22,6 +23,8 @@ setupSentryClient({
   ],
 });
 setClientPosthogSessionId();
+
+logger.debug('Client app started');
 
 export const handleError = handleErrorWithSentry((async ({ error }) => {
   const message = 'Internal Client Error';
