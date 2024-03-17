@@ -11,6 +11,9 @@ export const logLevels = {
   error: 50,
 } as const;
 
+/*
+ * Colors copied from https://github.com/gajus/roarr-browser-log-writer
+ */
 export const logLevelColors = {
   debug: {
     backgroundColor: '#666',
@@ -36,6 +39,9 @@ export const logLevelColors = {
   [key in LogLevelName]: { backgroundColor: string; color: string };
 };
 
+/*
+ * Colors copied from https://github.com/gajus/roarr-browser-log-writer
+ */
 export const logTimestampColors = {
   debug: {
     color: '#999',
