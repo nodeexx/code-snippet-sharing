@@ -1,3 +1,6 @@
+import { posthog } from '$lib/client/posthog';
+import { getSessionId } from '$lib/client/posthog/utils';
+import type { LoggerContext } from '$lib/shared/logging/types';
 import type { LogLevelName } from '../types';
 
 export const logLevels = {
@@ -52,3 +55,21 @@ export const logTimestampColors = {
 } satisfies {
   [key in LogLevelName]: { color: string };
 };
+
+export function enrichLoggerContextWithPosthogSessionId(
+  context: LoggerContext,
+): LoggerContext {
+  if (!posthog) {
+    return { ...context };
+  }
+
+  const sessionId = getSessionId();
+  if (!sessionId) {
+    return { ...context };
+  }
+
+  return {
+    ...context,
+    posthogSessionId: getSessionId(),
+  };
+}
