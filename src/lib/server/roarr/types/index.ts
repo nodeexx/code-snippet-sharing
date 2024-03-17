@@ -3,11 +3,12 @@
  * Don't import from `node_modules/roarr/src/types.ts` directly to avoid type errors.
  */
 
+import type { LoggerContext } from '$lib/shared/logging/types';
 import type { LogLevelName } from 'roarr';
 
-export type LoggerLoggingMethodName =
-  | LoggerLoggingMethodNameNoOnce
-  | LoggerLoggingMethodNameOnce;
+export type ServerLoggerLoggingMethodName =
+  | ServerLoggerLoggingMethodNameNoOnce
+  | ServerLoggerLoggingMethodNameOnce;
 
 export type JsonObject = {
   [k: string]: JsonValue;
@@ -22,12 +23,12 @@ export type JsonValue =
   | null
   | undefined;
 
-export interface LoggerContext extends JsonObject {
+export interface ServerLoggerContext extends JsonObject, LoggerContext {
   error?: JsonValue;
   sentryTraceId?: string;
 }
 
-export interface LoggerContextWithError {
+export interface ServerLoggerContextWithError extends LoggerContext {
   error?: Error | JsonValue;
   sentryTraceId?: string;
   // WARN: Other properties should not have an `Error` type, but I don't know
@@ -35,5 +36,6 @@ export interface LoggerContextWithError {
   [k: string]: Error | JsonValue;
 }
 
-type LoggerLoggingMethodNameNoOnce = LogLevelName;
-type LoggerLoggingMethodNameOnce = `${LoggerLoggingMethodNameNoOnce}Once`;
+type ServerLoggerLoggingMethodNameNoOnce = LogLevelName;
+type ServerLoggerLoggingMethodNameOnce =
+  `${ServerLoggerLoggingMethodNameNoOnce}Once`;
