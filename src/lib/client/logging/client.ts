@@ -5,7 +5,12 @@ import {
   enrichLoggerContextWithSentryTraceId,
 } from '$lib/shared/logging/utils';
 import type { LogLevelName } from './types';
-import { logLevelColors, logLevels, logTimestampColors } from './utils';
+import {
+  enrichLoggerContextWithPosthogSessionId,
+  logLevelColors,
+  logLevels,
+  logTimestampColors,
+} from './utils';
 
 export const logger = (function () {
   const createLogger = (methodName: LogLevelName) => {
@@ -18,7 +23,8 @@ export const logger = (function () {
         return;
       }
 
-      const contextClone = enrichLoggerContextWithSentryTraceId(context);
+      let contextClone = enrichLoggerContextWithSentryTraceId(context);
+      contextClone = enrichLoggerContextWithPosthogSessionId(contextClone);
 
       console[methodName](
         ...createLogPrefixStrings(methodName),
