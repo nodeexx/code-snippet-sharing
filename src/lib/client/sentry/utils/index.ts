@@ -1,4 +1,5 @@
 import { posthog } from '$lib/client/posthog';
+import { getSessionId } from '$lib/client/posthog/utils';
 import { sentry } from '$lib/shared/sentry';
 import type { Integration } from '@sentry/types';
 
@@ -17,6 +18,6 @@ export function getClientSentryIntegrations(
 
 export function setClientPosthogSessionId(): void {
   if (posthog) {
-    sentry?.setTag(POSTHOG_SESSION_ID_TAG, posthog.get_session_id());
+    sentry?.setTag(POSTHOG_SESSION_ID_TAG, getSessionId() as string);
   }
 }
