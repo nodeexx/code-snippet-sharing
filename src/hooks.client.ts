@@ -24,7 +24,7 @@ setupSentryClient({
 });
 setClientPosthogSessionId();
 
-logger.debug('Client app started');
+logger.info('Starting the app client...');
 
 export const handleError = handleErrorWithSentry((async ({ error }) => {
   const message = 'Internal Client Error';
