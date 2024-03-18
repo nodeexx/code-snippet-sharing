@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 5am on the first day of the month"],
+  "prConcurrentLimit": 1,
+  "separateMajorMinor": false,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "all dependencies",
+      "groupSlug": "update-all-dependencies"
+    }
+  ]
+}
