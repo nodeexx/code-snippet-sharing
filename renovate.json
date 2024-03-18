@@ -4,6 +4,8 @@
   "schedule": ["before 5am on the first day of the month"],
   "prConcurrentLimit": 1,
   "separateMajorMinor": false,
+  "internalChecksFilter": "strict",
+  "minimumReleaseAge": "3",
   "packageRules": [
     {
       "matchUpdateTypes": ["major", "minor", "patch"],
