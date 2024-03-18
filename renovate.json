@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 5am on the first day of the month"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dependencies (minor, patch)",
+      "groupSlug": "minor-patch-dependency-updates"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "groupName": "dependencies",
+      "groupSlug": "dependency-upgrades"
+    }
+  ]
+}
