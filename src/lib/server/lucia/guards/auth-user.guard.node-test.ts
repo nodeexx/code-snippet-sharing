@@ -32,7 +32,6 @@ describe(guardAuthUser.name, () => {
 
     expect(result).toEqual({
       authUser: locals.authUser,
-      doesRequireAuth: true,
     });
     expect(redirectSpy).toHaveBeenCalledTimes(0);
   });

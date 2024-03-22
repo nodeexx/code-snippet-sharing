@@ -27,7 +27,6 @@ declare global {
     interface PageData {
       flash?: GlobalMessage;
       authUser: import('$lib/shared/lucia/types').AuthUser | null;
-      doesRequireAuth?: boolean;
     }
 
     // interface Platform {}
