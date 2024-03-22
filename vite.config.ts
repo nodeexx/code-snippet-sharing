@@ -17,12 +17,12 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
     },
     server: {
-      host: env['VITE_DEV_HOST'] ?? 'localhost',
-      port: parseInt(env['VITE_DEV_PORT'] ?? '') || 5173,
+      host: 'localhost',
+      port: 3000,
       strictPort: true,
     },
     preview: {
-      port: parseInt(env['VITE_PREVIEW_PORT'] ?? '') || 4173,
+      port: 3000,
     },
     plugins: [
       ...getWrappedSentrySvelteKitPlugin(mode, env),
