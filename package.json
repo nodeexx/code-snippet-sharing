@@ -26,7 +26,6 @@
     "test:unit:dom:coverage": "npm run test:unit:dom -- --coverage",
     "test:unit:dom:debug": "npm run test:unit:dom -- --single-thread",
     "test:unit:browser": "vitest run --config vitest.browser.config.ts",
-    "test:unit:browser:learning": "vitest run --config vitest.browser.learning.config.ts",
     "test:api:only": "playwright test --config playwright.api.config.ts",
     "test:api:ui:only": "npm run test:api:only -- --ui",
     "test:e2e:only": "playwright test --config playwright.e2e.config.ts",
