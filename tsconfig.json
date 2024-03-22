@@ -26,7 +26,7 @@
     "./.*.ts",
     "./scripts/app/**/*.js",
     "./scripts/stack/**/*.js",
-    "./scripts/ci/**/*.js"
+    "./scripts/testing/**/*.js"
   ],
   "compilerOptions": {
     "useDefineForClassFields": true,
