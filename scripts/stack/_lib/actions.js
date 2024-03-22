@@ -136,9 +136,7 @@ export async function startLocalApp() {
   await sleep(5000);
 
   try {
-    await waitUntilServiceIsAvailable(
-      `http://localhost:${process.env['VITE_DEV_PORT']}`,
-    );
+    await waitUntilServiceIsAvailable('http://localhost:3000');
   } catch (error) {
     console.error(error);
     console.error(`app (local): failed`);
@@ -332,7 +330,7 @@ export function stopLocalApp() {
   try {
     console.log('app (local): stopping');
     const appPid = execSync(
-      `ss -lnp | grep :${process.env['VITE_DEV_PORT']} | sed 's/.*pid=\\(.*\\),.*/\\1/g'`,
+      `ss -lnp | grep :3000 | sed 's/.*pid=\\(.*\\),.*/\\1/g'`,
       { env: process.env },
     )
       .toString()
