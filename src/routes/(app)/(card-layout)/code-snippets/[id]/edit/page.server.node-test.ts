@@ -62,7 +62,6 @@ describe(load.name, () => {
     } as CodeSnippet);
     vi.spyOn(libServerLuciaGuardsModule, 'guardAuthUser').mockReturnValue({
       authUser: mockAuthUser,
-      doesRequireAuth: true,
     });
     vi.spyOn(
       libServerCodeSnippetsModule,

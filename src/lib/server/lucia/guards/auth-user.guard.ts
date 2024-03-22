@@ -8,7 +8,6 @@ export function guardAuthUser(locals: App.Locals, url: URL): App.PageData {
   if (locals.authUser) {
     return {
       authUser: locals.authUser,
-      doesRequireAuth: true,
     };
   }
 
