@@ -1,5 +1,8 @@
 {
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -50,9 +53,21 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
     // Identation settings -> .editorconfig
   },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // Identation settings -> .editorconfig
+  },
   /* TypeScript */
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  // "typescript.inlayHints.variableTypes.enabled": true,
+  // "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  // "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.enabled": true,
   /* GitHub Copilot */
   "github.copilot.enable": {
     "*": true,
@@ -75,11 +90,11 @@
   /* Wallaby.js */
   "wallaby.startAutomatically": false,
   /* ESLint */
-  // "eslint.enable": true,
-  // "eslint.format.enable": true,
+  "eslint.enable": true,
+  "eslint.format.enable": true,
   "eslint.validate": ["javascript", "typescript", "svelte"],
   /* Prettier */
-  // "prettier.enable": true,
+  "prettier.enable": true,
   /* Stylelint */
   "stylelint.validate": ["postcss", "svelte"],
   /* cSpell */
