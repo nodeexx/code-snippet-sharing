@@ -24,6 +24,7 @@
     "stordahl.sveltekit-snippets",
     "proverbialninja.svelte-extractor",
     "vunguyentuan.vscode-postcss",
-    "wix.vscode-import-cost"
+    "wix.vscode-import-cost",
+    "vitest.explorer"
   ]
 }
