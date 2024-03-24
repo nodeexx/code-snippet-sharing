@@ -3,25 +3,28 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
     project: './tsconfig.json',
     extraFileExtensions: ['.svelte'],
   },
-  plugins: [
-    '@typescript-eslint',
-    'import-no-duplicates-prefix-resolved-path',
-    'prettier',
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
   env: {
     browser: true,
     es2017: true,
     node: true,
   },
+  plugins: [
+    'import',
+    'import-no-duplicates-prefix-resolved-path',
+    'simple-import-sort',
+    '@typescript-eslint',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/strict-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
+    'prettier',
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.cjs', '.js', '.ts'],
@@ -33,10 +36,20 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 'error',
     'no-unused-vars': 'off',
     // Useful for triggering Svelte reactivity
     'no-self-assign': 'off',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'off',
+    'import-no-duplicates-prefix-resolved-path/no-duplicates': [
+      'error',
+      {
+        prefixResolvedPathWithImportName: true,
+      },
+    ],
     '@typescript-eslint/no-unused-vars': [
       'error',
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
@@ -50,6 +63,18 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-namespace': 'off',
+    '@typescript-eslint/consistent-indexed-object-style': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-throw-literal': 'off',
+    '@typescript-eslint/unbound-method': 'off',
+    '@typescript-eslint/no-unnecessary-type-arguments': 'off',
+    '@typescript-eslint/prefer-reduce-type-parameter': 'off',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'off',
+    '@typescript-eslint/no-extraneous-class': 'off',
   },
   overrides: [
     {
@@ -62,9 +87,24 @@ module.exports = {
       rules: {},
     },
     {
+      files: ['./scripts/testing/load/tests/**/*.js'],
+      rules: {
+        'import/no-unresolved': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+      },
+    },
+    {
       files: ['**/*.cjs', '**/*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+    {
+      files: ['src/**/*.{node-test,dom-test}.ts'],
+      rules: {
+        '@typescript-eslint/require-await': 'off',
       },
     },
     {
