@@ -11,9 +11,9 @@ export type ServerLoggerLoggingMethodName =
   | ServerLoggerLoggingMethodNameNoOnce
   | ServerLoggerLoggingMethodNameOnce;
 
-export type JsonObject = {
+export interface JsonObject {
   [k: string]: JsonValue;
-};
+}
 export type JsonValue =
   | JsonObject
   | JsonValue[]

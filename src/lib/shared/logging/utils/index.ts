@@ -26,7 +26,7 @@ export function enrichLoggerContextWithSentryTraceId<T extends LoggerContext>(
 export function enrichContextWithDebugInfo(
   context: LoggerContext = {},
   rootFolder = '',
-  stackLevel: number = 3,
+  stackLevel = 3,
 ): LoggerContext {
   return {
     ...context,
@@ -35,7 +35,7 @@ export function enrichContextWithDebugInfo(
   };
 }
 
-function getCallName(stackLevel: number = 3): string {
+function getCallName(stackLevel = 3): string {
   const typeName = callsites()[stackLevel]?.getTypeName() ?? '';
   const functionName =
     callsites()[3]?.getFunctionName() ??
@@ -49,7 +49,7 @@ function getCallName(stackLevel: number = 3): string {
   return functionName;
 }
 
-function getFileName(rootFolder = '', stackLevel: number = 3): string {
+function getFileName(rootFolder = '', stackLevel = 3): string {
   const fileName =
     callsites()[stackLevel]?.getFileName() ??
     callsites()[stackLevel]?.getEvalOrigin() ??

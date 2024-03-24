@@ -7,11 +7,11 @@ declare global {
     type Auth = import('$lib/server/lucia/types').Auth;
     // Database user = AuthUserSchema
     // Properties of the auth user schema that Lucia can be aware of
-    type DatabaseUserAttributes = {
+    interface DatabaseUserAttributes {
       email: string;
       email_verified: boolean;
       created_at?: Date;
-    };
+    }
     type DatabaseSessionAttributes = Record<string, never>;
   }
 
