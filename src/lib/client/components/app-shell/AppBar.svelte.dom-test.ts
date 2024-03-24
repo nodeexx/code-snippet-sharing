@@ -1,5 +1,6 @@
-import { describe, it, expect, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, describe, expect, it } from 'vitest';
+
 import Component from './AppBar.svelte';
 
 describe(Component.name, () => {

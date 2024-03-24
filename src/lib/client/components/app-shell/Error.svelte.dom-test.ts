@@ -1,15 +1,17 @@
+import { cleanup, render } from '@testing-library/svelte';
 import {
-  describe,
-  it,
-  expect,
   afterEach,
-  vi,
   beforeEach,
+  describe,
+  expect,
+  it,
   type MockInstance,
+  vi,
 } from 'vitest';
-import Component from './Error.svelte';
-import { render, cleanup } from '@testing-library/svelte';
+
 import * as appNavigationModule from '$app/navigation';
+
+import Component from './Error.svelte';
 
 describe(Component.name, () => {
   let invalidateAllSpy: MockInstance;

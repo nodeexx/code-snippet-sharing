@@ -1,5 +1,6 @@
-import { exitIfEnvVarsNotSet } from '$lib/server/core/utils';
 import type { Handle } from '@sveltejs/kit';
+
+import { exitIfEnvVarsNotSet } from '$lib/server/core/utils';
 
 export const checkMandatoryPrivateEnvVarsHandle = (async ({
   event,

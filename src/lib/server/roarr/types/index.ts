@@ -3,8 +3,9 @@
  * Don't import from `node_modules/roarr/src/types.ts` directly to avoid type errors.
  */
 
-import type { LoggerContext } from '$lib/shared/logging/types';
 import type { LogLevelName } from 'roarr';
+
+import type { LoggerContext } from '$lib/shared/logging/types';
 
 export type ServerLoggerLoggingMethodName =
   | ServerLoggerLoggingMethodNameNoOnce

@@ -1,5 +1,7 @@
-import { sentry } from '$lib/shared/sentry';
 import type { SeverityLevel } from '@sentry/sveltekit';
+
+import { sentry } from '$lib/shared/sentry';
+
 import { roarr } from '../client';
 
 export function logError(error: Error, level: SeverityLevel = 'error'): void {

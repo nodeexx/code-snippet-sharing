@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { GET } from './+server';
+
 import * as libServerCoreConfigModule from '$lib/server/core/config';
+
+import { GET } from './+server';
 
 describe(GET.name, () => {
   afterEach(async () => {

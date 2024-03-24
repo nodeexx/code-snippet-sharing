@@ -1,8 +1,9 @@
-import { page } from '$app/stores';
-import type { Unsubscriber } from 'svelte/store';
-import { sentry, checkIfSentryClientConfigured } from '$lib/shared/sentry';
-import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
+import type { Unsubscriber } from 'svelte/store';
+
+import { page } from '$app/stores';
+import type { AuthUser } from '$lib/shared/lucia/types';
+import { checkIfSentryClientConfigured, sentry } from '$lib/shared/sentry';
 
 // NOTE: It does not make sense to use Svelte custom store, because there is
 // no value to subscribe to. Reactivity is also not needed. Therefor class is

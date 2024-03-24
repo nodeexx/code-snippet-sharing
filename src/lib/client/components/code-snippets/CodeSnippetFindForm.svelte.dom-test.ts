@@ -1,8 +1,10 @@
-import { describe, it, expect, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './CodeSnippetFindForm.svelte';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
 import { getMockAuthUser } from '$lib/shared/lucia/testing';
+
+import Component from './CodeSnippetFindForm.svelte';
 
 describe(Component.name, () => {
   const actionPath = '/';

@@ -3,6 +3,7 @@
  */
 
 import { defineConfig, mergeConfig } from 'vitest/config';
+
 import commonConfig from './vitest.common.config';
 
 export default defineConfig((configEnv) =>

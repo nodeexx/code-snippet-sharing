@@ -1,15 +1,17 @@
+import * as sveltejsKitModule from '@sveltejs/kit';
 import {
+  afterEach,
+  beforeEach,
   describe,
   expect,
   it,
-  vi,
-  beforeEach,
-  afterEach,
   type MockInstance,
+  vi,
 } from 'vitest';
-import { guardAuthUser } from './auth-user.guard';
-import * as sveltejsKitModule from '@sveltejs/kit';
+
 import { getMockAuthUser } from '$lib/shared/lucia/testing';
+
+import { guardAuthUser } from './auth-user.guard';
 
 describe(guardAuthUser.name, () => {
   let redirectSpy: MockInstance;

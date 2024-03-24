@@ -1,5 +1,6 @@
-import { describe, it, expect, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import Component from './PageMessage.svelte';
 
 describe(Component.name, () => {

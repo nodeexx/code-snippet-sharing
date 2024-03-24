@@ -1,4 +1,5 @@
 import { test } from '@playwright/test';
+
 import { config } from '../../../../common/lib/config';
 import { HomePage } from '../../../page-objects/pages/home.page';
 

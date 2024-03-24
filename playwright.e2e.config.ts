@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
-import commonConfig from './playwright.common.config.ts';
 import path from 'path';
+
+import commonConfig from './playwright.common.config.ts';
 import {
   COMMON_SAVED_STATES_FOLDER,
   E2E_REPORTS_FOLDER,

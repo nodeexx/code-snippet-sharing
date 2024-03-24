@@ -1,6 +1,7 @@
-import { test, expect, type Page } from '@playwright/test';
-import { HomePage } from '../../../e2e/page-objects/pages/home.page';
+import { expect, type Page, test } from '@playwright/test';
+
 import { config } from '../../../common/lib/config';
+import { HomePage } from '../../../e2e/page-objects/pages/home.page';
 
 test.describe('POST /profile?/sign-out', () => {
   test('successfully logs user out and redirects to home page', async ({

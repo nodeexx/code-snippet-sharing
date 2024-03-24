@@ -1,8 +1,9 @@
 <script lang="ts">
+import { onMount } from 'svelte';
+
+import IconRotateRight from '~icons/fa6-solid/rotate-right';
 import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
 import type { AuthUser } from '$lib/shared/lucia/types';
-import { onMount } from 'svelte';
-import IconRotateRight from '~icons/fa6-solid/rotate-right';
 
 export let actionPath: string;
 export let query: FindCodeSnippetsQuery;

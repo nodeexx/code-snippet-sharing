@@ -1,8 +1,9 @@
-import {
-  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
-  encodeOriginalPath,
-} from '$lib/shared/core/utils';
 import { redirect } from '@sveltejs/kit';
+
+import {
+  encodeOriginalPath,
+  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
+} from '$lib/shared/core/utils';
 
 export function guardAuthUser(locals: App.Locals, url: URL): App.PageData {
   if (locals.authUser) {

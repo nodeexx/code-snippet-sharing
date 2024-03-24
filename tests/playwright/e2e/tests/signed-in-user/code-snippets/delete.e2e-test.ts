@@ -1,7 +1,8 @@
 import { test } from '@playwright/test';
-import { HomePage } from '../../../page-objects/pages/home.page';
-import { CodeSnippetViewDetailsPage } from '../../../page-objects/pages/code-snippets/view-details.page';
+
 import { config } from '../../../../common/lib/config';
+import { CodeSnippetViewDetailsPage } from '../../../page-objects/pages/code-snippets/view-details.page';
+import { HomePage } from '../../../page-objects/pages/home.page';
 
 const CODE_SNIPPET = config.testData.codeSnippets.forDeletion;
 

@@ -1,7 +1,8 @@
 import { test } from '@playwright/test';
-import { HomePage } from '../../../page-objects/pages/home.page.js';
-import { CodeSnippetCreatePage } from '../../../page-objects/pages/code-snippets/create.page.js';
+
 import { config } from '../../../../common/lib/config';
+import { CodeSnippetCreatePage } from '../../../page-objects/pages/code-snippets/create.page.js';
+import { HomePage } from '../../../page-objects/pages/home.page.js';
 
 const CODE_SNIPPET = config.testData.codeSnippets.forCreation;
 

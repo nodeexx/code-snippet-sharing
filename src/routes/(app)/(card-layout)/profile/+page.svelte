@@ -1,12 +1,13 @@
 <script lang="ts">
-import { Alert, Card } from '$lib/client/components/common';
 import { getToastStore } from '@skeletonlabs/skeleton';
 import { superForm } from 'sveltekit-superforms/client';
+
+import { Alert, Card } from '$lib/client/components/common';
+import { config } from '$lib/client/core/config';
 import {
   showToastIfFormMessagePresent,
   showToastOnInternetDisconnect,
 } from '$lib/client/global-messages/utils';
-import { config } from '$lib/client/core/config';
 
 export let data;
 

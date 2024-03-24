@@ -1,9 +1,11 @@
+import * as sveltejsKitModule from '@sveltejs/kit';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import * as libServerCoreConfigModule from '$lib/server/core/config';
+import { ORIGINAL_PATH_URL_QUERY_PARAM_NAME } from '$lib/shared/core/utils';
+
 import { load } from './+page.server';
 import type { PageServerLoadEvent } from './$types';
-import * as libServerCoreConfigModule from '$lib/server/core/config';
-import * as sveltejsKitModule from '@sveltejs/kit';
-import { ORIGINAL_PATH_URL_QUERY_PARAM_NAME } from '$lib/shared/core/utils';
 
 describe(load.name, () => {
   afterEach(async () => {

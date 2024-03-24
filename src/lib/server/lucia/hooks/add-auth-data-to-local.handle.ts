@@ -1,4 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
+
 import { auth } from '../client';
 import { getCurrentAuthSession, getCurrentAuthUserFromSession } from '../utils';
 

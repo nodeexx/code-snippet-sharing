@@ -1,12 +1,14 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './+page.svelte';
-import type { FormSchema } from './+page.server';
-import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
-import type { ToastStore } from '@skeletonlabs/skeleton';
-import { getMockFormValue } from '$lib/shared/superforms/testing';
 import type { CodeSnippet } from '@prisma/client';
+import type { ToastStore } from '@skeletonlabs/skeleton';
+import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { getMockCodeSnippet } from '$lib/shared/code-snippets/testing';
+import { getMockFormValue } from '$lib/shared/superforms/testing';
+
+import type { FormSchema } from './+page.server';
+import Component from './+page.svelte';
 
 describe(Component.name, () => {
   let mockCodeSnippet: CodeSnippet;

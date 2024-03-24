@@ -1,6 +1,8 @@
 import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+
 import { config } from '$lib/server/core/config';
+
+import type { RequestHandler } from './$types';
 
 export const GET = (async () => {
   let status = 'OK';

@@ -1,14 +1,16 @@
-import { guardAuthUser } from '$lib/server/lucia/guards';
+import type { CodeSnippet } from '@prisma/client';
 import { fail } from '@sveltejs/kit';
 import { redirect as redirectWithFlash } from 'sveltekit-flash-message/server';
-import type { Actions, PageServerLoad } from './$types';
-import { codeSnippetsService } from '$lib/server/code-snippets';
 import { message, superValidate } from 'sveltekit-superforms/server';
-import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
+
+import { codeSnippetsService } from '$lib/server/code-snippets';
+import { guardAuthUser } from '$lib/server/lucia/guards';
 import { posthog } from '$lib/server/posthog';
+import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import { POSTHOG_CODE_SNIPPET_CREATED_EVENT_NAME } from '$lib/shared/posthog/constants';
-import type { CodeSnippet } from '@prisma/client';
 import { sentry } from '$lib/shared/sentry';
+
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals, url }) => {
   const authPageData = guardAuthUser(locals, url);

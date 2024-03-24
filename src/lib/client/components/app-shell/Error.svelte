@@ -1,7 +1,8 @@
 <script lang="ts">
+import { onMount } from 'svelte';
+
 import { invalidateAll } from '$app/navigation';
 import { AppShell } from '$lib/client/components/app-shell';
-import { onMount } from 'svelte';
 
 export let showAppBar = true;
 export let title = 'Error';

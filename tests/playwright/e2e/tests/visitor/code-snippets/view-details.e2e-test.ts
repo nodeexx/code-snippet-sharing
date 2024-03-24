@@ -1,6 +1,7 @@
 import { test } from '@playwright/test';
-import { CodeSnippetViewDetailsPage } from '../../../page-objects/pages/code-snippets/view-details.page';
+
 import { config } from '../../../../common/lib/config';
+import { CodeSnippetViewDetailsPage } from '../../../page-objects/pages/code-snippets/view-details.page';
 
 const CODE_SNIPPET = config.testData.codeSnippets.forViewing;
 

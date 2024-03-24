@@ -1,30 +1,32 @@
+import { fail } from '@sveltejs/kit';
+import * as sveltejsKitModule from '@sveltejs/kit';
 import {
   afterEach,
+  beforeEach,
   describe,
   expect,
   it,
-  vi,
   type MockInstance,
-  beforeEach,
+  vi,
 } from 'vitest';
-import { actions, load } from './+page.server';
+
 import { codeSnippetsService } from '$lib/server/code-snippets';
-import type { AuthUser } from '$lib/shared/lucia/types';
-import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import * as libServerCodeSnippetsFormActionsModule from '$lib/server/code-snippets/form-actions';
+import { getMockFormData } from '$lib/server/superforms/testing';
 import {
   getMockLocals,
   getMockPageServerLoadEvent,
   getMockRequest,
   getMockRequestEvent,
 } from '$lib/server/sveltekit/testing';
-import { getMockFormData } from '$lib/server/superforms/testing';
-import * as libServerCodeSnippetsFormActionsModule from '$lib/server/code-snippets/form-actions';
-import { getMockCodeSnippet } from '$lib/shared/code-snippets/testing';
-import type { PageServerLoadEvent, RequestEvent } from './$types';
-import { fail } from '@sveltejs/kit';
-import { getMockFormValue } from '$lib/shared/superforms/testing';
 import type { DeleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
-import * as sveltejsKitModule from '@sveltejs/kit';
+import { getMockCodeSnippet } from '$lib/shared/code-snippets/testing';
+import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import type { AuthUser } from '$lib/shared/lucia/types';
+import { getMockFormValue } from '$lib/shared/superforms/testing';
+
+import { actions, load } from './+page.server';
+import type { PageServerLoadEvent, RequestEvent } from './$types';
 
 describe(load.name, () => {
   let mockLocals: App.Locals;

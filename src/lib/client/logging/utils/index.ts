@@ -1,6 +1,7 @@
 import { posthog } from '$lib/client/posthog';
 import { getSessionId } from '$lib/client/posthog/utils';
 import type { LoggerContext } from '$lib/shared/logging/types';
+
 import type { LogLevelName } from '../types';
 
 export const logLevels = {

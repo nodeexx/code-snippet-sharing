@@ -1,25 +1,27 @@
+import type { Navigation } from '@sveltejs/kit';
+import type { PostHog } from 'posthog-js';
+import { type Writable, writable } from 'svelte/store';
 import {
-  describe,
-  it,
-  expect,
-  beforeEach,
   afterEach,
-  vi,
+  beforeEach,
+  describe,
+  expect,
+  it,
   type Mock,
   type MockInstance,
+  vi,
 } from 'vitest';
-import type { PostHog } from 'posthog-js';
+
+import * as appStoresModule from '$app/stores';
+import { getMockWithType } from '$lib/shared/core/testing';
+import * as libSharedPosthogUtilsModule from '$lib/shared/posthog/utils';
+import { mockAppStoresNavigatingValue } from '$lib/shared/sveltekit/testing';
+
+import * as posthogClientModule from './client';
 import {
   _PageEventTrigger,
   _PosthogDefaultPageEventsCaptureConfigurator,
 } from './posthog-default-page-events-capture.configurator';
-import * as posthogClientModule from './client';
-import { writable, type Writable } from 'svelte/store';
-import type { Navigation } from '@sveltejs/kit';
-import * as appStoresModule from '$app/stores';
-import { mockAppStoresNavigatingValue } from '$lib/shared/sveltekit/testing';
-import { getMockWithType } from '$lib/shared/core/testing';
-import * as libSharedPosthogUtilsModule from '$lib/shared/posthog/utils';
 
 describe(_PosthogDefaultPageEventsCaptureConfigurator.name, () => {
   let configurator: _PosthogDefaultPageEventsCaptureConfigurator;

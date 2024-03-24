@@ -1,20 +1,21 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type MockInstance,
-} from 'vitest';
-import {
-  setupSentryClient,
-  sentry,
-  _resetSentryClient,
-  _areSentryClientConfigurationInputsValid,
-  checkIfSentryClientConfigured,
-} from './client';
 import * as sentrySveltekitModule from '@sentry/sveltekit';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type MockInstance,
+  vi,
+} from 'vitest';
+
+import {
+  _areSentryClientConfigurationInputsValid,
+  _resetSentryClient,
+  checkIfSentryClientConfigured,
+  sentry,
+  setupSentryClient,
+} from './client';
 
 // To avoid "TypeError: Cannot redefine property" error
 vi.mock('@sentry/sveltekit');

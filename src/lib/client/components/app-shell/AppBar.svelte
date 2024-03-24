@@ -1,5 +1,6 @@
 <script lang="ts">
 import { AppBar } from '@skeletonlabs/skeleton';
+
 import IconHouse from '~icons/fa6-solid/house';
 import { AppMenuButton } from '$lib/client/components/app-shell';
 </script>

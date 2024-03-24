@@ -1,7 +1,8 @@
-import { describe, it, expect, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './AppShell.svelte';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, describe, expect, it } from 'vitest';
+
 import { SlotTest } from '../testing';
+import Component from './AppShell.svelte';
 
 describe(Component.name, () => {
   afterEach(() => {

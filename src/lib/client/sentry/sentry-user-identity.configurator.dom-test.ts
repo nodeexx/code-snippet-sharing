@@ -1,20 +1,22 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type Mock,
-} from 'vitest';
-import { _SentryUserIdentityConfigurator } from './sentry-user-identity.configurator';
-import * as libSharedSentryModule from '$lib/shared/sentry';
-import { writable, type Writable } from 'svelte/store';
-import * as appStoresModule from '$app/stores';
 import type { Page } from '@sveltejs/kit';
-import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
-import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import { type Writable, writable } from 'svelte/store';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type Mock,
+  vi,
+} from 'vitest';
+
+import * as appStoresModule from '$app/stores';
 import { getMockWithType } from '$lib/shared/core/testing';
+import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import * as libSharedSentryModule from '$lib/shared/sentry';
+import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+
+import { _SentryUserIdentityConfigurator } from './sentry-user-identity.configurator';
 
 describe(_SentryUserIdentityConfigurator.name, () => {
   let configurator: _SentryUserIdentityConfigurator;

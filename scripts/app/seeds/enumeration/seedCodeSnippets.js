@@ -1,5 +1,6 @@
-import { prisma } from '../../lib/prisma/client.js';
 import { faker } from '@faker-js/faker';
+
+import { prisma } from '../../lib/prisma/client.js';
 
 const POSTGRES_CODE_SNIPPETS_SEQUENCE_NAME = 'code_snippets_id_seq';
 const SEEDED_USER_ID = 'uop6wpmo6m20i6p';

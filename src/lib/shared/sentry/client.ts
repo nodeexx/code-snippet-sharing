@@ -1,6 +1,7 @@
-import { dev } from '$app/environment';
 import * as Sentry from '@sentry/sveltekit';
 import type { Integration } from '@sentry/types';
+
+import { dev } from '$app/environment';
 
 type SentryClient = typeof Sentry;
 

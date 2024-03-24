@@ -1,29 +1,31 @@
+import { OAuthRequestError } from '@lucia-auth/oauth';
+import type { GoogleUser, GoogleUserAuth } from '@lucia-auth/oauth/providers';
+import { type Cookies, error, redirect } from '@sveltejs/kit';
+import type { PostHog } from 'posthog-node';
 import {
   afterEach,
+  beforeEach,
   describe,
   expect,
   it,
-  vi,
   type Mock,
-  beforeEach,
+  vi,
 } from 'vitest';
-import { signInWithGoogle } from './sign-in.utils';
-import { redirect, type Cookies, error } from '@sveltejs/kit';
+
+import * as libServerLuciaModule from '$lib/server/lucia';
+import * as libServerLuciaOauthGoogleModule from '$lib/server/lucia/oauth/google';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import { prisma } from '$lib/server/prisma';
+import type { DatabaseUser } from '$lib/server/prisma/types';
+import { getMockWithType } from '$lib/shared/core/testing';
 import {
   getMockAuthRequest,
   getMockAuthSession,
   getMockAuthUser,
 } from '$lib/shared/lucia/testing';
-import * as libServerLuciaModule from '$lib/server/lucia';
-import * as libServerLuciaOauthGoogleModule from '$lib/server/lucia/oauth/google';
-import { OAuthRequestError } from '@lucia-auth/oauth';
-import type { GoogleUser, GoogleUserAuth } from '@lucia-auth/oauth/providers';
 import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
-import { prisma } from '$lib/server/prisma';
-import type { DatabaseUser } from '$lib/server/prisma/types';
-import * as libServerPosthogModule from '$lib/server/posthog';
-import type { PostHog } from 'posthog-node';
-import { getMockWithType } from '$lib/shared/core/testing';
+
+import { signInWithGoogle } from './sign-in.utils';
 
 interface SignInArgumentsObject {
   url: URL;

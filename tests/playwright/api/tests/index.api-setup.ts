@@ -1,12 +1,13 @@
 import { test as setup } from '@playwright/test';
+
+import { config } from '../../common/lib/config';
 import {
-  signIn,
   saveSignedInUserBeforeSignOutRoleState,
   saveSignedInUserRoleState,
   saveVisitorRoleState,
   seedDb,
+  signIn,
 } from '../../common/lib/setup';
-import { config } from '../../common/lib/config';
 
 setup('setup API', async ({ page, baseURL }) => {
   seedDb();

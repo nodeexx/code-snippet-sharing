@@ -1,9 +1,11 @@
-import { getMockAuthSession } from '$lib/shared/lucia/testing';
+import type { Cookies } from '@sveltejs/kit';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { auth } from '$lib/server/lucia';
+import { getMockAuthSession } from '$lib/shared/lucia/testing';
+
 import { load } from './+layout.server';
 import type { LayoutServerLoadEvent } from './$types';
-import { auth } from '$lib/server/lucia';
-import type { Cookies } from '@sveltejs/kit';
 
 describe(load.name, () => {
   beforeEach(async () => {

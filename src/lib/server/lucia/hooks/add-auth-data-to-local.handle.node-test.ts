@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type * as clientModule from '../client';
 import type * as utilsModule from '../utils';
 import { addAuthDataToLocalHandle } from './add-auth-data-to-local.handle';

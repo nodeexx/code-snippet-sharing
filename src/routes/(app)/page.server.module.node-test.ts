@@ -1,8 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanSearchParamsAndGenerateQuery } from './page.server.module';
+
 import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
 import { getMockAuthUser } from '$lib/shared/lucia/testing';
 import type { AuthUser } from '$lib/shared/lucia/types';
+
+import { cleanSearchParamsAndGenerateQuery } from './page.server.module';
 
 describe(cleanSearchParamsAndGenerateQuery.name, () => {
   let mockAuthUser: AuthUser;

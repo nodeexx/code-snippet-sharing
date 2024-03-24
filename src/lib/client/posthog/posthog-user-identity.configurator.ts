@@ -1,9 +1,11 @@
-import { page } from '$app/stores';
-import type { Unsubscriber } from 'svelte/store';
-import { posthog } from './client';
-import { checkIfPosthogClientConfigured } from '$lib/shared/posthog/utils';
-import type { AuthUser } from '$lib/shared/lucia/types';
 import isEqual from 'lodash/isEqual';
+import type { Unsubscriber } from 'svelte/store';
+
+import { page } from '$app/stores';
+import type { AuthUser } from '$lib/shared/lucia/types';
+import { checkIfPosthogClientConfigured } from '$lib/shared/posthog/utils';
+
+import { posthog } from './client';
 
 // NOTE: It does not make sense to use Svelte custom store, because there is
 // no value to subscribe to. Reactivity is also not needed. Therefor class is

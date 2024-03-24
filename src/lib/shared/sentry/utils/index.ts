@@ -1,5 +1,6 @@
-import { sentry } from '../client';
 import type { SpanContextData } from '@sentry/types';
+
+import { sentry } from '../client';
 
 export function getTraceSpanId(): string | undefined {
   const { traceId, spanId } = getSpanContextData() || {};

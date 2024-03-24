@@ -1,5 +1,6 @@
 <script lang="ts">
 import { AppShell } from '@skeletonlabs/skeleton';
+
 import { AppBar } from '$lib/client/components/app-shell';
 
 export let appBar = true;

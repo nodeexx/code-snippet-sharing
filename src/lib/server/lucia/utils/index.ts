@@ -1,4 +1,5 @@
 import type { AuthRequest } from 'lucia';
+
 import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 
 /**

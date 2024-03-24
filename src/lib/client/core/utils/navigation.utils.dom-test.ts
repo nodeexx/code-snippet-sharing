@@ -1,20 +1,22 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type MockInstance,
-} from 'vitest';
-import * as appNavigationModule from '$app/navigation';
-import { goBack } from './navigation.utils';
-import { writable, type Writable } from 'svelte/store';
 import type { NavigationTarget, Page } from '@sveltejs/kit';
-import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+import { type Writable, writable } from 'svelte/store';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type MockInstance,
+  vi,
+} from 'vitest';
+
+import * as appNavigationModule from '$app/navigation';
 import * as appStoresModule from '$app/stores';
 import * as previousAppPageStoreModule from '$lib/client/core/stores/previous-app-page.store';
+import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+
 import { mockPreviousAppPageValue } from '../stores/testing';
+import { goBack } from './navigation.utils';
 
 describe(goBack.name, () => {
   let previousAppPageStore: Writable<NavigationTarget | undefined>;

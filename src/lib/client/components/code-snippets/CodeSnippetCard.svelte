@@ -1,13 +1,14 @@
 <script lang="ts">
-import { Card } from '$lib/client/components/common';
-import { formatUtcDateTime } from '$lib/shared/core/utils';
 import type { CodeSnippet } from '@prisma/client';
+import type { SuperForm } from 'sveltekit-superforms/client';
+
 import IconPenToSquare from '~icons/fa6-solid/pen-to-square';
 import IconTrash from '~icons/fa6-solid/trash';
+import { Card } from '$lib/client/components/common';
 import type { GlobalMessage } from '$lib/client/global-messages/types';
-import type { SuperForm } from 'sveltekit-superforms/client';
-import type { AuthUser } from '$lib/shared/lucia/types';
 import type { DeleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
+import { formatUtcDateTime } from '$lib/shared/core/utils';
+import type { AuthUser } from '$lib/shared/lucia/types';
 
 export let codeSnippet: CodeSnippet;
 export let codeSnippetDeletionSuperForm: SuperForm<

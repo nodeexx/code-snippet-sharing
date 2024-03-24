@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import {
-  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
   decodeOriginalPath,
   encodeOriginalPath,
   getUrlPathAndQueryParams,
+  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
 } from './url.utils';
 
 describe(getUrlPathAndQueryParams.name, () => {

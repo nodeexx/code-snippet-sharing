@@ -1,6 +1,7 @@
-import { posthog, PostHogSentryIntegration } from '$lib/server/posthog';
-import type { Integration } from '@sentry/types';
 import * as Sentry from '@sentry/sveltekit';
+import type { Integration } from '@sentry/types';
+
+import { posthog, PostHogSentryIntegration } from '$lib/server/posthog';
 import { prisma } from '$lib/server/prisma';
 
 export function getServerSentryIntegrations(

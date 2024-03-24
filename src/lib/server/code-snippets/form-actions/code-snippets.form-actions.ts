@@ -1,18 +1,20 @@
-import type { AuthUser } from '$lib/shared/lucia/types';
 import type { CodeSnippet } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import type { HttpError } from '@sveltejs/kit';
 import type { SuperValidated, ZodValidation } from 'sveltekit-superforms';
 import { message } from 'sveltekit-superforms/server';
 import type { AnyZodObject } from 'zod';
+
 import { codeSnippetsService } from '$lib/server/code-snippets';
+import { posthog } from '$lib/server/posthog';
+import type { AuthUser } from '$lib/shared/lucia/types';
+import { POSTHOG_CODE_SNIPPET_DELETED_EVENT_NAME } from '$lib/shared/posthog/constants';
+import { sentry } from '$lib/shared/sentry';
+
 import {
   throwCodeSnippetDeletionUnauthorizedError,
   throwCodeSnippetNotFoundError,
 } from '../utils/errors';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import type { HttpError } from '@sveltejs/kit';
-import { posthog } from '$lib/server/posthog';
-import { POSTHOG_CODE_SNIPPET_DELETED_EVENT_NAME } from '$lib/shared/posthog/constants';
-import { sentry } from '$lib/shared/sentry';
 
 export async function deleteCodeSnippetFormAction<
   T extends ZodValidation<AnyZodObject>,

@@ -1,16 +1,18 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import {
-  render,
-  cleanup,
-  type RenderResult,
-  queries,
-} from '@testing-library/svelte';
-import Component from './+page.svelte';
-import type { AuthUser } from '$lib/shared/lucia/types';
-import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
 import type { ToastStore } from '@skeletonlabs/skeleton';
-import type { FormSchema } from './+page.server';
+import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
+import {
+  cleanup,
+  queries,
+  render,
+  type RenderResult,
+} from '@testing-library/svelte';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { AuthUser } from '$lib/shared/lucia/types';
 import { getMockFormValue } from '$lib/shared/superforms/testing';
+
+import type { FormSchema } from './+page.server';
+import Component from './+page.svelte';
 
 describe(Component.name, () => {
   let renderResult: RenderResult<Component, typeof queries>;

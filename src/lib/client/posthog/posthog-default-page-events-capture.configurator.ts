@@ -1,11 +1,13 @@
+import type { Unsubscriber } from 'svelte/store';
+
 import { navigating } from '$app/stores';
 import {
   POSTHOG_PAGE_LEAVE_EVENT_NAME,
   POSTHOG_PAGE_VIEW_EVENT_NAME,
 } from '$lib/shared/posthog/constants';
-import type { Unsubscriber } from 'svelte/store';
-import { posthog } from './client';
 import { checkIfPosthogClientConfigured } from '$lib/shared/posthog/utils';
+
+import { posthog } from './client';
 
 export enum _PageEventTrigger {
   VISIBILITY_VISIBLE = 'visibility-visible',

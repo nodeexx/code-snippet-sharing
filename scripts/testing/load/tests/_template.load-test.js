@@ -1,7 +1,7 @@
 // @ts-expect-error
-import http from 'k6/http';
-// @ts-expect-error
 import { sleep } from 'k6';
+// @ts-expect-error
+import http from 'k6/http';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.

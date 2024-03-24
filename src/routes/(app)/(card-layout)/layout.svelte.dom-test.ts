@@ -1,7 +1,9 @@
-import { describe, it, expect, afterEach } from 'vitest';
-import Component from './+layout.svelte';
-import { render, cleanup } from '@testing-library/svelte';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, describe, expect, it } from 'vitest';
+
 import { SlotTest } from '$lib/client/components/testing';
+
+import Component from './+layout.svelte';
 
 describe(Component.name, () => {
   afterEach(() => {

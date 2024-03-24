@@ -1,18 +1,19 @@
 <script lang="ts">
+import { getToastStore } from '@skeletonlabs/skeleton';
+import { superForm } from 'sveltekit-superforms/client';
+
+import IconGoogle from '~icons/fa6-brands/google';
 import { AppShell } from '$lib/client/components/app-shell';
 import {
   Alert,
   Card,
   SingleCardPageContainer,
 } from '$lib/client/components/common';
-import IconGoogle from '~icons/fa6-brands/google';
-import { getToastStore } from '@skeletonlabs/skeleton';
-import { superForm } from 'sveltekit-superforms/client';
+import { config } from '$lib/client/core/config';
 import {
   showToastIfFormMessagePresent,
   showToastOnInternetDisconnect,
 } from '$lib/client/global-messages/utils';
-import { config } from '$lib/client/core/config';
 
 export let data;
 

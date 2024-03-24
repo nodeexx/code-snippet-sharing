@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+
 import { NavigationBarComponent } from '../components/navigation-bar.component';
 
 export class HomePage {

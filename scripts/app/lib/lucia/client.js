@@ -1,8 +1,10 @@
 // Polyfill the Web Crypto API, required only for Node.js runtime <= version 18
 import 'lucia/polyfill/node';
+
+import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma';
 import { lucia } from 'lucia';
 import { node as nodeMiddleware } from 'lucia/middleware';
-import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma';
+
 import { prisma as prismaClient } from '../prisma/client.js';
 
 export const auth = lucia({

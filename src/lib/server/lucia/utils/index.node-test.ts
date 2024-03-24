@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
+
+import {
+  getMockAuthRequest,
+  getMockAuthSession,
+} from '$lib/shared/lucia/testing';
+
 import {
   getCurrentAuthSession,
   getCurrentAuthUserFromRequest,
   getCurrentAuthUserFromSession,
 } from './index';
-import {
-  getMockAuthRequest,
-  getMockAuthSession,
-} from '$lib/shared/lucia/testing';
 
 describe(getCurrentAuthSession.name, () => {
   it('should return null if request contains invalid, expired, or no session ID', async () => {

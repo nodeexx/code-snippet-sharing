@@ -1,22 +1,24 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type Mock,
-} from 'vitest';
-import type { PostHog } from 'posthog-js';
-import { _PosthogUserIdentityConfigurator } from './posthog-user-identity.configurator';
-import * as posthogClientModule from './client';
-import { writable, type Writable } from 'svelte/store';
-import * as appStoresModule from '$app/stores';
 import type { Page } from '@sveltejs/kit';
-import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
-import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import type { PostHog } from 'posthog-js';
+import { type Writable, writable } from 'svelte/store';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type Mock,
+  vi,
+} from 'vitest';
+
+import * as appStoresModule from '$app/stores';
 import { getMockWithType } from '$lib/shared/core/testing';
+import { getMockAuthUser } from '$lib/shared/lucia/testing';
 import * as libSharedPosthogUtilsModule from '$lib/shared/posthog/utils';
+import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+
+import * as posthogClientModule from './client';
+import { _PosthogUserIdentityConfigurator } from './posthog-user-identity.configurator';
 
 describe(_PosthogUserIdentityConfigurator.name, () => {
   let configurator: _PosthogUserIdentityConfigurator;

@@ -1,16 +1,18 @@
+import type { CodeSnippet } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import {
   afterEach,
   beforeEach,
   describe,
-  it,
   expect,
-  vi,
+  it,
   type Mock,
+  vi,
 } from 'vitest';
+
 import * as libServerPrismaModule from '$lib/server/prisma';
+
 import { CodeSnippetsService } from './code-snippets.service';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import type { CodeSnippet } from '@prisma/client';
 
 type PrismaClient = typeof libServerPrismaModule.prisma;
 type CodeSnippetDelegate = PrismaClient['codeSnippet'];

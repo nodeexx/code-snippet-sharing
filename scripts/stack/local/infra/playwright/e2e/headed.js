@@ -1,20 +1,21 @@
 #!/usr/bin/env node
 
+import { execSync } from 'child_process';
 import { program } from 'commander';
-import { loadAndCheckEnvVars } from '../../../../_lib/utils/env.js';
-import { getPaths } from '../../../../_lib/utils/paths.js';
+
 import {
   performLocalMigration,
   runLocalHeadedE2E,
   startDockerizedInfra,
   startLocalApp,
 } from '../../../../_lib/actions.js';
-import { ENV_FILE } from '../_lib/constants.js';
-import { execSync } from 'child_process';
+import { loadAndCheckEnvVars } from '../../../../_lib/utils/env.js';
+import { getPaths } from '../../../../_lib/utils/paths.js';
 import {
   DOCKER_COMPOSE_FILES,
   MANDATORY_ENV_VARS,
 } from '../../_lib/constants.js';
+import { ENV_FILE } from '../_lib/constants.js';
 
 main().catch((e) => {
   console.error(e);

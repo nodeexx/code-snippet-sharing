@@ -1,12 +1,13 @@
 import {
-  describe,
-  it,
-  expect,
-  beforeEach,
   afterEach,
-  vi,
+  beforeEach,
+  describe,
+  expect,
+  it,
   type Mock,
+  vi,
 } from 'vitest';
+
 import {
   _arePosthogClientConfigurationInputsValid,
   _setupPosthogClientBase,

@@ -1,6 +1,7 @@
 import type { Handle } from '@sveltejs/kit';
-import { roarr } from '$lib/server/roarr';
+
 import { config } from '$lib/server/core/config';
+import { roarr } from '$lib/server/roarr';
 
 export const httpLogHandle = (async ({ event, resolve }) => {
   if (!config.roarr.isAccessLoggingEnabled) {

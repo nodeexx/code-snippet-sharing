@@ -1,25 +1,27 @@
+import { cleanup, render } from '@testing-library/svelte';
+import type { PostHog } from 'posthog-js';
 import {
-  describe,
-  it,
-  expect,
-  beforeEach,
   afterEach,
-  vi,
+  beforeEach,
+  describe,
+  expect,
+  it,
   type MockInstance,
+  vi,
 } from 'vitest';
-import Component from './+layout.svelte';
-import { render, cleanup } from '@testing-library/svelte';
+
 import { SlotTest } from '$lib/client/components/testing';
-import { getMockWithType } from '$lib/shared/core/testing';
-import * as libClientPosthogModule from '$lib/client/posthog';
-import * as libClientSentryModule from '$lib/client/sentry';
-import * as libSharedSentryModule from '$lib/shared/sentry';
 import type {
   _PosthogDefaultPageEventsCaptureConfigurator,
   _PosthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
+import * as libClientPosthogModule from '$lib/client/posthog';
 import type { _SentryUserIdentityConfigurator } from '$lib/client/sentry';
-import type { PostHog } from 'posthog-js';
+import * as libClientSentryModule from '$lib/client/sentry';
+import { getMockWithType } from '$lib/shared/core/testing';
+import * as libSharedSentryModule from '$lib/shared/sentry';
+
+import Component from './+layout.svelte';
 
 describe(Component.name, () => {
   beforeEach(() => {

@@ -1,16 +1,16 @@
 // Skeleton Popup required middleware
 import {
-  computePosition,
+  arrow,
   autoUpdate,
+  computePosition,
+  flip,
+  type Middleware,
   offset,
   shift,
-  flip,
-  arrow,
-  type Middleware,
 } from '@floating-ui/dom';
 // Skeleton Popup optional middleware
-import { size, autoPlacement, hide, inline } from '@floating-ui/dom';
-import { storePopup, initializeStores } from '@skeletonlabs/skeleton';
+import { autoPlacement, hide, inline, size } from '@floating-ui/dom';
+import { initializeStores, storePopup } from '@skeletonlabs/skeleton';
 
 type SkeletonPopupMiddlewareFactory = () => Middleware;
 

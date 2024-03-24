@@ -1,13 +1,14 @@
-import { dev } from '$app/environment';
 import type { HandleClientError } from '@sveltejs/kit';
+
+import { dev } from '$app/environment';
 import { config } from '$lib/client/core/config';
-import { handleErrorWithSentry, setupSentryClient } from '$lib/shared/sentry';
+import { logger } from '$lib/client/logging';
 import { setupBrowserPosthogClient } from '$lib/client/posthog';
 import {
   getClientSentryIntegrations,
   setClientPosthogSessionId,
 } from '$lib/client/sentry/utils';
-import { logger } from '$lib/client/logging';
+import { handleErrorWithSentry, setupSentryClient } from '$lib/shared/sentry';
 
 setupBrowserPosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({
