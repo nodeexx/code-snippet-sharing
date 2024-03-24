@@ -20,7 +20,7 @@ export const roarr = (function () {
     return (
       message: string,
       context: ServerLoggerContextWithError = {},
-      stackLevel: number = 3,
+      stackLevel = 3,
     ) => {
       if (!shouldBeLogged(methodName)) {
         return;

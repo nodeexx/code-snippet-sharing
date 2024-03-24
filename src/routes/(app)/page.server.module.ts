@@ -67,23 +67,23 @@ export function cleanSearchParamsAndGenerateQuery(
       const path = String(errorPath[0]);
 
       if (['page', 'count'].includes(path)) {
-        delete findCodeSnippetsQuery['page'];
+        delete findCodeSnippetsQuery.page;
         cleanedSearchParams.delete('page');
 
-        findCodeSnippetsQuery['count'] = DEFAULT_CODE_SNIPPET_COUNT;
+        findCodeSnippetsQuery.count = DEFAULT_CODE_SNIPPET_COUNT;
         cleanedSearchParams.delete('count');
       }
 
       if (['filterBy'].includes(path)) {
-        delete findCodeSnippetsQuery['filterBy'];
+        delete findCodeSnippetsQuery.filterBy;
         cleanedSearchParams.delete('filterBy');
 
-        delete findCodeSnippetsQuery['filterValue'];
+        delete findCodeSnippetsQuery.filterValue;
         cleanedSearchParams.delete('filterValue');
       }
 
       if (['sortOrder'].includes(path)) {
-        findCodeSnippetsQuery['sortOrder'] = 'asc';
+        findCodeSnippetsQuery.sortOrder = 'asc';
         cleanedSearchParams.delete('sortOrder');
       }
     });

@@ -18,7 +18,7 @@ export const logger = (function () {
     return (
       message: string,
       context: LoggerContext = {},
-      stackLevel: number = 3,
+      stackLevel = 3,
     ) => {
       if (!shouldBeLogged(methodName)) {
         return;
