@@ -12,12 +12,7 @@ module.exports = {
     es2017: true,
     node: true,
   },
-  plugins: [
-    'import',
-    'import-no-duplicates-prefix-resolved-path',
-    'simple-import-sort',
-    '@typescript-eslint',
-  ],
+  plugins: ['simple-import-sort', '@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -25,31 +20,12 @@ module.exports = {
     'plugin:@typescript-eslint/stylistic-type-checked',
     'prettier',
   ],
-  settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.cjs', '.js', '.ts'],
-    },
-    'import/resolver': {
-      typescript: {
-        alwaysTryTypes: true,
-      },
-    },
-  },
   rules: {
     'no-unused-vars': 'off',
     // Useful for triggering Svelte reactivity
     'no-self-assign': 'off',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
-    'import/first': 'error',
-    'import/newline-after-import': 'error',
-    'import/no-duplicates': 'off',
-    'import-no-duplicates-prefix-resolved-path/no-duplicates': [
-      'error',
-      {
-        prefixResolvedPathWithImportName: true,
-      },
-    ],
     '@typescript-eslint/no-unused-vars': [
       'error',
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
@@ -89,7 +65,6 @@ module.exports = {
     {
       files: ['./scripts/testing/load/tests/**/*.js'],
       rules: {
-        'import/no-unresolved': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
