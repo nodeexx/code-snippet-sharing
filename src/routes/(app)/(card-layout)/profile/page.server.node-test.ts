@@ -1,21 +1,23 @@
+import { fail, redirect } from '@sveltejs/kit';
+import type { PostHog } from 'posthog-node';
+import * as sveltekitSuperformsServerModule from 'sveltekit-superforms/server';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { auth } from '$lib/server/lucia';
+import * as libServerLuciaModule from '$lib/server/lucia';
+import * as libServerLuciaGuardsModule from '$lib/server/lucia/guards';
+import * as libServerPosthogModule from '$lib/server/posthog';
+import { getMockFormData } from '$lib/server/superforms/testing';
+import { getMockWithType } from '$lib/shared/core/testing';
 import {
   getMockAuthRequest,
   getMockAuthSession,
   getMockAuthUser,
 } from '$lib/shared/lucia/testing';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { actions, load, type FormSchema } from './+page.server';
-import type { PageServerLoadEvent, RequestEvent } from './$types';
-import { fail, redirect } from '@sveltejs/kit';
-import { auth } from '$lib/server/lucia';
-import { getMockFormData } from '$lib/server/superforms/testing';
 import { getMockFormValue } from '$lib/shared/superforms/testing';
-import * as libServerLuciaModule from '$lib/server/lucia';
-import * as libServerLuciaGuardsModule from '$lib/server/lucia/guards';
-import * as sveltekitSuperformsServerModule from 'sveltekit-superforms/server';
-import * as libServerPosthogModule from '$lib/server/posthog';
-import type { PostHog } from 'posthog-node';
-import { getMockWithType } from '$lib/shared/core/testing';
+
+import { actions, type FormSchema, load } from './+page.server';
+import type { PageServerLoadEvent, RequestEvent } from './$types';
 
 describe(load.name, () => {
   afterEach(async () => {

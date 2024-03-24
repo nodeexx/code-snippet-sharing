@@ -1,22 +1,24 @@
 <script lang="ts">
 import '../app.postcss';
-import {
-  setupSkeletonModalToastDrawer,
-  setupSkeletonPopup,
-} from '$lib/client/skeleton/utils';
+
 import { Toast } from '@skeletonlabs/skeleton';
-import { getFlash } from 'sveltekit-flash-message';
-import { page } from '$app/stores';
 import { getToastStore } from '@skeletonlabs/skeleton';
+import { onDestroy, onMount } from 'svelte';
+import { getFlash } from 'sveltekit-flash-message';
+
+import { page } from '$app/stores';
 import { PageMessage } from '$lib/client/components/app-shell';
 import { createFlashToastSubscriber } from '$lib/client/global-messages/utils';
-import { onDestroy, onMount } from 'svelte';
 import {
   posthog,
   posthogDefaultPageEventsCaptureConfigurator,
   posthogUserIdentityConfigurator,
 } from '$lib/client/posthog';
 import { sentryUserIdentityConfigurator } from '$lib/client/sentry';
+import {
+  setupSkeletonModalToastDrawer,
+  setupSkeletonPopup,
+} from '$lib/client/skeleton/utils';
 import { sentry } from '$lib/shared/sentry';
 
 setupSkeletonPopup();

@@ -1,6 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
+
 import { config } from '$lib/server/core/config';
 import { decodeOriginalPath } from '$lib/shared/core/utils';
+
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, setHeaders }) => {

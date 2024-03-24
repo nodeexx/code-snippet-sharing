@@ -1,11 +1,11 @@
 // @ts-expect-error
-import http from 'k6/http';
+import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 // @ts-expect-error
 import { check, sleep } from 'k6';
 // @ts-expect-error
-import { Rate } from 'k6/metrics';
+import http from 'k6/http';
 // @ts-expect-error
-import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
+import { Rate } from 'k6/metrics';
 
 // Define the failure rate
 let failureRate = new Rate('failed_requests');

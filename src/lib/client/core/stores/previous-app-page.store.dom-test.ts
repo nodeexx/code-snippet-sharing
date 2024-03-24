@@ -1,15 +1,17 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { _createPreviousAppPageStore } from './previous-app-page.store';
-import * as appStoresModule from '$app/stores';
 import type { Navigation, NavigationTarget } from '@sveltejs/kit';
 import {
-  writable,
-  type Unsubscriber,
-  type Writable,
   type Readable,
   type Subscriber,
+  type Unsubscriber,
+  type Writable,
+  writable,
 } from 'svelte/store';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import * as appStoresModule from '$app/stores';
 import { mockAppStoresNavigatingValue } from '$lib/shared/sveltekit/testing';
+
+import { _createPreviousAppPageStore } from './previous-app-page.store';
 
 describe(_createPreviousAppPageStore.name, () => {
   const defaultPreviousAppPageSubscriber: Subscriber<

@@ -1,15 +1,17 @@
 import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
   afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
   type MockInstance,
+  vi,
 } from 'vitest';
-import { exitIfEnvVarsNotSet, throwIfEnvVarsNotSet } from './env.utils';
+
 import * as envDynamicPrivate from '$env/dynamic/private';
 import * as envDynamicPublic from '$env/dynamic/public';
+
+import { exitIfEnvVarsNotSet, throwIfEnvVarsNotSet } from './env.utils';
 
 beforeEach(() => {
   vi.spyOn(envDynamicPrivate, 'env', 'get').mockReturnValue({} as any);

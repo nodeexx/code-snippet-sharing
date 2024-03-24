@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import * as utilsModule from '../utils';
 import { checkMandatoryPrivateEnvVarsHandle } from './check-mandatory-private-env-vars.handle';
 

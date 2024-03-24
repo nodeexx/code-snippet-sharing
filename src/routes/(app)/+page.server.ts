@@ -1,10 +1,12 @@
-import { codeSnippetsService } from '$lib/server/code-snippets';
+import { type ActionFailure, redirect } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms/server';
-import type { Actions, PageServerLoad } from './$types';
-import { redirect, type ActionFailure } from '@sveltejs/kit';
+
+import { codeSnippetsService } from '$lib/server/code-snippets';
 import { deleteCodeSnippetFormAction } from '$lib/server/code-snippets/form-actions';
-import { deleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import { generatePreviousAndNextPageUrlPaths } from '$lib/server/pagination/utils';
+import { deleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
+
+import type { Actions, PageServerLoad } from './$types';
 import { cleanSearchParamsAndGenerateQuery } from './page.server.module';
 
 export const load = (async ({ url, locals }) => {

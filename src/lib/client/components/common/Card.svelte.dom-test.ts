@@ -1,12 +1,13 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import {
-  render,
   cleanup,
-  type RenderResult,
   queries,
+  render,
+  type RenderResult,
 } from '@testing-library/svelte';
-import Component from './Card.svelte';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+
 import { SlotTest } from '../testing';
+import Component from './Card.svelte';
 
 describe(Component.name, () => {
   let renderResult: RenderResult<Component, typeof queries>;

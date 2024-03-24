@@ -1,5 +1,6 @@
-import _posthog from 'posthog-js';
 import type { PostHog } from 'posthog-js';
+import _posthog from 'posthog-js';
+
 import { _setupPosthogClientBase } from '$lib/shared/posthog/utils';
 
 export let posthog: PostHog | undefined;

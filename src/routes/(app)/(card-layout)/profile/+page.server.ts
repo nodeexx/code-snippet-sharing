@@ -1,19 +1,21 @@
+import { redirect } from '@sveltejs/kit';
+import type { AuthRequest } from 'lucia';
+import { message, superValidate } from 'sveltekit-superforms/server';
+import { z } from 'zod';
+
 import { auth } from '$lib/server/lucia';
 import { guardAuthUser } from '$lib/server/lucia/guards';
 import {
   getCurrentAuthSession,
   getCurrentAuthUserFromSession,
 } from '$lib/server/lucia/utils';
-import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
-import type { AuthSession } from '$lib/shared/lucia/types';
-import { message, superValidate } from 'sveltekit-superforms/server';
-import { z } from 'zod';
-import { POSTHOG_USER_SIGN_OUT_EVENT_NAME } from '$lib/shared/posthog/constants';
-import type { AuthRequest } from 'lucia';
 import { posthog } from '$lib/server/posthog';
+import type { AuthSession } from '$lib/shared/lucia/types';
+import { POSTHOG_USER_SIGN_OUT_EVENT_NAME } from '$lib/shared/posthog/constants';
 import { sentry } from '$lib/shared/sentry';
+
+import type { PageServerLoad } from './$types';
+import type { Actions } from './$types';
 
 const formSchema = z.object({}).strict();
 export type FormSchema = typeof formSchema;

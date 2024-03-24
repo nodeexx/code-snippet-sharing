@@ -1,17 +1,19 @@
-import { Roarr, logLevels, type LogLevelName } from 'roarr';
+import { type LogLevelName, logLevels, Roarr } from 'roarr';
+import { serializeError } from 'serialize-error';
+
 import { config } from '$lib/server/core/config';
+import {
+  enrichContextWithDebugInfo,
+  enrichLoggerContextWithSentryTraceId,
+} from '$lib/shared/logging/utils';
+import { sentry } from '$lib/shared/sentry';
+import type { SeverityLevel } from '$lib/shared/sentry/types';
+
 import type {
   ServerLoggerContext,
   ServerLoggerContextWithError,
   ServerLoggerLoggingMethodName,
 } from './types';
-import { serializeError } from 'serialize-error';
-import { sentry } from '$lib/shared/sentry';
-import type { SeverityLevel } from '$lib/shared/sentry/types';
-import {
-  enrichContextWithDebugInfo,
-  enrichLoggerContextWithSentryTraceId,
-} from '$lib/shared/logging/utils';
 
 export const roarr = (function () {
   const createLogger = (methodName: ServerLoggerLoggingMethodName) => {

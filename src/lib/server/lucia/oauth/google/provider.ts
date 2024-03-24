@@ -1,5 +1,7 @@
-import { config } from '$lib/server/core/config';
 import { google as googleProvider } from '@lucia-auth/oauth/providers';
+
+import { config } from '$lib/server/core/config';
+
 import { auth } from '../../client';
 
 export const googleAuth = googleProvider(auth, {

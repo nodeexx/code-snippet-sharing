@@ -1,3 +1,8 @@
+import { OAuthRequestError } from '@lucia-auth/oauth';
+import type { GoogleAuth } from '@lucia-auth/oauth/providers';
+import type { User as PrismaUser } from '@prisma/client';
+import { type Cookies, error, type HttpError, redirect } from '@sveltejs/kit';
+
 import { auth } from '$lib/server/lucia';
 import {
   GOOGLE_OAUTH_CODE_QUERY_PARAM_NAME,
@@ -6,18 +11,14 @@ import {
   GOOGLE_OAUTH_STATE_SEPARATOR,
   googleAuth,
 } from '$lib/server/lucia/oauth/google';
-import { OAuthRequestError } from '@lucia-auth/oauth';
-import type { GoogleAuth } from '@lucia-auth/oauth/providers';
-import { prisma } from '$lib/server/prisma';
-import type { User as PrismaUser } from '@prisma/client';
-import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
-import { error, redirect, type HttpError, type Cookies } from '@sveltejs/kit';
+import { getCurrentAuthUserFromSession } from '$lib/server/lucia/utils';
 import { posthog } from '$lib/server/posthog';
+import { prisma } from '$lib/server/prisma';
+import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 import {
   POSTHOG_USER_SIGN_IN_EVENT_NAME,
   POSTHOG_USER_SIGN_UP_EVENT_NAME,
 } from '$lib/shared/posthog/constants';
-import { getCurrentAuthUserFromSession } from '$lib/server/lucia/utils';
 
 export async function signInWithGoogle(
   url: URL,

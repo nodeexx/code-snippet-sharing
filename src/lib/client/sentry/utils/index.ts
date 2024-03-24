@@ -1,7 +1,8 @@
+import type { Integration } from '@sentry/types';
+
 import { posthog } from '$lib/client/posthog';
 import { getSessionId } from '$lib/client/posthog/utils';
 import { sentry } from '$lib/shared/sentry';
-import type { Integration } from '@sentry/types';
 
 const POSTHOG_SESSION_ID_TAG = 'posthog_session_id';
 

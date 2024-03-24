@@ -1,21 +1,22 @@
+import type { Handle, HandleServerError } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+
+import { config } from '$lib/server/core/config';
 import {
   checkMandatoryPrivateEnvVarsHandle,
   maintenanceModeHandle,
 } from '$lib/server/core/hooks';
 import { addAuthDataToLocalHandle } from '$lib/server/lucia/hooks';
-import { sequence } from '@sveltejs/kit/hooks';
-import { config } from '$lib/server/core/config';
-import type { Handle, HandleServerError } from '@sveltejs/kit';
+import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
+import { roarr } from '$lib/server/roarr';
+import { httpLogHandle } from '$lib/server/roarr/hooks';
+import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
+import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
 import {
   handleErrorWithSentry,
   sentry,
   setupSentryClient,
 } from '$lib/shared/sentry';
-import { setSentryUserIdentity } from '$lib/server/sentry/hooks';
-import { posthog, setupNodePosthogClient } from '$lib/server/posthog';
-import { getServerSentryIntegrations } from '$lib/server/sentry/utils';
-import { roarr } from '$lib/server/roarr';
-import { httpLogHandle } from '$lib/server/roarr/hooks';
 
 setupNodePosthogClient(config.posthog.projectApiKey, config.posthog.apiHost);
 setupSentryClient({

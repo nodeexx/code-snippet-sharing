@@ -1,6 +1,8 @@
+import callsites from 'callsites';
+
 import { sentry } from '$lib/shared/sentry';
 import { getTraceId } from '$lib/shared/sentry/utils';
-import callsites from 'callsites';
+
 import type { LoggerContext } from '../types';
 
 export function enrichLoggerContextWithSentryTraceId<T extends LoggerContext>(

@@ -1,9 +1,11 @@
-import { lucia } from 'lucia';
-import { sveltekit as sveltekitMiddleware } from 'lucia/middleware';
-import { dev } from '$app/environment';
 // Polyfill the Web Crypto API, required only for Node.js runtime <= version 18
 import 'lucia/polyfill/node';
+
 import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma';
+import { lucia } from 'lucia';
+import { sveltekit as sveltekitMiddleware } from 'lucia/middleware';
+
+import { dev } from '$app/environment';
 import { prisma as prismaClient } from '$lib/server/prisma';
 
 export const auth = lucia({

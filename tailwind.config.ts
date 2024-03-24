@@ -1,8 +1,8 @@
-import { join } from 'path';
-import type { Config } from 'tailwindcss';
 import { skeleton } from '@skeletonlabs/tw-plugin';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
+import { join } from 'path';
+import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config = {

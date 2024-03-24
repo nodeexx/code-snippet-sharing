@@ -1,10 +1,11 @@
 import { expect, type Page } from '@playwright/test';
 import dayjs from 'dayjs';
 import path from 'path';
-import { COMMON_SAVED_STATES_FOLDER } from './constants';
+import shelljs from 'shelljs';
+
 import { HomePage } from '../../e2e/page-objects/pages/home.page';
 import { config } from './config';
-import shelljs from 'shelljs';
+import { COMMON_SAVED_STATES_FOLDER } from './constants';
 
 export async function signIn(
   page: Page,

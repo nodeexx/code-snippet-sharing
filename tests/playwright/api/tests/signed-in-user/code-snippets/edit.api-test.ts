@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../../../../e2e/page-objects/pages/home.page';
+import { expect, test } from '@playwright/test';
+
 import { config } from '../../../../common/lib/config';
+import { HomePage } from '../../../../e2e/page-objects/pages/home.page';
 
 const CODE_SNIPPET = config.testData.codeSnippets.forEditing;
 

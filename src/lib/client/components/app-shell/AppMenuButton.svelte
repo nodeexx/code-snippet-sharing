@@ -2,8 +2,8 @@
 import IconUser from '~icons/fa6-solid/user';
 import { page } from '$app/stores';
 import {
-  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
   encodeOriginalPath,
+  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
 } from '$lib/shared/core/utils';
 
 $: signInPath = getSignInPath($page.url);

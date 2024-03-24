@@ -1,17 +1,19 @@
-import {
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-  vi,
-  type Mock,
-} from 'vitest';
-import { setSentryUserIdentity } from './set-sentry-user-identity.handle';
-import * as libSharedSentryModule from '$lib/shared/sentry';
-import { getMockAuthUser } from '$lib/shared/lucia/testing';
 import type { RequestEvent } from '@sveltejs/kit';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type Mock,
+  vi,
+} from 'vitest';
+
 import { getMockWithType } from '$lib/shared/core/testing';
+import { getMockAuthUser } from '$lib/shared/lucia/testing';
+import * as libSharedSentryModule from '$lib/shared/sentry';
+
+import { setSentryUserIdentity } from './set-sentry-user-identity.handle';
 
 describe(setSentryUserIdentity.name, () => {
   let mockSetUser: Mock<any[], void>;

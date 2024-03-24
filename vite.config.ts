@@ -1,11 +1,11 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig, loadEnv } from 'vite';
-import { purgeCss } from 'vite-plugin-tailwind-purgecss';
-import Icons from 'unplugin-icons/vite';
-import type { PluginOption } from 'vite';
-import { visualizer } from 'rollup-plugin-visualizer';
 import { sentrySvelteKit } from '@sentry/sveltekit';
 import type { SentrySvelteKitPluginOptions } from '@sentry/sveltekit/types/vite/sentryVitePlugins';
+import { sveltekit } from '@sveltejs/kit/vite';
+import { visualizer } from 'rollup-plugin-visualizer';
+import Icons from 'unplugin-icons/vite';
+import type { PluginOption } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.

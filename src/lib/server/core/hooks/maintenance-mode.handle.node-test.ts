@@ -1,7 +1,9 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
-import * as libServerCoreConfigModule from '$lib/server/core/config';
-import { maintenanceModeHandle } from './maintenance-mode.handle';
 import * as sveltejsKitModule from '@sveltejs/kit';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import * as libServerCoreConfigModule from '$lib/server/core/config';
+
+import { maintenanceModeHandle } from './maintenance-mode.handle';
 
 describe(maintenanceModeHandle.name, () => {
   afterEach(async () => {

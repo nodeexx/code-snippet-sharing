@@ -1,10 +1,12 @@
-import { describe, it, expect, afterEach, vi } from 'vitest';
-import Component from './+error.svelte';
-import { render, cleanup } from '@testing-library/svelte';
-import * as appStores from '$app/stores';
-import { readable } from 'svelte/store';
 import type { Page } from '@sveltejs/kit';
+import { cleanup, render } from '@testing-library/svelte';
+import { readable } from 'svelte/store';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import * as appStores from '$app/stores';
 import { defaultMockAppStoresPageValue } from '$lib/shared/sveltekit/testing';
+
+import Component from './+error.svelte';
 
 describe(Component.name, () => {
   afterEach(() => {

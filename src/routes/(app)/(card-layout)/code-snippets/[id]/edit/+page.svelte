@@ -1,10 +1,11 @@
 <script lang="ts">
-import { Card } from '$lib/client/components/common';
-import { CodeSnippetCreateEditForm } from '$lib/client/components/code-snippets';
-import { goBack } from '$lib/client/core/utils';
-import { config } from '$lib/client/core/config';
 import { onMount } from 'svelte';
+
+import { CodeSnippetCreateEditForm } from '$lib/client/components/code-snippets';
+import { Card } from '$lib/client/components/common';
+import { config } from '$lib/client/core/config';
 import { previousAppPage } from '$lib/client/core/stores';
+import { goBack } from '$lib/client/core/utils';
 
 export let data;
 

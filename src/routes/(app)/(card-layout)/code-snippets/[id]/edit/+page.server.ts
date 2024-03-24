@@ -1,15 +1,17 @@
-import { guardAuthUser } from '$lib/server/lucia/guards';
-import { type HttpError, error, fail } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
-import { codeSnippetsService } from '$lib/server/code-snippets';
-import { message, superValidate } from 'sveltekit-superforms/server';
-import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import type { CodeSnippet } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { error, fail, type HttpError } from '@sveltejs/kit';
+import { message, superValidate } from 'sveltekit-superforms/server';
+
+import { codeSnippetsService } from '$lib/server/code-snippets';
 import { throwCodeSnippetNotFoundError } from '$lib/server/code-snippets/utils';
+import { guardAuthUser } from '$lib/server/lucia/guards';
 import { posthog } from '$lib/server/posthog';
+import { createEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import { POSTHOG_CODE_SNIPPET_UPDATED_EVENT_NAME } from '$lib/shared/posthog/constants';
 import { sentry } from '$lib/shared/sentry';
+
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals, url, params }) => {
   const authPageData = guardAuthUser(locals, url);

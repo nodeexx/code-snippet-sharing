@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
 import { HomePage } from '../../page-objects/pages/home.page.js';
 import { ProfilePage } from '../../page-objects/pages/profile.page.js';
 

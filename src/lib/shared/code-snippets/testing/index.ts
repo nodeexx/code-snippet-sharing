@@ -1,5 +1,6 @@
 import type { CodeSnippet } from '@prisma/client';
 import type { SuperValidated } from 'sveltekit-superforms';
+
 import type { CreateEditCodeSnippetFormSchema } from '../dtos';
 
 export function getMockCodeSnippet(

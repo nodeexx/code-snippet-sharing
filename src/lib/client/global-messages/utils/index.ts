@@ -9,6 +9,7 @@ import type {
   ZodValidation,
 } from 'sveltekit-superforms';
 import type { AnyZodObject } from 'zod';
+
 import { browser } from '$app/environment';
 import type { SuperformsOnErrorResult } from '$lib/client/superforms/types';
 

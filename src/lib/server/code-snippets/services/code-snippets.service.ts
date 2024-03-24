@@ -1,6 +1,7 @@
+import type { CodeSnippet } from '@prisma/client';
+
 import { prisma } from '$lib/server/prisma';
 import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
-import type { CodeSnippet } from '@prisma/client';
 
 export class CodeSnippetsService {
   async getAll(): Promise<CodeSnippet[]> {

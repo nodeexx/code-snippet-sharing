@@ -1,14 +1,16 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './AppMenuButton.svelte';
-import {
-  SveltekitDefaultMocks,
-  defaultMockAppStoresPageValue,
-} from '$lib/shared/sveltekit/testing';
-import type { AuthUser } from '$lib/shared/lucia/types';
-import * as appStores from '$app/stores';
-import { readable } from 'svelte/store';
 import type { Page } from '@sveltejs/kit';
+import { cleanup, render } from '@testing-library/svelte';
+import { readable } from 'svelte/store';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import * as appStores from '$app/stores';
+import type { AuthUser } from '$lib/shared/lucia/types';
+import {
+  defaultMockAppStoresPageValue,
+  SveltekitDefaultMocks,
+} from '$lib/shared/sveltekit/testing';
+
+import Component from './AppMenuButton.svelte';
 
 describe(Component.name, () => {
   afterEach(() => {

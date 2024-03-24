@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
+import { execSync } from 'child_process';
 import { program } from 'commander';
+
+import { startDockerizedE2E } from '../../../_lib/actions.js';
 import { loadAndCheckEnvVars } from '../../../_lib/utils/env.js';
 import { getPaths } from '../../../_lib/utils/paths.js';
-import { startDockerizedE2E } from '../../../_lib/actions.js';
 import { MANDATORY_ENV_VARS } from '../_lib/constants.js';
-import { execSync } from 'child_process';
 import { DOCKER_COMPOSE_FILES, ENV_FILE } from './_lib/constants.js';
 
 main().catch((e) => {

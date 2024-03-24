@@ -1,6 +1,8 @@
+import { get } from 'svelte/store';
+
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
-import { get } from 'svelte/store';
+
 import { previousAppPage } from '../stores/previous-app-page.store';
 
 export async function goBack() {

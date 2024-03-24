@@ -1,4 +1,8 @@
 <script lang="ts">
+import { getToastStore } from '@skeletonlabs/skeleton';
+import { superForm } from 'sveltekit-superforms/client';
+
+import IconPlus from '~icons/fa6-solid/plus';
 import { goto, invalidateAll } from '$app/navigation';
 import { CodeSnippetCard } from '$lib/client/components/code-snippets';
 import CodeSnippetFindForm from '$lib/client/components/code-snippets/CodeSnippetFindForm.svelte';
@@ -10,9 +14,6 @@ import {
   showToastOnInternetDisconnect,
 } from '$lib/client/global-messages/utils';
 import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
-import { getToastStore } from '@skeletonlabs/skeleton';
-import { superForm } from 'sveltekit-superforms/client';
-import IconPlus from '~icons/fa6-solid/plus';
 
 export let data;
 

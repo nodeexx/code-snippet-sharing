@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { z, ZodError } from 'zod';
+
 import { extractZodErrorPaths } from './extract';
-import { ZodError, z } from 'zod';
 
 describe(extractZodErrorPaths.name, () => {
   it('should return error path if error is thrown', () => {

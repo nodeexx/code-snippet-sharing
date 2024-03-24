@@ -1,11 +1,12 @@
+import type { Navigation, Page } from '@sveltejs/kit';
+import { readable } from 'svelte/store';
 import { vi } from 'vitest';
+
 import type * as appEnvironmentModule from '$app/environment';
 import type * as appNavigationModule from '$app/navigation';
 import type * as appStoresModule from '$app/stores';
 import type * as envDynamicPrivateModule from '$env/dynamic/private';
 import type * as envDynamicPublicModule from '$env/dynamic/public';
-import type { Navigation, Page } from '@sveltejs/kit';
-import { readable } from 'svelte/store';
 
 export const defaultMockAppEnvironment: typeof appEnvironmentModule = {
   browser: false,

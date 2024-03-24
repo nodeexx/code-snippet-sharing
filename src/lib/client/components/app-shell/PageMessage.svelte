@@ -1,6 +1,7 @@
 <script lang="ts">
-import type { GlobalMessageType } from '$lib/client/global-messages/types';
 import type { CssClasses } from '@skeletonlabs/skeleton';
+
+import type { GlobalMessageType } from '$lib/client/global-messages/types';
 
 export let message: string;
 export let type: GlobalMessageType;

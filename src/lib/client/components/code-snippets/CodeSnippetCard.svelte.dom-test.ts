@@ -1,14 +1,16 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './CodeSnippetCard.svelte';
-import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
-import type { ToastStore } from '@skeletonlabs/skeleton';
-import { getMockCodeSnippet } from '$lib/shared/code-snippets/testing';
-import type { SuperForm } from 'sveltekit-superforms/client';
-import type { DeleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
-import { getMockAuthUser } from '$lib/shared/lucia/testing';
 import type { CodeSnippet } from '@prisma/client';
+import type { ToastStore } from '@skeletonlabs/skeleton';
+import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
+import { cleanup, render } from '@testing-library/svelte';
 import type { UnwrapEffects } from 'sveltekit-superforms';
+import type { SuperForm } from 'sveltekit-superforms/client';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { DeleteCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
+import { getMockCodeSnippet } from '$lib/shared/code-snippets/testing';
+import { getMockAuthUser } from '$lib/shared/lucia/testing';
+
+import Component from './CodeSnippetCard.svelte';
 
 type DeleteCodeSnippetSuperForm = SuperForm<
   UnwrapEffects<DeleteCodeSnippetFormSchema>,

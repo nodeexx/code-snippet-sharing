@@ -1,10 +1,17 @@
 import {
-  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
-  decodeOriginalPath,
-} from '$lib/shared/core/utils';
+  type Cookies,
+  type HttpError,
+  type Redirect,
+  redirect,
+} from '@sveltejs/kit';
+import { message, superValidate } from 'sveltekit-superforms/server';
+import { z } from 'zod';
+
+import { dev } from '$app/environment';
+import { getRefererHeaderUrl } from '$lib/server/core/utils';
 import {
-  OAUTH_TYPE_QUERY_PARAM_NAME,
   OAUTH_STATE_COOKIE_MAX_AGE_IN_SECONDS,
+  OAUTH_TYPE_QUERY_PARAM_NAME,
 } from '$lib/server/lucia/oauth';
 import {
   GOOGLE_OAUTH_STATE_COOKIE_NAME,
@@ -14,19 +21,14 @@ import {
 } from '$lib/server/lucia/oauth/google';
 import { signInWithGoogle } from '$lib/server/lucia/oauth/google/utils';
 import {
-  redirect,
-  type HttpError,
-  type Redirect,
-  type Cookies,
-} from '@sveltejs/kit';
+  decodeOriginalPath,
+  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
+} from '$lib/shared/core/utils';
+import { encodeOriginalPath } from '$lib/shared/core/utils';
+import { sentry } from '$lib/shared/sentry';
+
 import type { PageServerLoad } from './$types';
 import type { Actions } from './$types';
-import { getRefererHeaderUrl } from '$lib/server/core/utils';
-import { encodeOriginalPath } from '$lib/shared/core/utils';
-import { dev } from '$app/environment';
-import { message, superValidate } from 'sveltekit-superforms/server';
-import { z } from 'zod';
-import { sentry } from '$lib/shared/sentry';
 
 const formSchema = z.object({}).strict();
 export type FormSchema = typeof formSchema;

@@ -1,6 +1,7 @@
-import { sentry } from '$lib/shared/sentry';
 import type { Handle } from '@sveltejs/kit';
+
 import { posthog, PostHogSentryIntegration } from '$lib/server/posthog';
+import { sentry } from '$lib/shared/sentry';
 
 export const setSentryUserIdentity = (async ({ event, resolve }) => {
   if (!sentry) {

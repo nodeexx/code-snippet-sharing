@@ -4,6 +4,7 @@ import {
   enrichContextWithDebugInfo,
   enrichLoggerContextWithSentryTraceId,
 } from '$lib/shared/logging/utils';
+
 import type { LogLevelName } from './types';
 import {
   enrichLoggerContextWithPosthogSessionId,

@@ -1,10 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
-import commonConfig from './playwright.common.config.ts';
 import path from 'path';
+
+import commonConfig from './playwright.common.config.ts';
 import {
-  COMMON_SAVED_STATES_FOLDER,
   API_REPORTS_FOLDER,
   API_TESTS_FOLDER,
+  COMMON_SAVED_STATES_FOLDER,
 } from './tests/playwright/common/lib/constants.ts';
 
 /**

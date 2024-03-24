@@ -1,7 +1,8 @@
-import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 import dayjs from 'dayjs';
 import type { AuthRequest } from 'lucia';
 import { vi } from 'vitest';
+
+import type { AuthSession, AuthUser } from '$lib/shared/lucia/types';
 
 export function getMockAuthRequest(
   authSession: AuthSession | null = null,

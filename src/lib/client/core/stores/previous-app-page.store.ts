@@ -1,11 +1,12 @@
-import { navigating } from '$app/stores';
 import type { NavigationTarget } from '@sveltejs/kit';
 import {
-  writable,
-  type Unsubscriber,
-  type Subscriber,
   type Invalidator,
+  type Subscriber,
+  type Unsubscriber,
+  writable,
 } from 'svelte/store';
+
+import { navigating } from '$app/stores';
 
 export function _createPreviousAppPageStore() {
   const previousAppPage = writable<NavigationTarget | undefined>();

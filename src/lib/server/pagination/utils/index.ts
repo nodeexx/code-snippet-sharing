@@ -1,4 +1,5 @@
 import { getUrlPathAndQueryParams } from '$lib/shared/core/utils';
+
 import type { PaginationQuery } from '../types';
 
 export function generatePreviousAndNextPageUrlPaths(

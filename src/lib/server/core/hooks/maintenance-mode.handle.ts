@@ -1,8 +1,9 @@
+import { type Handle, redirect } from '@sveltejs/kit';
+
 import { config } from '$lib/server/core/config';
-import { redirect, type Handle } from '@sveltejs/kit';
 import {
-  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
   encodeOriginalPath,
+  ORIGINAL_PATH_URL_QUERY_PARAM_NAME,
 } from '$lib/shared/core/utils';
 
 const NON_REDIRECTED_ROUTES = [

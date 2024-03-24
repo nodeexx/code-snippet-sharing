@@ -1,11 +1,13 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { render, cleanup } from '@testing-library/svelte';
-import Component from './+page.svelte';
-import type { CreateEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
-import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
 import type { ToastStore } from '@skeletonlabs/skeleton';
-import { getMockFormValue } from '$lib/shared/superforms/testing';
+import * as skeletonlabsSkeletonModule from '@skeletonlabs/skeleton';
+import { cleanup, render } from '@testing-library/svelte';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { CreateEditCodeSnippetFormSchema } from '$lib/shared/code-snippets/dtos';
 import { getMockCreateCodeSnippetFormConstraints } from '$lib/shared/code-snippets/testing';
+import { getMockFormValue } from '$lib/shared/superforms/testing';
+
+import Component from './+page.svelte';
 
 describe(Component.name, () => {
   beforeEach(() => {

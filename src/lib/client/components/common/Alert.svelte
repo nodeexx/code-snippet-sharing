@@ -1,8 +1,9 @@
 <script lang="ts">
-import IconTriangleExclamation from '~icons/fa6-solid/triangle-exclamation';
-import IconCircleCheck from '~icons/fa6-solid/circle-check';
-import type { GlobalMessageType } from '$lib/client/global-messages/types';
 import type { ComponentType } from 'svelte';
+
+import IconCircleCheck from '~icons/fa6-solid/circle-check';
+import IconTriangleExclamation from '~icons/fa6-solid/triangle-exclamation';
+import type { GlobalMessageType } from '$lib/client/global-messages/types';
 
 export let type: GlobalMessageType;
 export let message: string;
