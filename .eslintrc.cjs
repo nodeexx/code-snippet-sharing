@@ -101,5 +101,12 @@ module.exports = {
         'testing-library/prefer-screen-queries': 'off',
       },
     },
+    {
+      files: ['tests/playwright/**/*.{api-test,e2e-test}.{js,ts}'],
+      extends: ['plugin:playwright/recommended'],
+      rules: {
+        'playwright/expect-expect': 'off',
+      },
+    },
   ],
 };

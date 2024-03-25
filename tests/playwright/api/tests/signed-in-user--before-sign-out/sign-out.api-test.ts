@@ -8,10 +8,6 @@ test.describe('POST /profile?/sign-out', () => {
     page,
     baseURL,
   }) => {
-    if (!baseURL) {
-      throw new Error('Base URL is not set');
-    }
-
     const homePage = new HomePage(page);
     await homePage.doNavigateTo();
 
@@ -20,7 +16,7 @@ test.describe('POST /profile?/sign-out', () => {
     const response = await page.request.post('/profile?/sign-out', {
       headers: {
         // Needed to pass CSRF check
-        origin: baseURL,
+        origin: baseURL!,
       },
       form: {},
     });
@@ -35,15 +31,11 @@ test.describe('POST /profile?/sign-out', () => {
   });
 
   test('returns 401 if user is not logged in', async ({ page, baseURL }) => {
-    if (!baseURL) {
-      throw new Error('Base URL is not set');
-    }
-
     await page.context().clearCookies();
     const response = await page.request.post('/profile?/sign-out', {
       headers: {
         // Needed to pass CSRF check
-        origin: baseURL,
+        origin: baseURL!,
       },
       form: {},
     });

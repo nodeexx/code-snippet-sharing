@@ -12,7 +12,7 @@ test.describe('Feature: Sign out', () => {
 
     await expect(
       homePage.componentNavigationBar.getSignInButton(),
-    ).not.toBeVisible();
+    ).toBeHidden();
     await expect(
       homePage.componentNavigationBar.getProfileButton(),
     ).toBeVisible();
@@ -29,6 +29,6 @@ test.describe('Feature: Sign out', () => {
     ).toBeVisible();
     await expect(
       homePage.componentNavigationBar.getProfileButton(),
-    ).not.toBeVisible();
+    ).toBeHidden();
   });
 });

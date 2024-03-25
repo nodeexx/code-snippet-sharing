@@ -10,10 +10,6 @@ test.describe('POST /code-snippets/:id?/delete', () => {
     page,
     baseURL,
   }) => {
-    if (!baseURL) {
-      throw new Error('Base URL is not set');
-    }
-
     const homePage = new HomePage(page);
     await homePage.doNavigateTo();
 
@@ -22,7 +18,7 @@ test.describe('POST /code-snippets/:id?/delete', () => {
       {
         headers: {
           // Needed to pass CSRF check
-          origin: baseURL,
+          origin: baseURL!,
         },
         multipart: {},
       },

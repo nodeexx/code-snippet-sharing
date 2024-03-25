@@ -14,7 +14,7 @@ test.describe('Feature: Sign in/Sign up via Google', () => {
       ).toBeVisible();
       await expect(
         homePage.componentNavigationBar.getProfileButton(),
-      ).not.toBeVisible();
+      ).toBeHidden();
 
       await homePage.componentNavigationBar.doClickSignInButton();
 

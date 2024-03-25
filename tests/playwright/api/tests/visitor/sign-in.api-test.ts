@@ -5,14 +5,10 @@ test.describe('POST /sign-in?/google-auth', () => {
     request,
     baseURL,
   }, testInfo) => {
-    if (!baseURL) {
-      throw new Error('Base URL is not set');
-    }
-
     const response = await request.post('/sign-in?/google-auth', {
       headers: {
         // Needed to pass CSRF check
-        origin: baseURL,
+        origin: baseURL!,
       },
       form: {},
     });
