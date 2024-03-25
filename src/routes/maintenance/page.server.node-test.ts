@@ -23,7 +23,7 @@ describe(load.name, () => {
       url: new URL('http://localhost/maintenance'),
       setHeaders,
     } as Partial<PageServerLoadEvent> as PageServerLoadEvent;
-    await expect(load(event)).rejects.toThrow();
+    expect(() => load(event)).toThrow();
 
     expect(setHeaders).toHaveBeenCalledTimes(1);
     expect(setHeaders).toHaveBeenCalledWith({
@@ -46,7 +46,7 @@ describe(load.name, () => {
       ),
       setHeaders,
     } as Partial<PageServerLoadEvent> as PageServerLoadEvent;
-    await expect(load(event)).rejects.toThrow();
+    expect(() => load(event)).toThrow();
 
     expect(redirectSpy).toHaveBeenCalledTimes(1);
     expect(redirectSpy).toHaveBeenCalledWith(307, '/auth');
@@ -63,7 +63,7 @@ describe(load.name, () => {
       url: new URL('http://localhost/maintenance'),
       setHeaders,
     } as Partial<PageServerLoadEvent> as PageServerLoadEvent;
-    await expect(load(event)).rejects.toThrow();
+    expect(() => load(event)).toThrow();
 
     expect(redirectSpy).toHaveBeenCalledTimes(1);
     expect(redirectSpy).toHaveBeenCalledWith(307, '/');

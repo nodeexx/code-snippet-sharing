@@ -15,11 +15,7 @@ import {
 
 export const logger = (function () {
   const createLogger = (methodName: LogLevelName) => {
-    return (
-      message: string,
-      context: LoggerContext = {},
-      stackLevel = 3,
-    ) => {
+    return (message: string, context: LoggerContext = {}, stackLevel = 3) => {
       if (!shouldBeLogged(methodName)) {
         return;
       }
