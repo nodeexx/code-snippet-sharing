@@ -105,6 +105,7 @@
     "eslint": "8.53.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-jest-dom": "5.1.0",
+    "eslint-plugin-playwright": "1.5.4",
     "eslint-plugin-simple-import-sort": "12.0.0",
     "eslint-plugin-svelte": "2.34.1",
     "eslint-plugin-testing-library": "6.1.0",

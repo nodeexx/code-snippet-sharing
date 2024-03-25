@@ -10,6 +10,10 @@ import {
 } from '../../common/lib/setup';
 
 setup('setup API', async ({ page, baseURL }) => {
+  if (!baseURL) {
+    throw new Error('Base URL is not set');
+  }
+
   seedDb();
   await saveVisitorRoleState(page);
 
