@@ -5,6 +5,7 @@ import type * as utilsModule from '../utils';
 import { addAuthDataToLocalHandle } from './add-auth-data-to-local.handle';
 
 vi.mock('../client', async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const actual = (await vi.importActual('../client')) as typeof clientModule;
   return {
     ...actual,
@@ -15,6 +16,7 @@ vi.mock('../client', async () => {
 });
 
 vi.mock('../utils', async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const actual = (await vi.importActual('../utils')) as typeof utilsModule;
   return {
     ...actual,

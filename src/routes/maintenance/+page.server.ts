@@ -5,7 +5,7 @@ import { decodeOriginalPath } from '$lib/shared/core/utils';
 
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ url, setHeaders }) => {
+export const load = (({ url, setHeaders }) => {
   if (config.isMaintenanceMode) {
     setHeaders({
       'Retry-After': '600',

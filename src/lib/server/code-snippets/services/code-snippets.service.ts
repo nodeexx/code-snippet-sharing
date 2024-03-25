@@ -32,7 +32,7 @@ export class CodeSnippetsService {
       where: {
         is_deleted: false,
         ...(query?.filterBy === 'author' &&
-          query?.filterValue && { user_id: query?.filterValue }),
+          query.filterValue && { user_id: query.filterValue }),
       },
     });
 
@@ -44,7 +44,7 @@ export class CodeSnippetsService {
   ): Promise<number> {
     const itemCount = await this.getTotalItemCountByQuery(query);
     let pageCount = 1;
-    if (query?.count != null && query?.count > 0) {
+    if (query?.count != null && query.count > 0) {
       pageCount = Math.ceil(itemCount / query.count);
     }
 
@@ -53,26 +53,26 @@ export class CodeSnippetsService {
 
   async findManyByQuery(query?: FindCodeSnippetsQuery): Promise<CodeSnippet[]> {
     let skip: number | undefined;
-    if (query?.page != null && query?.page > 1 && query?.count != null) {
+    if (query?.page != null && query.page > 1 && query.count != null) {
       skip = (query.page - 1) * query.count;
     }
 
     let take: number | undefined;
     if (query?.count != null) {
-      take = query?.count;
+      take = query.count;
     }
 
     const codeSnippets = await prisma.codeSnippet.findMany({
       where: {
         is_deleted: false,
         ...(query?.filterBy === 'author' &&
-          query?.filterValue && { user_id: query?.filterValue }),
+          query.filterValue && { user_id: query.filterValue }),
       },
       ...(skip && { skip }),
       ...(take && { take }),
       ...(query?.sortBy && {
         orderBy: {
-          [query?.sortBy]: query?.sortOrder || 'asc',
+          [query.sortBy]: query.sortOrder || 'asc',
         },
       }),
     });

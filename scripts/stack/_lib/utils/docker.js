@@ -40,8 +40,9 @@ export function getDockerContainerHealthStatus(containerName) {
         .trim()
     );
   } catch (e) {
+    const error = /** @type {Error} */ (e);
     throw new Error(
-      `Failed to get health status of ${containerName} container: ${e}`,
+      `Failed to get health status of ${containerName} container: ${error.message}`,
     );
   }
 

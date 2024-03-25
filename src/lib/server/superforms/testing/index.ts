@@ -6,7 +6,7 @@ export function getMockFormData(
   Object.entries(data).forEach(([key, value]) => {
     formData.append(key, value);
   });
-  const formDataFn = async () => formData;
+  const formDataFn = () => Promise.resolve(formData);
 
   return formDataFn;
 }

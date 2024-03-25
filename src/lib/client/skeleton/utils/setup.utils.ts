@@ -23,7 +23,7 @@ export function setupSkeletonPopup() {
     computePosition,
     autoUpdate,
     offset,
-    // @ts-ignore
+    // @ts-expect-error
     shift,
     flip,
     arrow,

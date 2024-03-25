@@ -19,6 +19,6 @@ export function getClientSentryIntegrations(
 
 export function setClientPosthogSessionId(): void {
   if (posthog) {
-    sentry?.setTag(POSTHOG_SESSION_ID_TAG, getSessionId()!);
+    sentry?.setTag(POSTHOG_SESSION_ID_TAG, getSessionId());
   }
 }
