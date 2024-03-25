@@ -264,7 +264,7 @@ describe('actions', () => {
         libServerLuciaOauthGoogleModule,
         'GOOGLE_OAUTH_STATE_COOKIE_NAME',
         'get',
-      ).mockReturnValue('mock-state-cookie-name');
+      ).mockReturnValue('mock-state-cookie-name' as any);
       const redirectSpy = vi.spyOn(sveltejsKitModule, 'redirect');
 
       await expect(actions['google-auth'](mockEvent)).rejects.toThrow();
@@ -313,7 +313,7 @@ describe('actions', () => {
         libServerLuciaOauthGoogleModule,
         'GOOGLE_OAUTH_STATE_COOKIE_NAME',
         'get',
-      ).mockReturnValue('mock-state-cookie-name');
+      ).mockReturnValue('mock-state-cookie-name' as any);
       const redirectSpy = vi.spyOn(sveltejsKitModule, 'redirect');
 
       await expect(actions['google-auth'](mockEvent)).rejects.toThrow();
