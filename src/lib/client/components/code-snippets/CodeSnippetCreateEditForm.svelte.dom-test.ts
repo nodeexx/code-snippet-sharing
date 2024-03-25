@@ -59,11 +59,11 @@ describe(Component.name, () => {
     });
 
     expect(renderResult.getByTestId('name-error-message')).toBeVisible();
-    expect(renderResult.getByTestId('name-error-message').textContent).toEqual(
+    expect(renderResult.getByTestId('name-error-message')).toHaveTextContent(
       'Name is required',
     );
     expect(renderResult.getByTestId('code-error-message')).toBeVisible();
-    expect(renderResult.getByTestId('code-error-message').textContent).toEqual(
+    expect(renderResult.getByTestId('code-error-message')).toHaveTextContent(
       'Code is required',
     );
   });
