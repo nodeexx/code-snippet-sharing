@@ -8,12 +8,14 @@ import { getPaths } from '../../../_lib/utils/paths.js';
 import { DOCKER_COMPOSE_FILES, MANDATORY_ENV_VARS } from '../_lib/constants.js';
 import { ENV_FILE } from './_lib/constants.js';
 
-main().catch((e) => {
+try {
+  main();
+} catch (e) {
   console.error(e);
   process.exit(1);
-});
+}
 
-async function main() {
+function main() {
   const scriptPath = /** @type {string} */ (process.argv[1]);
 
   const paths = getPaths(scriptPath, ENV_FILE);

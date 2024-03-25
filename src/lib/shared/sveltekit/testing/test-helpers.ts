@@ -101,7 +101,7 @@ export class SveltekitDefaultMocks {
 
         const updated = {
           subscribe: readable(false).subscribe,
-          check: async () => false,
+          check: () => Promise.resolve(false),
         };
 
         return { navigating, page, updated };
@@ -123,7 +123,7 @@ export class SveltekitDefaultMocks {
         subscribe(fn) {
           return getStores().updated.subscribe(fn);
         },
-        check: async () => false,
+        check: () => Promise.resolve(false),
       };
 
       return {

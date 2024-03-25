@@ -16,7 +16,7 @@ describe(GET.name, () => {
       typeof libServerCoreConfigModule.config
     > as typeof libServerCoreConfigModule.config);
 
-    const response = await GET();
+    const response = GET();
 
     expect(await response.json()).toEqual({
       status: 'OK',
@@ -30,7 +30,7 @@ describe(GET.name, () => {
       typeof libServerCoreConfigModule.config
     > as typeof libServerCoreConfigModule.config);
 
-    const response = await GET();
+    const response = GET();
 
     expect(await response.json()).toEqual({
       status: 'maintenance',

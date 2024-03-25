@@ -27,7 +27,7 @@ setClientPosthogSessionId();
 
 logger.info('Starting the app client...');
 
-export const handleError = handleErrorWithSentry((async ({ error }) => {
+export const handleError = handleErrorWithSentry((({ error }) => {
   const message = 'Internal Client Error';
   if (dev) {
     console.error(message, error);

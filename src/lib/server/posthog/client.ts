@@ -21,7 +21,7 @@ export function setupNodePosthogClient(
 }
 
 function getNodePosthogClient(projectApiKey: string, apiHost: string): PostHog {
-  return new PostHog(projectApiKey!, {
-    host: apiHost!,
+  return new PostHog(projectApiKey, {
+    host: apiHost,
   });
 }

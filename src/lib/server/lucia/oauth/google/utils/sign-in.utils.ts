@@ -190,7 +190,7 @@ async function performOAuthAccountLinking(
 }
 
 async function verifyEmail(databaseUser: PrismaUser): Promise<void> {
-  if (databaseUser.email_verified === true) {
+  if (databaseUser.email_verified) {
     return;
   }
 

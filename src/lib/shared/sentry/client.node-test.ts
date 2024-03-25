@@ -37,7 +37,7 @@ describe(setupSentryClient.name, () => {
   });
 
   it('should configure the client', async () => {
-    await setupSentryClient({
+    setupSentryClient({
       dsn: 'mock-dsn',
       environment: 'localhost',
       origin: 'http://localhost:3000',
@@ -54,7 +54,7 @@ describe(setupSentryClient.name, () => {
   });
 
   it('should not configure the client if its already configured', async () => {
-    await setupSentryClient({
+    setupSentryClient({
       dsn: 'mock-dsn',
       environment: 'localhost',
       origin: 'http://localhost:3000',
@@ -62,7 +62,7 @@ describe(setupSentryClient.name, () => {
     // Reset the spy to check if it's called again
     vi.clearAllMocks();
 
-    await setupSentryClient({
+    setupSentryClient({
       dsn: 'mock-dsn',
       environment: 'localhost',
       origin: 'http://localhost:3000',
@@ -72,7 +72,7 @@ describe(setupSentryClient.name, () => {
   });
 
   it('should fail configuration of the client if configuration inputs are invalid', async () => {
-    await setupSentryClient({
+    setupSentryClient({
       dsn: undefined,
       environment: undefined,
       origin: 'http://localhost:3000',
@@ -90,7 +90,7 @@ describe(checkIfSentryClientConfigured.name, () => {
   });
 
   it('should not throw an error if client is configured', async () => {
-    await setupSentryClient({
+    setupSentryClient({
       dsn: 'mock-dsn',
       environment: 'localhost',
       origin: 'http://localhost:3000',

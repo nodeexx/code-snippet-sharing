@@ -54,7 +54,7 @@ export const handle = (async (input) => {
   return sequence(...nonMaintenanceModeHandles)(input);
 }) satisfies Handle;
 
-export const handleError = handleErrorWithSentry((async ({ error }) => {
+export const handleError = handleErrorWithSentry((({ error }) => {
   const message = 'Internal Server Error';
   console.error(message, error);
 
@@ -64,6 +64,7 @@ export const handleError = handleErrorWithSentry((async ({ error }) => {
   };
 }) satisfies HandleServerError);
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 process.on('SIGINT', async () => {
   console.info(
     'Got SIGINT (e.g. `Ctrl+C`). Graceful shutdown ',
@@ -71,6 +72,7 @@ process.on('SIGINT', async () => {
   );
   await shutdownGracefully();
 });
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 process.on('SIGTERM', async () => {
   console.info(
     'Got SIGTERM (e.g. `docker container stop`). Graceful shutdown ',

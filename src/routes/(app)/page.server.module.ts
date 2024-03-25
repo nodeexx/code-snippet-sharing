@@ -46,7 +46,7 @@ export function cleanSearchParamsAndGenerateQuery(
   const sortOrder =
     (searchParams.get('sortOrder') as
       | FindCodeSnippetsQuery['sortOrder']
-      | null) || 'asc';
+      | null) ?? 'asc';
 
   // Set query
   const findCodeSnippetsQuery = {
@@ -55,7 +55,7 @@ export function cleanSearchParamsAndGenerateQuery(
     ...(filterBy != null && { filterBy }),
     ...(filterValue != null && { filterValue }),
     sortBy,
-    ...(sortOrder != null && { sortOrder }),
+    sortOrder,
   };
 
   // Validate query

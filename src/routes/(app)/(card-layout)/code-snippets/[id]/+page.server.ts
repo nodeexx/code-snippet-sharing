@@ -53,7 +53,8 @@ export const actions = {
       authUser,
       form,
     );
-    if ((result as unknown as ActionFailure)?.status >= 400) {
+    const possibleActionFailure = result as unknown as ActionFailure;
+    if (possibleActionFailure.status && possibleActionFailure.status >= 400) {
       return result;
     }
 

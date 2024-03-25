@@ -17,7 +17,7 @@ const config = {
   plugins: [
     forms,
     typography,
-    // @ts-ignore
+    // @ts-expect-error
     skeleton({
       themes: { preset: [{ name: 'wintry', enhancements: true }] },
     }),
