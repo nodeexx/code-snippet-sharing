@@ -85,12 +85,19 @@ module.exports = {
       },
     },
     {
-      // No `.spec.{js,ts}` files, because those are for server unit tests
-      files: ['src/**/*.{test,browser-test}.{js,ts}'],
+      files: ['src/**/*.node-test.{js,ts}'],
+      extends: ['plugin:jest-dom/recommended'],
+      rules: {
+        'jest-dom/prefer-in-document': 'off',
+      },
+    },
+    {
+      files: ['src/**/*.dom-test.{js,ts}'],
       plugins: ['testing-library'],
       extends: ['plugin:testing-library/dom', 'plugin:jest-dom/recommended'],
       rules: {
         'jest-dom/prefer-in-document': 'off',
+        'testing-library/prefer-presence-queries': 'off',
         'testing-library/prefer-screen-queries': 'off',
       },
     },

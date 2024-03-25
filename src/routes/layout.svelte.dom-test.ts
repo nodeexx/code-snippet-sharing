@@ -45,7 +45,7 @@ describe(Component.name, () => {
   it('should render slot content', () => {
     const renderResult = render(SlotTest, { props: { component: Component } });
 
-    expect(renderResult.getByTestId('slot-content').textContent).toBe(
+    expect(renderResult.getByTestId('slot-content')).toHaveTextContent(
       'mock-slot-text',
     );
   });
