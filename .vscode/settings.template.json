@@ -21,6 +21,8 @@
   "debug.javascript.terminalOptions": {
     "skipFiles": ["<node_internals>/**"]
   },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // Identation settings -> .editorconfig
