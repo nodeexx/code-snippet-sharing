@@ -4,6 +4,7 @@ import { superForm } from 'sveltekit-superforms/client';
 
 import IconPlus from '~icons/fa6-solid/plus';
 import { goto, invalidateAll } from '$app/navigation';
+import { page } from '$app/stores';
 import { CodeSnippetCard } from '$lib/client/components/code-snippets';
 import CodeSnippetFindForm from '$lib/client/components/code-snippets/CodeSnippetFindForm.svelte';
 import { Alert, Card } from '$lib/client/components/common';
@@ -17,6 +18,41 @@ import type { FindCodeSnippetsQuery } from '$lib/shared/code-snippets/dtos';
 
 export let data;
 
+const pageMetaDescription =
+  'Explore a simple Pastebin-like CRUD app: A rich, open-source ' +
+  'example of a full-stack SvelteKit application designed for ' +
+  'developers. Features comprehensive tooling for real-world software ' +
+  'development, including CI/CD, testing, and more.';
+const pageMetaKeywords = [
+  'code snippets',
+  'Pastebin',
+  'SvelteKit',
+  'full-stack development',
+  'CRUD app',
+  'open source',
+  'software development tools',
+  'CI/CD',
+  'testing',
+].join(', ');
+const pageRepositoryUrl = 'https://github.com/nodeexx/code-snippet-sharing';
+const pageJsonLdData = {
+  '@context': 'http://schema.org',
+  '@type': 'WebApplication',
+  name: config.appName,
+  description: pageMetaDescription,
+  license: 'https://opensource.org/licenses/MIT',
+  url: $page.url.href,
+  sourceCode: 'https://github.com/nodeexx/code-snippet-sharing',
+  author: {
+    '@type': 'Person',
+    name: 'Nodeexx',
+    url: 'https://github.com/nodeexx',
+  },
+};
+const tagName = 'script';
+const pageJsonLdScriptHtml = `<${tagName} type="application/ld+json">${JSON.stringify(
+  pageJsonLdData,
+)}</${tagName}>`;
 const toastStore = getToastStore();
 const codeSnippetDeletionSuperForm = superForm(data.deleteForm, {
   onUpdated({ form }) {
@@ -60,10 +96,13 @@ async function reloadData() {
 
 <svelte:head>
   <title>Home{config.pageTitleSuffix}</title>
-  <meta
-    name="description"
-    content="Simple Pastebin-like CRUD app that, open-source example of a full-stack SvelteKit app"
-  />
+  <meta name="description" content="{pageMetaDescription}" />
+  <meta name="keywords" content="{pageMetaKeywords}" />
+  <meta name="author" content="Nodeexx" />
+  <link rel="canonical" href="${$page.url.href}" />
+  <link rel="me" href="{pageRepositoryUrl}" title="GitHub Repository" />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html pageJsonLdScriptHtml}
 </svelte:head>
 
 <div class="flex h-full flex-col items-center justify-center gap-5">
