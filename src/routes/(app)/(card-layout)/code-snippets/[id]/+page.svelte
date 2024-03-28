@@ -4,6 +4,7 @@ import { superForm } from 'sveltekit-superforms/client';
 
 import IconPenToSquare from '~icons/fa6-solid/pen-to-square';
 import IconTrash from '~icons/fa6-solid/trash';
+import { page } from '$app/stores';
 import { Alert, Card } from '$lib/client/components/common';
 import { config } from '$lib/client/core/config';
 import {
@@ -14,6 +15,18 @@ import { formatUtcDateTime } from '$lib/shared/core/utils';
 
 export let data;
 
+const pageJsonLdData = {
+  '@context': 'http://schema.org',
+  '@type': 'SoftwareSourceCode',
+  identifier: data.codeSnippet.id,
+  name: data.codeSnippet.name,
+  text: data.codeSnippet.code,
+  url: $page.url.href,
+};
+const tagName = 'script';
+const pageJsonLdScriptHtml = `<${tagName} type="application/ld+json">${JSON.stringify(
+  pageJsonLdData,
+)}</${tagName}>`;
 const toastStore = getToastStore();
 const { message, enhance } = superForm(data.form, {
   onUpdated({ form }) {
@@ -36,6 +49,8 @@ const lastModificationDate = formatUtcDateTime(updated_at);
     name="description"
     content="Code snippet - {data.codeSnippet.name} | {data.codeSnippet.code}"
   />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html pageJsonLdScriptHtml}
 </svelte:head>
 
 <Card
