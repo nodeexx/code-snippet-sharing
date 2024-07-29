@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.39.0-jammy as common
+FROM mcr.microsoft.com/playwright:v1.45.3-jammy as common
 
 WORKDIR /playwright
 
