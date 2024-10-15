@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:20.9.0-alpine3.18 as base-node-version
+FROM node:20.13.1-alpine3.18 as base-node-version
 
 FROM base-node-version as install
 
