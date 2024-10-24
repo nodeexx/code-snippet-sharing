@@ -20,7 +20,7 @@ jobs:
                 commits-linting,
                 forbidden-comments-linting,
             ]
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Check jobs status
               run: if ${{ contains(needs.*.result, 'failure') }}; then exit 1; fi
@@ -28,10 +28,10 @@ jobs:
               run: echo 'All dependencies completed'
 
     app-code-linting:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   # Make sure the actual branch is checked out when running on pull requests
                   ref: ${{ github.head_ref }}
@@ -40,7 +40,7 @@ jobs:
               with:
                   gpg-private-key: ${{ secrets.GIT_SECRET_PRIVATE_KEY }}
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: '20.9.0'
                   cache: 'npm'
@@ -51,18 +51,18 @@ jobs:
               run: npm run build && npm run lint
 
     app-tests-unit-node:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         strategy:
             matrix:
                 index: ['1']
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   # Make sure the actual branch is checked out when running on pull requests
                   ref: ${{ github.head_ref }}
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: '20.9.0'
                   cache: 'npm'
@@ -74,18 +74,18 @@ jobs:
                   npm run test:unit:node -- --shard=${{matrix.index}}/1
 
     app-tests-unit-dom:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         strategy:
             matrix:
                 index: ['1']
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   # Make sure the actual branch is checked out when running on pull requests
                   ref: ${{ github.head_ref }}
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: '20.9.0'
                   cache: 'npm'
@@ -97,14 +97,14 @@ jobs:
                   npm run test:unit:dom -- --shard=${{matrix.index}}/1
 
     app-tests-playwright-e2e:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: '20.9.0'
                   cache: 'npm'
@@ -122,7 +122,7 @@ jobs:
               run: ./scripts/stack/local/all/e2e/headless.js
             - name: Upload data for failed tests
               if: failure() && steps.run-e2e-tests.outcome == 'failure'
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: e2e-failed-tests-data
                   path: |
@@ -131,14 +131,14 @@ jobs:
                   retention-days: 3
 
     app-tests-playwright-api:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: '20.9.0'
                   cache: 'npm'
@@ -156,7 +156,7 @@ jobs:
               run: ./scripts/stack/local/all/api/headless.js
             - name: Upload data for failed tests
               if: failure() && steps.run-api-tests.outcome == 'failure'
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: api-failed-tests-data
                   path: |
@@ -165,10 +165,10 @@ jobs:
                   retention-days: 3
 
     commits-linting:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
             - name: 'Validate PR commits messages'
@@ -182,10 +182,10 @@ jobs:
                   echo "Commits messages are valid"
 
     forbidden-comments-linting:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   ref: ${{ github.head_ref }}
             - name: Setup todos CLI command
